@@ -2,7 +2,8 @@
 
 
 import DoctorList from "@/components/Home/doctorList"
-import HospitalList from "@/components/Home/hospitalList"
+import Hopital from "@/components/Home/hospital"
+import SpecialistlList from "@/components/Home/specialistList"
 import { useState } from "react"
 
 
@@ -19,7 +20,7 @@ export default function Home() {
     }
     else if(clickSubMenu === 'ck'){
       return (<div className="flex text-center text-lg font-semibold mt-5 cursor-pointer">
-                <div onClick={() => {setClickSubMenu('bv')}} className="p-3 min-w-[300px] hover:border-b-bluehome">Bệnh Viện</div>
+                <div onClick={() => {setClickSubMenu('bv')}} className="p-3 min-w-[300px] border-b-4 hover:border-b-bluehome">Bệnh Viện</div>
                 <div className="p-3 min-w-[300px] border-b-4 border-b-bluehome text-blue-700">Chuyên Khoa</div>
                 <div onClick={() => {setClickSubMenu('bs')}} className="p-3 min-w-[300px] border-b-4 hover:border-b-bluehome">Bác Sĩ</div>
             </div> )
@@ -97,13 +98,16 @@ export default function Home() {
         <div className="flex justify-center text-lg">
           {(handleSubMenu)()}
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-8">
           {(() => {
             if (clickSubMenu === 'bv'){
-              return <HospitalList></HospitalList>
+              return <Hopital></Hopital>
             }
             else if(clickSubMenu === 'bs'){
               return <DoctorList></DoctorList>
+            }
+            else{
+              return <SpecialistlList></SpecialistlList>
             }
 
           })()}
