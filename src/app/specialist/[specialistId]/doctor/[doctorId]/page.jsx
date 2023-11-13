@@ -9,13 +9,17 @@ import { USER_URL } from '@/api/constant/user'
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { selectUserLogin, setAvatar, setName, setDsForm } from '@/app/redux/userLogin/userLoginSlice';
+import { useDispatch, useSelector } from "react-redux";
 
 
 
 
 export default function DoctorDetailPage() {
+   const dispatch = useDispatch();
    const pathname = useParams();
    const router = useRouter(pathname);
+   const user = useSelector(selectUserLogin);
    const [doctor, setDoctor]= useState({});
    const [workingTime, setWorkingTime] = useState();
    const callDoctorDetailById = async () => {
@@ -32,6 +36,27 @@ export default function DoctorDetailPage() {
    }
    const logToast = () => {
       toast.error('Bạn phải chọn khung giờ khám');
+      return;
+   }
+   const useForm = (tmp) => {
+      if(tmp){
+         return workingTime ?
+            <div onClick={() => { router.push(`/specialist/${pathname.specialistId}/doctor/${pathname.doctorId}/booking/${workingTime}`); }} className="cursor-pointer m-5 mx-32 p-2 bg-bluehome text-lg text-white font-medium rounded-xl text-center">
+               Đặt Khám Ngay
+            </div> :
+            <div onClick={logToast} className="cursor-pointer m-5 mx-32 p-2 bg-bluehome text-lg text-white font-medium rounded-xl text-center">
+               Đặt Khám Ngay
+            </div>
+      }
+      else{
+         return workingTime ?
+            <div onClick={() => { dispatch(setDsForm(true)) }} className="cursor-pointer m-5 mx-32 p-2 bg-bluehome text-lg text-white font-medium rounded-xl text-center">
+               Đặt Khám Ngay
+            </div> :
+            <div onClick={logToast} className="cursor-pointer m-5 mx-32 p-2 bg-bluehome text-lg text-white font-medium rounded-xl text-center">
+               Đặt Khám Ngay
+            </div>
+      }
    }
    return (
       
@@ -82,16 +107,8 @@ export default function DoctorDetailPage() {
                   
                   <div>
                      {
-                        workingTime ? 
-                        <div onClick={() => { router.push(`/specialist/${pathname.specialistId}/doctor/${pathname.doctorId}/booking/${workingTime}`); }} className="cursor-pointer m-5 mx-32 p-2 bg-bluehome text-lg text-white font-medium rounded-xl text-center">
-                           Đặt Khám Ngay
-                        </div> :
-                        <div onClick={logToast} className="cursor-pointer m-5 mx-32 p-2 bg-bluehome text-lg text-white font-medium rounded-xl text-center">
-                           Đặt Khám Ngay
-                        </div>
+                        useForm(user.name !== 'NULL')
                      }
-                     <ToastContainer />
-
                   </div>
                   
                </div>

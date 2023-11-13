@@ -23,9 +23,12 @@ export default function Booking() {
          return;
       }
       setIsLoading(true);
-      await axios.post(`${USER_URL.BOOKING}`, {workingTime:booking, note: form} );
+      const mes = await axios.post(`${USER_URL.BOOKING}`, {workingTime:booking, note: form} );
+      if(mes?.data?.code !== 201){
+         toast.error(tmp?.response?.data?.message);
+      }
       setIsLoading(false);
-      toast.success('Đặt khám thành công');
+      
    }
 
    const callWorkingTimeById = async () => {
@@ -142,7 +145,6 @@ export default function Booking() {
                            </svg>
                         </div>
                      </div>
-                     <ToastContainer />
                   </div>
                </div>
             </div>

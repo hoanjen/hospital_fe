@@ -19,8 +19,8 @@ export default function Hospital() {
             </div>
          </div>
          <div className="mb-10 flex">
-            <img className="w-[500px]" src="https://insmart.com.vn/wp-content/uploads/2021/05/BV-DK-Ha-Noi.jpg" alt="" />
-            <img className="ml-5 w-[500px]" src="https://insmart.com.vn/wp-content/uploads/2021/05/BV-DK-Ha-Noi.jpg" alt="" />
+            <img className="w-[500px] rounded-lg" src="https://insmart.com.vn/wp-content/uploads/2021/05/BV-DK-Ha-Noi.jpg" alt="" />
+            <img className="ml-5 w-[500px] rounded-lg" src="https://baohanam-fileserver.nvcms.net/IMAGES/2022/11/02/20221102094043-57bvdk.jpg" alt="" />
          </div>
          <div className="grid grid-cols-2">
             <div className="max-w-md">
