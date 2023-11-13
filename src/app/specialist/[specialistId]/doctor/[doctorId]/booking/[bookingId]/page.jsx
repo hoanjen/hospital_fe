@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment/moment"
-
+import Signin from '@/components/auth/signin';
 
 export default function Booking() {
    const pathname = useParams();
@@ -53,6 +53,7 @@ export default function Booking() {
 
    return (
       <div className="h-screen">
+         
          <div className="flex justify-center">
             <div className="m-5 flex">
                <div className="bg-white w-[600px] m-5 rounded-xl pb-10">

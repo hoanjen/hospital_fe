@@ -10,7 +10,6 @@ const instance = axios.create({
 
 instance.interceptors.request.use(function (config) {
    const asscess_token = getCookie('access_token')
-   console.log(asscess_token)
    if(asscess_token){
       config.headers['Authorization'] = `Bearer ${asscess_token}`;
    }
@@ -22,7 +21,7 @@ instance.interceptors.request.use(function (config) {
 
 
 instance.interceptors.response.use(function (response) {
-   if(response.status===401){
+   if(response.status===409){
       deleteCookie('access_token')
       window.location.href = `${process.env.REACT_APP_BASE_HREF}/`;
    }

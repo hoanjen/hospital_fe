@@ -13,7 +13,7 @@ export const userLoginSlice = createSlice({
       state.name = action.payload;
     },
     setAvatar: (state, action) => {
-      state.balance = action.payload;
+      state.avatar = action.payload;
     },
   },
 });

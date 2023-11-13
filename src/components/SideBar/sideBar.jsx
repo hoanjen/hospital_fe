@@ -6,6 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { selectUserLogin } from '@/app/redux/userLogin/userLoginSlice';
 import { useEffect, useState } from 'react';
+import Signin from '../auth/signin';
+import axios from '@/api/axios'
+import { USER_URL } from '@/api/constant/user'
 
 
 export default function SideBar() {
@@ -13,11 +16,13 @@ export default function SideBar() {
    const userName = useSelector(selectUserLogin).name;
    const [logoutButton, setLogoutButton] = useState(false);
    const [displayLogin, setDisplayLogin] = useState(false);
-   const logout = () => {
+   
 
+   const hiddenLogin = (index) =>{
+      setDisplayLogin(index);
    }
    const checkLogin = (isLogin) => {
-      if(isLogin){
+      if(!isLogin){
          return (<div onPointerEnter={() => {setLogoutButton(true)}} onPointerLeave={()=>{setLogoutButton(false)}} className='cursor-pointer p-4 text-l mr-4 relative' onClick={() => {router.push('/profile')}}>
             <div>
                {userName}
@@ -35,7 +40,7 @@ export default function SideBar() {
    }
 
    return (
-      <div className='flex flex-row bg-white text-black font-semibold shadow-lg shadow-black-500/50 border-b-2 w-screen justify-between '>
+      <div className='flex flex-row bg-white text-black font-semibold shadow-lg shadow-black-500/50 border-b-2 w-screen justify-between relative'>
          <div className='cursor-pointer p-4 text-lg ml-28' onClick={() => router.push('/')}>Youmed</div>
          <div className='flex flex-row'>
             <div className='cursor-pointer p-4 text-l mr-4' onClick={() => router.push('/specialist')}>
@@ -49,6 +54,12 @@ export default function SideBar() {
                {checkLogin(userName === 'NULL')}
             </div>
             
+         </div>
+         <div  className={displayLogin ? 'z-10 top-0 left-0 w-screen h-screen absolute' : 'hidden z-10 top-0 left-0 w-screen h-screen absolute'}>
+            <div className='flex z-20 w-full absolute justify-center'>
+               <Signin hiddenLogin={hiddenLogin}></Signin>
+            </div>
+            <div className='bg-slate-800 w-screen h-screen opacity-50 absolute z-10 left-0 top-0'></div>
          </div>
       </div>
    )
