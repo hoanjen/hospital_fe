@@ -40,8 +40,8 @@ export default function Home() {
         <img className="float-right bg-bluehome h-[520px]" src="https://res.cloudinary.com/drlvs8ebw/image/upload/v1697647330/Hospital/exxw5coy7klf0danagft.jpg" alt="" />
         <div className="absolute z-10 top-1/4 w-[630px] left-[32%] text-center text-white">
           <div className="font-bold text-4xl">Ứng dụng đặt khám</div>
-          <div className="text-lg mt-2 font-medium">Đặt khám với hơn 475 bác sĩ, 25 bệnh viện, 50 phòng khám trên YouMed để có số thứ tự và khung giờ khám trước.</div>
-          <div>input</div>
+          <div className="text-lg mt-2 font-medium">Đặt khám với hơn 475 bác sĩ, 50 phòng khám trên YouMed để có số thứ tự và khung giờ khám trước.</div>
+          <div></div>
           <div></div>
         </div>
         

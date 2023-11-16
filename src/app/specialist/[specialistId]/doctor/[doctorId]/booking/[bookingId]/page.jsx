@@ -24,16 +24,18 @@ export default function Booking() {
       }
       setIsLoading(true);
       const mes = await axios.post(`${USER_URL.BOOKING}`, {workingTime:booking, note: form} );
-      if(mes?.data?.code !== 201){
-         toast.error(tmp?.response?.data?.message);
+      if(mes?.data?.code === 201){
+         toast.success('Đặt lịch thành công')
+         setIsLoading(false);
       }
-      setIsLoading(false);
+      toast.error(mes?.response?.data?.message);
+      
       
    }
 
    const callWorkingTimeById = async () => {
       const workingTime = await axios.get(`${USER_URL.WORKINGTIME}/${pathname.bookingId}`);
-      console.log(workingTime)
+      console.log(pathname.bookingId)
       setWorkingTime(workingTime.data.data);
    }
 
@@ -97,7 +99,7 @@ export default function Booking() {
                   <div className="m-5 p-2">
                      <div className="mb-2">Ghi chú</div>
                      <div className="w-[400px] h-28">
-                        <textarea onChange={(e) => { setForm(e.target.value) }} placeholder="Triệu chứng, thuốc đang dùng, v.v"  className="text-sm w-[400px] h-28 max-h-36 border-2 rounded-lg" type="text" />
+                        <textarea  onChange={(e) => { setForm(e.target.value) }} placeholder="Triệu chứng, thuốc đang dùng, v.v"  className="text-sm w-full h-28 max-h-36 min-w-[500px] border-2 rounded-lg" type="text" />
                      </div>
                   </div>
                </div>
@@ -132,7 +134,7 @@ export default function Booking() {
                      </div>
                      <div className="mt-3 flex justify-between">
                         <div>Phòng khám</div>
-                        <div>{workingTime?.workingPlan?.place}</div>
+                        <div>{workingTime?.workingPlan?.place}Phòng 302</div>
                      </div>
                      
                      

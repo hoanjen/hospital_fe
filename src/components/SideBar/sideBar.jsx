@@ -43,19 +43,19 @@ export default function SideBar() {
    }
 
    const checkLogin = (isLogin) => {
-      if(!isLogin){
+      if(isLogin){
          return (<div onPointerEnter={() => {setLogoutButton(true)}} onPointerLeave={()=>{setLogoutButton(false)}} className='cursor-pointer p-4 text-l mr-4 relative' onClick={() => {router.push('/profile')}}>
             <div>
                {userFullName}
             </div>
             <div  className=''>            
-               {logoutButton ? <div onClick={(event) => { event.stopPropagation(); signout()}} className='absolute z-20 right-0 top-14 rounded-md bg-white p-2'>Logout</div> : ''}
+               {logoutButton ? <div onClick={(event) => { event.stopPropagation(); signout()}} className='absolute z-20 right-0 top-14 rounded-md bg-white p-2'>Đăng xuất</div> : ''}
             </div>
          </div>)
       }
       else{
-         return (<div className='cursor-pointer p-4 text-l mr-4' onClick={() => { setDisplayLogin(true)} }>
-            SignIn
+         return (<div className='cursor-pointer p-4 text-l mr-4' onClick={() => { dispatch(setDsForm(true))} }>
+            Đăng nhập
             </div>)
       }
    }
@@ -72,7 +72,7 @@ export default function SideBar() {
             <div className='cursor-pointer p-4 text-l mr-4'>Tin Y tế</div>
             <div className='cursor-pointer p-4 text-l mr-4' onClick={() => router.push('/admin')}>Dành cho nhân viên Y tế</div>
             <div >
-               {checkLogin(userFullName === 'NULL')}
+               {checkLogin(userFullName !== 'NULL')}
             </div>
             
          </div>

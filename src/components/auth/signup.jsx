@@ -5,7 +5,7 @@ import axios from '@/api/axios'
 import { USER_URL } from '@/api/constant/user'
 import { toast, ToastContainer } from 'react-toastify';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
-import { selectUserLogin, setAvatar, setName } from '@/app/redux/userLogin/userLoginSlice';
+import { selectUserLogin, setAvatar, setDsForm, setName } from '@/app/redux/userLogin/userLoginSlice';
 import { useDispatch } from 'react-redux';
 export default function Signup(props) {
    const [email, setEmail] = useState('');
@@ -16,18 +16,6 @@ export default function Signup(props) {
 
 
    const signup = async () => {
-      if (email === '' || password === '') {
-         toast.error('Email và mật khẩu không được để trống')
-         return;
-      }
-      if(password !== passwordAgain){
-         toast.error('Mật khẩu nhập lại không khớp')
-         return;
-      }
-      if (fullName === '') {
-         toast.error('Tên không được để trống')
-         return;
-      }
 
       const tmp = await axios.post(`${USER_URL.REGISTER}`, { email, password, fullName });
       const user = tmp.data?.data;
@@ -36,7 +24,7 @@ export default function Signup(props) {
       if (tmp?.data?.code === 201) {
          toast.success('Đăng ký thành công, vào email để xác thực');
          props.hiddenSignup(false);
-         props.hiddenSignin(true);
+         dispatch(setDsForm(true));
       } else {
          toast.error(tmp.response.data.message);
       }
@@ -46,7 +34,7 @@ export default function Signup(props) {
       <div className="">
          <section className="">
             <div className="flex flex-col w-[500px] items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-               <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+               <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-white dark:text-white">
                   <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
                   BV Đa Khoa Hà Nội
                </a>

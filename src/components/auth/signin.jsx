@@ -14,10 +14,7 @@ export default function Signin(props) {
     
 
     const signin = async () => {
-        if (email === '' || password === '') {
-            toast.error('Email và mật khẩu không được để trống')
-            return;
-        }
+
 
         const tmp = await axios.post(`${USER_URL.LOGIN}`, { email, password });
         const user = tmp.data?.data;
@@ -27,9 +24,10 @@ export default function Signin(props) {
             setCookie('access_token', user.tokens.access.token);
             dispatch(setAvatar(user.user.avatar));
             dispatch(setName(user.user.fullName));
-            props.hiddenLogin(false);
+            dispatch(setDsForm(false));
+            
         } else {
-            toast.error(tmp.response.data.message);
+            toast.error(tmp?.response?.data?.message);
         }
 
     }
@@ -37,7 +35,7 @@ export default function Signin(props) {
         <div className="">
             <section className="">
                 <div className="flex flex-col w-[500px]  items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                    <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+                    <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-white dark:text-white">
                         <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
                         BV Đa Khoa Hà Nội
                     </a>
