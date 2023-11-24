@@ -21,9 +21,11 @@ export default function Signin(props) {
 
         if (tmp?.data?.code === 200) {
             toast.success('Đăng nhập thành công');
+            console.log(user)
             setCookie('access_token', user.tokens.access.token);
-            dispatch(setAvatar(user.user.avatar));
-            dispatch(setName(user.user.fullName));
+            setCookie('user_avatar', user.user.avatar);
+            setCookie('user_name', user.user.fullName);
+            setCookie('user_id', user.user.id);
             dispatch(setDsForm(false));
             
         } else {

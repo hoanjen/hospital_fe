@@ -16,23 +16,32 @@ import { toast, ToastContainer } from 'react-toastify';
 export default function SideBar() {
    const router = useRouter()
    const user = useSelector(selectUserLogin);
-   const [userFullName, setUserFullName] = useState(''); 
-   const [avatarr, setAvatarr] = useState(''); 
+   const [userFullName, setUserFullName] = useState('NULL');
+   const [userId, setUserId] = useState('NULL');
+   const [avatarr, setAvatarr] = useState('NULL'); 
    const [logoutButton, setLogoutButton] = useState(false);
-   const [displayLogin, setDisplayLogin] = useState(false);
    const [displaySignup, setDisplaySignup] = useState(false);
    const dispatch = useDispatch();
    const signout = () => {
-      dispatch(setAvatar('NULL'));
-      dispatch(setName('NULL'));
+      deleteCookie('user_avatar');
+      deleteCookie('user_name');
+      deleteCookie('user_id');
+      setAvatarr('NULL');
+      setUserFullName('NULL');
       deleteCookie('access_token');
-      toast.success('Đăng xuất thành công'); 
+      toast.success('Đăng xuất thành công');
    }
 
    useEffect(() => {
-      console.log(user)
-      setUserFullName(user.name);
-      setAvatar(user.avatar);
+      if (getCookie('user_id')) {
+         setUserId(getCookie('user_id'));
+      }
+      if (getCookie('user_name')){
+         setUserFullName(getCookie('user_name'));
+      }
+      if (getCookie('user_name')){
+         setAvatarr(getCookie('user_name'));
+      }
    })
 
    const hiddenLogin = (index) =>{
@@ -44,17 +53,19 @@ export default function SideBar() {
 
    const checkLogin = (isLogin) => {
       if(isLogin){
-         return (<div onPointerEnter={() => {setLogoutButton(true)}} onPointerLeave={()=>{setLogoutButton(false)}} className='cursor-pointer p-4 text-l mr-4 relative' onClick={() => {router.push('/profile')}}>
-            <div>
+         return (
+         <div  className=' ' >
+            <div onClick={() => { router.push(`/profile/${userId}`) }}>
                {userFullName}
             </div>
             <div  className=''>            
-               {logoutButton ? <div onClick={(event) => { event.stopPropagation(); signout()}} className='absolute z-20 right-0 top-14 rounded-md bg-white p-2'>Đăng xuất</div> : ''}
+                  {logoutButton ? <div onClick={() => { signout()}}  className='absolute z-20 right-0 top-16 rounded-md bg-white p-2'>Đăng xuất</div> : ''}
             </div>
-         </div>)
+         </div>
+         )
       }
       else{
-         return (<div className='cursor-pointer p-4 text-l mr-4' onClick={() => { dispatch(setDsForm(true))} }>
+         return (<div className='' onClick={() => { dispatch(setDsForm(true))} }>
             Đăng nhập
             </div>)
       }
@@ -67,11 +78,11 @@ export default function SideBar() {
             <div className='cursor-pointer p-4 text-l mr-4' onClick={() => router.push('/specialist')}>
                Đặt khám
             </div>
-            <div className='cursor-pointer p-4 text-l mr-4'>Tư vấn trực tuyến</div>
-            <div className='cursor-pointer p-4 text-l mr-4'>Store</div>
-            <div className='cursor-pointer p-4 text-l mr-4'>Tin Y tế</div>
-            <div className='cursor-pointer p-4 text-l mr-4' onClick={() => router.push('/admin')}>Dành cho nhân viên Y tế</div>
-            <div >
+            <div className='cursor-pointer p-4 text-lg mr-4'>Tư vấn trực tuyến</div>
+            <div className='cursor-pointer p-4 text-lg mr-4'>Store</div>
+            <div className='cursor-pointer p-4 text-lg mr-4'>Tin Y tế</div>
+            <div className='cursor-pointer p-4 text-lg mr-4' onClick={() => router.push('/admin')}>Dành cho nhân viên Y tế</div>
+            <div onPointerEnter={() => { setLogoutButton(true) }} onPointerLeave={() => { setLogoutButton(false) }} className='cursor-pointer p-4 text-lg mr-4 relative '>
                {checkLogin(userFullName !== 'NULL')}
             </div>
             

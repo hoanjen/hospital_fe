@@ -4,11 +4,13 @@
 import DoctorList from "@/components/Home/doctorList"
 import Hopital from "@/components/Home/hospital"
 import SpecialistlList from "@/components/Home/specialistList"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+
 
 
 
 export default function Home() {
+  const [myNumber, setMyNumber] = useState(null);
   const [clickSubMenu, setClickSubMenu] = useState('bv')
   function handleSubMenu() {
     if (clickSubMenu === 'bv') {
@@ -33,6 +35,9 @@ export default function Home() {
             </div> )
     }
   }
+  
+
+  
 
   return (
     <div className="">
@@ -49,8 +54,8 @@ export default function Home() {
       <div className="w-screen bg-bluehome text-white flex justify-around px-64 pb-8">
         <div className="flex">
           <div>
-            <div className="font-bold text-2xl">25+</div>
-            <div className="font-medium">Bệnh viện kết nối</div>
+            <div className="font-bold text-2xl">50 NĂM</div>
+            <div className="font-medium">Hình thành & phát triển</div>
           </div>
           <div className="text-blue-700 pl-8">
             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" className="bi bi-hospital" viewBox="0 0 16 16">
@@ -61,8 +66,8 @@ export default function Home() {
         </div>
         <div className="flex">
           <div>
-            <div className="font-bold text-2xl">475+</div>
-            <div className="font-medium">Bác sĩ hoạt động</div>
+            <div className="font-bold text-2xl">200</div>
+            <div className="font-medium">Giáo sư, bác sĩ hàng đầu</div>
           </div>
           <div className="text-blue-700 pl-8">
             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
@@ -72,8 +77,9 @@ export default function Home() {
         </div>
         <div className="flex">
           <div>
-            <div className="font-bold text-2xl">50+</div>
-            <div className="font-medium">Phòng khám đa khoa</div>
+            <div className="font-bold text-2xl">
+              1.256.174</div>
+            <div className="font-medium">Bệnh nhân đến khám & điều trị</div>
           </div>
           <div className="text-blue-700 pl-8">
             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" className="bi bi-geo-alt" viewBox="0 0 16 16">
@@ -84,8 +90,8 @@ export default function Home() {
         </div>
         <div className="flex">
           <div>
-            <div className="font-bold text-2xl">40+</div>
-            <div className="font-medium">Chuyên khoa</div>
+            <div className="font-bold text-2xl">100%</div>
+            <div className="font-medium">Khách hàng hài lòng</div>
           </div>
           <div className="text-blue-700 pl-8">
             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" className="bi bi-activity" viewBox="0 0 16 16">

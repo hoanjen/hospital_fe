@@ -11,6 +11,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { selectUserLogin, setAvatar, setName, setDsForm } from '@/app/redux/userLogin/userLoginSlice';
 import { useDispatch, useSelector } from "react-redux";
+import { getCookie } from "cookies-next";
 
 
 
@@ -19,7 +20,7 @@ export default function DoctorDetailPage() {
    const dispatch = useDispatch();
    const pathname = useParams();
    const router = useRouter(pathname);
-   const user = useSelector(selectUserLogin);
+   const [userName, setUserName] = useState('NULL')
    const [doctor, setDoctor]= useState({});
    const [workingTime, setWorkingTime] = useState();
    const callDoctorDetailById = async () => {
@@ -28,6 +29,7 @@ export default function DoctorDetailPage() {
    }
 
    useEffect(() => {
+      setUserName(getCookie('user_name'));
       callDoctorDetailById();
    },[])
 
@@ -107,7 +109,7 @@ export default function DoctorDetailPage() {
                   
                   <div>
                      {
-                        useForm(user.name !== 'NULL')
+                        useForm(userName !== 'NULL')
                      }
                   </div>
                   

@@ -14,7 +14,7 @@ export default function Hospital() {
                <div className="font-bold text-xl">Bệnh Viện Đa Khoa Hà Nội</div>
                <div className="my-4 opacity-80">Kiểm soát bệnh tât - Vững tin cuộc sống</div>
                <div>
-                  Địa chỉ: Nhổn city
+                  Địa chỉ: Số 29 Hàn Thuyên, Hai Bà Trưng, Hà Nội
                </div>
             </div>
          </div>

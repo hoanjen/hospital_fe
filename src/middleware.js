@@ -14,5 +14,4 @@ export function middleware(request) {
 
 export const config = {
    matcher: ['/specialist/:path*/doctor/:path*/booking/:path*']   
-
 }
