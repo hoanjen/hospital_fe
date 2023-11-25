@@ -1,12 +1,30 @@
-import { useState } from "react"
+'use client'
+
+import { useState, useEffect } from "react"
+import axios from '@/api/axios'
+import { USER_URL } from '@/api/constant/user'
+
 
 
 export default function Account(props){
    
 
+   const [userProfile,setUserProfile] = useState('');
    const [currentPasswordDisplay, setCurrentPasswordDisplay] = useState(false);
    const [newPasswordDisplay, setNewPasswordDisplay] = useState(false);
    
+
+   const callProfileById = async () => {
+      const user = await axios.get(`${USER_URL.USERS}`);   
+      setUserProfile(user.data.data.results);
+      console.log(user.data.data.results);
+   }
+
+   useEffect(()=>{
+      callProfileById();
+   },[])
+
+
    return (
       <div className="m-5 mt-10">
          <div className="font-semibold py-5 text-xl">Tài khoản</div>

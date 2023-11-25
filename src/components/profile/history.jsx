@@ -12,7 +12,7 @@ export default function History() {
    
 
    const callHistoryByUserId = async () => {
-      const historyy = await axios.get(`${USER_URL.HEALFORM}/?userId=${path.profileId}&populate=doctor`);   
+      const historyy = await axios.get(`${USER_URL.HEALFORM}/?userId=${path.profileId}&populate=doctor,workingTime`);   
       setHistory(historyy.data.data.results);
       console.log(historyy.data.data.results);
    }
@@ -20,6 +20,21 @@ export default function History() {
    useEffect(()=>{
       callHistoryByUserId();
    },[])
+
+   const dsStatus = (status) => {
+      if(status === 'success'){
+         return ( 
+            <div className="p-2 min-w-[110px] text-white bg-green-500 text-center rounded-md">Thành công</div>
+         )
+      }
+      else if(status === 'pending'){
+         return (
+            <div className="p-2 min-w-[110px] text-white bg-yellow-400   text-center rounded-md">Chờ duyệt</div>
+         )
+      }else{
+         <div className="p-2 min-w-[110px] text-white bg-yellow-400   text-center rounded-md">Từ chối</div>
+      }
+   }
 
    return (
       <div className="w-[1140px] mt-10 ml-5">
@@ -76,16 +91,16 @@ export default function History() {
                                {item.doctor.name}
                             </td>
                             <td className="px-6 py-4">
-                               Laptop
+                                 {item.workingTime.startTime} - {item.workingTime.endTime}
                             </td>
                             <td className="px-6 py-4">
-                               $2999
+                                 {item.numberOrder}
                             </td>
                             <td className="px-6 py-4">
-                               Laptop
+                               {item.note}
                             </td>
-                            <td className="px-6 py-4">
-                               $2999
+                            <td className="px-6 py-2">          
+                              {dsStatus(item.status)}
                             </td>
                             <td className="px-6 py-4 text-right">
                                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Hủy lịch</a>
