@@ -4,11 +4,13 @@ import { useEffect, useState } from "react"
 import axios from '@/api/axios'
 import { USER_URL } from '@/api/constant/user'
 import { useParams } from "next/navigation"
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 export default function History() {
    const path = useParams();
-   const [history, setHistory] = useState([]);
+   const [history, setHistory] = useState('');
    
 
    const callHistoryByUserId = async () => {
@@ -35,6 +37,8 @@ export default function History() {
          <div className="p-2 min-w-[110px] text-white bg-yellow-400   text-center rounded-md">Từ chối</div>
       }
    }
+
+   
 
    return (
       <div className="w-[1140px] mt-10 ml-5">
@@ -81,11 +85,13 @@ export default function History() {
                      </tr>
                </thead>
                <tbody>
-                  {history.map((item,index) => {
+                  
+                  
+                  {history.length > 0 ? history.map((item,index) => {
                       return (
                          <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                               {item.id}
+                               {item.id} 
                             </th>
                             <td className="px-6 py-4">
                                {item.doctor.name}
@@ -107,9 +113,50 @@ export default function History() {
                             </td>
                          </tr>
                       )  
-                  })}
-               </tbody>
+                  }) : ''
+                  }  
+                  {
+                     history === '' ? [1, 2, 3, 4, 5, 6].map((item, key) => {
+                        return (
+                           <tr key={key} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                 <Skeleton></Skeleton>
+                              </th>
+                              <td className="px-6 py-4">
+                                 <Skeleton></Skeleton>
+                              </td>
+                              <td className="px-6 py-4">
+                                 <Skeleton></Skeleton>
+                              </td>
+                              <td className="px-6 py-4">
+                                 <Skeleton></Skeleton>
+                              </td>
+                              <td className="px-6 py-4">
+                                 <Skeleton></Skeleton>
+                              </td>
+                              <td className="px-6 py-2">
+                                 <Skeleton></Skeleton>
+                              </td>
+                              <td className="px-6 py-4 text-right">
+                                 <Skeleton></Skeleton>
+                              </td>
+                           </tr>
+                        )
+                     }) :''
+                  }
+               </tbody> 
+                  
             </table>
+                     {
+               history.length > 0 || history === '' ? '' : 
+               <div className="bg-slate-100 p-4">
+                  <div className=" text-center">
+
+                     <div className="text-base ml-2 text-gray-900 font-normal">Không có dữ liệu</div>
+                  </div>
+               </div>   
+               }
+            
          </div>
       </div>
    )

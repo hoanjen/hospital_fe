@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react"
 import axios from '@/api/axios'
 import { USER_URL } from '@/api/constant/user'
-
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 export default function Account(props){
@@ -12,13 +13,31 @@ export default function Account(props){
    const [userProfile,setUserProfile] = useState('');
    const [currentPasswordDisplay, setCurrentPasswordDisplay] = useState(false);
    const [newPasswordDisplay, setNewPasswordDisplay] = useState(false);
-   
+   const [currentPassword,setCurrentPassword] = useState('');
+   const [newPassword,setNewPassword] = useState('');
 
    const callProfileById = async () => {
       const user = await axios.get(`${USER_URL.USERS}`);   
       setUserProfile(user.data.data.results);
       console.log(user.data.data.results);
    }
+
+   // const updatePassword = async () => {
+   //    const tmp = await axios.
+   //    if (tmp?.data?.code === 200) {
+   //       toast.success('Đăng nhập thành công');
+   //       console.log(user)
+   //       setCookie('access_token', user.tokens.access.token);
+   //       setCookie('user_avatar', user.user.avatar);
+   //       setCookie('user_name', user.user.fullName);
+   //       setCookie('user_id', user.user.id);
+   //       dispatch(setDsForm(false));
+
+   //    } else {
+   //       toast.error(tmp?.response?.data?.message);
+   //    }
+
+   // }
 
    useEffect(()=>{
       callProfileById();

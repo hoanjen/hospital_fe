@@ -21,14 +21,20 @@ instance.interceptors.request.use(function (config) {
 
 
 instance.interceptors.response.use(function (response) {
-   if(response.status===409){
-      deleteCookie('access_token')
-      window.location.href = `${process.env.REACT_APP_BASE_HREF}/`;
-   }
+   
  
    return response;
-}, function (error) {
-
+}, function (error) {   
+   if (error.response?.data?.code === 401) {
+      window.location.href = `http://localhost:3000/`;
+   }
+   if (error.response?.data?.code === 500) {
+      deleteCookie('access_token')
+      deleteCookie('user_avatar');
+      deleteCookie('user_name');
+      deleteCookie('user_id');
+      window.location.href = `${process.env.REACT_APP_BASE_HREF}/`;
+   }
    return error
 });
 export default instance

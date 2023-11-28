@@ -6,5 +6,6 @@ export const  USER_URL= {
    WORKINGTIME: 'working-times',
    BOOKING:'health-forms',
    USERS:'users/profile',
-   HEALFORM:'health-forms'
+   HEALFORM:'health-forms',
+   UPDATEPROFILE:'/users/profile',
 }
