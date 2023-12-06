@@ -1,9 +1,9 @@
 'use client'
 
 
-import DoctorList from "@/components/Home/doctorList"
-import Hopital from "@/components/Home/hospital"
-import SpecialistlList from "@/components/Home/specialistList"
+import DoctorList from "../../components/Home/doctorList"
+import Hopital from "../../components/Home/hospital"
+import SpecialistlList from "../../components/Home/specialistList"
 import { useState, useEffect } from "react"
 
 

@@ -9,7 +9,7 @@ export default function Doctor(props) {
    const router = useRouter();
    return (
       <div onClick={() => {router.push(`${props.specialistId}/doctor/${props.item.id}`) }} onPointerEnter={() => { setHover(true) }}  onPointerLeave={()=>{setHover(false)}} className="flex flex-col bg-white justify-between cursor-pointer border border-slate-300 w-[287px] h-[278px] rounded-xl hover:shadow-md" >
-         <div className="flex flex-col items-center mt-5">
+         <div className="flex flex-col items-center mt-5 text-center">
             <div className="h-20">
                <img className="h-20" src={props.item.image} alt="" />
             </div>

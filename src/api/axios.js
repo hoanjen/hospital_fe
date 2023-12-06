@@ -25,9 +25,7 @@ instance.interceptors.response.use(function (response) {
  
    return response;
 }, function (error) {   
-   if (error.response?.data?.code === 401) {
-      window.location.href = `http://localhost:3000/`;
-   }
+   
    if (error.response?.data?.code === 500) {
       deleteCookie('access_token')
       deleteCookie('user_avatar');

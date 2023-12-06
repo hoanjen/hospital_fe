@@ -5,6 +5,8 @@ import axios from '@/api/axios'
 import { USER_URL } from '@/api/constant/user'
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation"
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 export default function WorkingTimeList(props) {
    const pathname = useParams();
@@ -21,6 +23,9 @@ export default function WorkingTimeList(props) {
          list = await axios.get(`${USER_URL.WORKINGTIME}?doctorId=${pathname.doctorId}&date=${moment().format('YYYY-MM-DD')}&populate=workingPlan`)
       }
       setListTime(list.data.data.results);
+      if (list.data.data.results.length === 0){
+         setListTime('');
+      }
    }
 
    useEffect(() => {
@@ -30,6 +35,8 @@ export default function WorkingTimeList(props) {
       }
       setTime7Day(tmp);
       callWorkingTimebyDoctor(0);
+      
+      
    }, [])
 
    const displayRegis = (item, index) => {
@@ -54,7 +61,7 @@ export default function WorkingTimeList(props) {
          <div className="grid grid-cols-7 my-3">
             {time7Day.map((item, index) => {
                return (
-                  <div onClick={() => {setIndexClick(index); callWorkingTimebyDoctor(index)}} className={indexClick === index ? 'bg-bluepadding cursor-pointer p-3 border-b-2 border-bluehome  mx-1 text-center' : 'hover:bg-bluepadding cursor-pointer p-3 hover:border-b-2 hover:border-bluehome  mx-1 text-center'} key={index}>
+                  <div onClick={() => { setIndexClick(index); setChosseTime(); callWorkingTimebyDoctor(index); setListTime([]);} } className={indexClick === index ? 'bg-bluepadding cursor-pointer p-3 border-b-2 border-bluehome  mx-1 text-center' : 'hover:bg-bluepadding cursor-pointer p-3 hover:border-b-2 hover:border-bluehome  mx-1 text-center'} key={index}>
                      {item.format('DD-MM')}
                   </div>
                )
@@ -64,7 +71,7 @@ export default function WorkingTimeList(props) {
             <div className="my-3">Lịch khám đang có:</div>
             <div className="border-b-1 m-2">Buổi sáng</div>
             <div className="grid grid-cols-6">
-               {listTime.map((item, index) => {
+               {listTime.length > 0 && listTime !== '' ? listTime.map((item, index) => {
                   if(item.startTime < "12:00"){
                      return (
                         <div  key={index}>
@@ -74,21 +81,40 @@ export default function WorkingTimeList(props) {
                         </div>
                      )
                   }
-               })}
+               }) :
+                  listTime !== '' ? 
+                  [1, 2, 3, 4, 5].map((item, index)=>{
+                     return (<div>
+                        <Skeleton width={125} height={32}></Skeleton>
+                     </div>)
+                  })
+                  :
+                  <div className="p-2">Không có lịch khám</div> 
+            }
             </div>
+            
             <div className="border-b-1 m-2">Buổi chiều</div>
             <div className="grid grid-cols-6">
-               {listTime.map((item, index) => {
+               {listTime.length > 0 && listTime !== '' ? listTime.map((item, index) => {
                   if (item.startTime > "12:00") {
                      return (
                         <div key={index}>
                            {
-                              displayRegis(item,index)
+                              displayRegis(item, index)
                            }
                         </div>
                      )
                   }
-               })}
+               }) :
+                  listTime !== '' ?
+                     [1, 2, 3, 4, 5].map((item, index) => {
+                        return (<div>
+                           <Skeleton width={125} height={32}></Skeleton>
+                        </div>)
+                     })
+                     :
+                     <div className="p-2">Không có lịch khám</div>
+               }
             </div>
          </div>
       </div>

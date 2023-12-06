@@ -12,7 +12,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { selectUserLogin, setAvatar, setName, setDsForm } from '@/app/redux/userLogin/userLoginSlice';
 import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "cookies-next";
-
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 
@@ -20,17 +21,23 @@ export default function DoctorDetailPage() {
    const dispatch = useDispatch();
    const pathname = useParams();
    const router = useRouter(pathname);
-   const [userName, setUserName] = useState('NULL')
-   const [doctor, setDoctor]= useState({});
+   const [userName, setUserName] = useState(undefined)
+   const [doctor, setDoctor]= useState('');
    const [workingTime, setWorkingTime] = useState();
+   const [isLoading, setIsLoading] = useState('false')
    const callDoctorDetailById = async () => {
       const list = await axios.get(`${USER_URL.DOCTOR}/${pathname.doctorId}`)
+      console.log(list.data.data.departments[0].description);
       setDoctor(list.data.data)
+      
    }
 
    useEffect(() => {
       setUserName(getCookie('user_name'));
+      setIsLoading(true);
       callDoctorDetailById();
+      setIsLoading(false);
+      
    },[])
 
    const getWorkingTime = (id) => {
@@ -41,9 +48,18 @@ export default function DoctorDetailPage() {
       return;
    }
    const useForm = (tmp) => {
-      if(tmp){
+      if(!tmp){
          return workingTime ?
-            <div onClick={() => { router.push(`/specialist/${pathname.specialistId}/doctor/${pathname.doctorId}/booking/${workingTime}`); }} className="cursor-pointer m-5 mx-32 p-2 bg-bluehome text-lg text-white font-medium rounded-xl text-center">
+            <div onClick={() => {
+               if (getCookie('user_name')) {
+                  router.push(`/dashboard/specialist/${pathname.specialistId}/doctor/${pathname.doctorId}/booking/${workingTime}`); 
+                }
+                else{
+                  dispatch(setDsForm(true))
+                }
+
+               }} 
+                  className="cursor-pointer m-5 mx-32 p-2 bg-bluehome text-lg text-white font-medium rounded-xl text-center">
                Đặt Khám Ngay
             </div> :
             <div onClick={logToast} className="cursor-pointer m-5 mx-32 p-2 bg-bluehome text-lg text-white font-medium rounded-xl text-center">
@@ -52,7 +68,13 @@ export default function DoctorDetailPage() {
       }
       else{
          return workingTime ?
-            <div onClick={() => { dispatch(setDsForm(true)) }} className="cursor-pointer m-5 mx-32 p-2 bg-bluehome text-lg text-white font-medium rounded-xl text-center">
+            <div onClick={() => {
+               if (getCookie('user_name')) {
+                  router.push(`/dashboard/specialist/${pathname.specialistId}/doctor/${pathname.doctorId}/booking/${workingTime}`);
+               }
+               else {
+                  dispatch(setDsForm(true))
+               } }} className="cursor-pointer m-5 mx-32 p-2 bg-bluehome text-lg text-white font-medium rounded-xl text-center">
                Đặt Khám Ngay
             </div> :
             <div onClick={logToast} className="cursor-pointer m-5 mx-32 p-2 bg-bluehome text-lg text-white font-medium rounded-xl text-center">
@@ -68,10 +90,10 @@ export default function DoctorDetailPage() {
                <div className=" m-5">
                   <div className="flex">
                      <div className="w-44 h-44 rounded-full overflow-hidden"> 
-                        <img className="w-44" src={doctor.image} alt="" />
-                     </div>   
+                        {doctor === '' ? <Skeleton className="pt-5" width={176} height={176} /> : <img className="w-44"  src={doctor.image} alt="" /> }
+                     </div>
                      <div className="ml-10 mt-5">
-                        <div className="text-lg font-bold">{doctor.degree} {` ${doctor.name}`}</div>
+                        <div className="text-lg font-bold">{doctor === '' ? <Skeleton width={312} height={28}></Skeleton> : `${doctor.degree} ${doctor.name}`}</div>
                         <div className="flex mt-2">
                            <div className=" text-bluehome font-bold flex ">
                               <div className="">
@@ -82,15 +104,15 @@ export default function DoctorDetailPage() {
                               <div className="flex items-center text-center ">Bác sĩ</div>
                            </div>
                            <div className="ml-3"></div>
-                           <div className="flex items-center border-l-1 pl-3 ">{doctor.experience} Năm kinh nghiệm</div>
+                           <div className="flex items-center border-l-1 pl-3 ">{doctor === '' ? <Skeleton width={158} height={20}></Skeleton> :`${doctor.experience} Năm kinh nghiệm`} </div>
                         </div>
                         <div className="flex mt-2">
                            <div>Chuyên khoa: </div>
-                           <div className="pl-2 text-blue-600">Tiêu hóa</div>
+                           <div className="pl-2 text-blue-600">{doctor === '' ? <Skeleton width={75} height={20}></Skeleton> : doctor.departments[0].name}</div>
                         </div>
                         <div className="flex mt-2">
                            <div>Nơi công tác:</div>
-                           <div className="pl-2">Bệnh viện Đa Khoa Hà Nội</div>
+                           <div className="pl-2">{isLoading ? <Skeleton width={205} height={20}></Skeleton>: 'Bệnh viện Đa Khoa Hà Nội'}</div>
                         </div>
                         
                      </div>
@@ -104,12 +126,12 @@ export default function DoctorDetailPage() {
                   </div>
                   <div>
                      <div className="text-lg  font-bold mb-2">Giới thiệu</div>
-                     <div>{doctor.description}</div>
+                     <div>{doctor === '' ? <Skeleton width={800} height={80}></Skeleton> : doctor.description}</div>
                   </div>
                   
                   <div>
                      {
-                        useForm(userName !== 'NULL')
+                        useForm(userName === undefined)
                      }
                   </div>
                   
