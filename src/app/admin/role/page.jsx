@@ -1,7 +1,8 @@
 
+"use client"
 
-export default function User() {
+export default function Role() {
    return (
-      <div>Người dùng</div>
+      <div>Role</div>
    )
 }
