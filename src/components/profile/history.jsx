@@ -6,6 +6,7 @@ import { USER_URL } from '@/api/constant/user'
 import { useParams } from "next/navigation"
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { toast } from "react-toastify"
 
 
 export default function History() {
@@ -19,12 +20,24 @@ export default function History() {
       console.log(historyy.data.data.results);
    }
 
+   const cancelBooking = async (id) => {
+      const cancel = await axios.put(`${USER_URL.HEALFORM}/${id}`, { status: "rejected"});
+      console.log(cancel)
+      if(cancel?.data?.code === 200){
+         toast.success(cancel.data.message);
+         callHistoryByUserId();
+      }
+      else{
+         toast.error(cancel.response.data.message);
+      }
+   }
+
    useEffect(()=>{
       callHistoryByUserId();
    },[])
 
    const dsStatus = (status) => {
-      if(status === 'success'){
+      if (status === 'accepted'){
          return ( 
             <div className="p-2 min-w-[110px] text-white bg-green-500 text-center rounded-md">Thành công</div>
          )
@@ -34,7 +47,7 @@ export default function History() {
             <div className="p-2 min-w-[110px] text-white bg-yellow-400   text-center rounded-md">Chờ duyệt</div>
          )
       }else{
-         <div className="p-2 min-w-[110px] text-white bg-yellow-400   text-center rounded-md">Từ chối</div>
+         return <div className="p-2 min-w-[110px] text-white bg-red-500   text-center rounded-md">Từ chối</div>
       }
    }
 
@@ -109,7 +122,7 @@ export default function History() {
                               {dsStatus(item.status)}
                             </td>
                             <td className="px-6 py-4 text-right">
-                               <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Hủy lịch</a>
+                               <a onClick={() =>{cancelBooking(item.id)}} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Hủy lịch</a>
                             </td>
                          </tr>
                       )  

@@ -19,7 +19,7 @@ export default function SideBarAdmin() {
          <div onClick={() => { setActive(0); router.push('main')  }} className={active === 0 ? 'flex py-2 pl-2 cursor-pointer rounded-md mt-3 bg-blue-200' : 'flex p-2 cursor-pointer rounded-md  mt-3 hover:bg-slate-200'}>
             <HomeOutlined />
             <div className='min-w-[160px] px-2'>
-               Dashboard
+               Bảng điều khiển
             </div>
          </div>
          <div onClick={() => { setActive(1); router.push('user') }} className={active === 1 ? 'flex py-2 pl-2 cursor-pointer rounded-md mt-3 bg-blue-200' : 'flex p-2 rounded-md cursor-pointer mt-3 hover:bg-slate-200'}>

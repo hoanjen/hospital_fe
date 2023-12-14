@@ -1,5 +1,7 @@
-
 "use client"
+
+import Chart1 from "@/components/admin/DashBoard/Chart/chart1";
+import Chart2 from "@/components/admin/DashBoard/Chart/chart2";
 
 export default function Admin(){
    return (
@@ -56,7 +58,14 @@ export default function Admin(){
                   </div>
                </div>
             </div>
-            <div></div>
+            <div className="flex ">
+               <div className="w-[900px] p-2 rounded-xl mt-6 bg-white">
+                  <Chart1></Chart1>
+               </div>
+               <div className="w-[562px] ml-6 p-2 rounded-xl mt-6 bg-white">
+                  <Chart2></Chart2>
+               </div>
+            </div>
          </div>
       </div>
    )

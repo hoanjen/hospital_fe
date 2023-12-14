@@ -30,8 +30,10 @@ export default function Doctor() {
     return <Flex gap="small" vertical>
       <Spin tip="Loading...">
       </Spin>
-  </Flex>
+    </Flex>
   }
 
-  return <DataTable doctors={doctors} />;
+  return <div className="m-16">
+          <DataTable doctors={doctors} />
+        </div> 
 }

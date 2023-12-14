@@ -15,6 +15,7 @@ import { USER_URL } from '@/api/constant/user'
 import { toast, ToastContainer } from 'react-toastify';
 
 
+
 export default function SideBar() {
    const router = useRouter()
    const user = useSelector(selectUserLogin);
@@ -69,7 +70,7 @@ export default function SideBar() {
          )
       }
       else{
-         return (<div className='' onClick={() => { dispatch(setDsForm(true))} }>
+         return (<div className='' onClick={() => { dispatch(setDsForm(true));} }>
             Đăng nhập
             </div>)
       }
