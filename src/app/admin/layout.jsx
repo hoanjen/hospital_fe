@@ -5,11 +5,10 @@ import { Layout } from "antd";
 import { SearchOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Inter } from "next/font/google";
 import SideBarAdmin from "../../components/SideBar/sideBarAdmin";
-// import { Providers } from "../provider";
-// import { ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
-// import { useParams } from "next/navigation";
 import Notify from "@/components/admin/Notify";
 import { Outlet } from 'react-router-dom';
 const { Header, Footer, Sider, Content } = Layout;
@@ -20,6 +19,7 @@ export default function AdminLayout({ children }) {
   return (
     <>
       <Layout className="layout">
+        <ToastContainer/>
         <Header className="header">
           <div className={"header__logo " + (collapsed && "header__hidden")}>
             {/* <img src={logo} alt="logo" className="header__logo--img" /> */}

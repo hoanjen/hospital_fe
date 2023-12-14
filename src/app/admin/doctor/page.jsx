@@ -5,11 +5,13 @@ import { getListDoctor } from "../services/doctor.service.jsx";
 import DataTable from "./dataTable";
 
 import React from 'react';
-import { Alert, Flex, Spin } from 'antd';
+import { Flex, Spin } from 'antd';
 
 export default function Doctor() {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
+
+
 
   const fetchApi = async () => {
     try {
@@ -26,12 +28,17 @@ export default function Doctor() {
     fetchApi();
   }, []);
 
+
+  const handleReload = () => {
+    fetchApi();
+  };
+
   if (loading) {
     return <Flex gap="small" vertical>
-      <Spin tip="Loading...">
+      <Spin>
       </Spin>
   </Flex>
   }
 
-  return <DataTable doctors={doctors} />;
+  return <DataTable doctors={doctors} onReload={handleReload}/>;
 }

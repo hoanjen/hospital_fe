@@ -17,7 +17,7 @@ function DeleteRecord(props) {
     console.log("id: ",record.id);
   };
   return (
-    <div>
+    <>
       <Popconfirm
         title="Delete"
         description="Bạn có chắc chắn muốn xóa không?"
@@ -26,7 +26,7 @@ function DeleteRecord(props) {
       >
         <Button icon={<DeleteOutlined />} danger size="small" />
       </Popconfirm>
-    </div>
+    </>
   );
 }
 
