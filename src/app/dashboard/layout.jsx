@@ -9,23 +9,27 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 const inter = Inter({ subsets: ['latin'] })
 
+import Footer from '@/components/Home/footer';
+
 
 
 export default function RootLayout({ children }) {
-  
+
 
 
   return (
-      <div>
-        <div className='flex flex-col bg-slate-100 h-full  '>
-          <div className='fixed z-20 w-screen '>
-            <SideBar></SideBar>
-          </div>
-          <div className='mt-[62px]'>
-            {children}
-          </div>
+    <div >
+      <div className='flex flex-col bg-slate-100 h-full  '>
+        <div className='fixed z-20 w-screen '>
+          <SideBar></SideBar>
         </div>
-          <ToastContainer/>
+        <div className='mt-[62px]'>
+          {children}
+        </div>
+        <Footer></Footer>
       </div>
+
+      <ToastContainer />
+    </div>
   )
 }
