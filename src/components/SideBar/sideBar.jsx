@@ -45,6 +45,7 @@ export default function SideBar() {
       if (getCookie('user_name')){
          setAvatarr(getCookie('user_name'));
       }
+      
    })
 
    const hiddenForgot = (index) =>{

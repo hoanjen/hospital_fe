@@ -6,9 +6,6 @@ import Hopital from "../../components/Home/hospital"
 import SpecialistlList from "../../components/Home/specialistList"
 import { useState, useEffect } from "react"
 
-
-
-
 export default function Home() {
   const [myNumber, setMyNumber] = useState(null);
   const [clickSubMenu, setClickSubMenu] = useState('bv')

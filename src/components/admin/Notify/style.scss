@@ -1,0 +1,60 @@
+.notify__dropdown {
+  box-shadow: 0 2px 8px #00000026;
+  background: #fff;
+  border-radius: 5px;
+  min-width: 350px;
+  overflow: hidden;
+}
+.notify__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-bottom: 1px solid #dfdfdf;
+}
+.btn__view {
+  color: #555;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+.notify__body {
+  max-height: 500px;
+  overflow-y: auto;
+}
+.notify__body .ant-dropdown-menu {
+  box-shadow: none;
+}
+.notify__item {
+  display: flex;
+  gap: 15px;
+  padding: 10px 10px 10px 10px;
+
+  &--icon {
+    height: 45px;
+    width: 45px;
+    font-size: 1.6rem;
+    border-radius: 50%;
+    background: #eee;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &--content {
+    flex: 1;
+  }
+  &--title {
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  &--time {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #bbb;
+  }
+}

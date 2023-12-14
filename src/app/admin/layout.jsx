@@ -1,31 +1,71 @@
-'use client'
+"use client";
 
-import { Inter } from 'next/font/google'
-import SideBarAdmin from '../../components/SideBar/sideBarAdmin'
-import { Providers } from "../provider";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-const inter = Inter({ subsets: ['latin'] })
-
-
+import "./layout.scss";
+import { Layout } from "antd";
+import { SearchOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { Inter } from "next/font/google";
+import SideBarAdmin from "../../components/SideBar/sideBarAdmin";
+// import { Providers } from "../provider";
+// import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useEffect, useState } from "react";
+// import { useParams } from "next/navigation";
+import Notify from "@/components/admin/Notify";
+import { Outlet } from 'react-router-dom';
+const { Header, Footer, Sider, Content } = Layout;
+const inter = Inter({ subsets: ["latin"] });
 
 export default function AdminLayout({ children }) {
-  
-
-
+  const [collapsed, setCollapsed] = useState(false);
   return (
-    <div className='h-screen w-screen bg-slate-100'>
-        <div className='flex '>
-          <div className='fixed z-20 h-full w-64 border-r-1 border-dashed '>
-            <SideBarAdmin></SideBarAdmin>
+    <>
+      <Layout className="layout">
+        <Header className="header">
+          <div className={"header__logo " + (collapsed && "header__hidden")}>
+            {/* <img src={logo} alt="logo" className="header__logo--img" /> */}
+            <h1>LOGO Trang web</h1>
           </div>
-          <div className='ml-[256px]'>
-            {children}
+          <div className="header__nav">
+            <div className="header__nav--left">
+              <div
+                className="header__nav--collapsed"
+                onClick={() => setCollapsed(!collapsed)}
+              >
+                <MenuUnfoldOutlined />
+              </div>
+              <div className="header__nav--search">
+                <SearchOutlined />
+              </div>
+            </div>
+            <div className="header__nav--right">
+              <Notify />
+            </div>
           </div>
-        </div>
-          <ToastContainer/>
-      </div>
-  )
+        </Header>
+        <Layout>
+          <Sider className="sider" collapsed={collapsed} theme="light">
+              <SideBarAdmin/>
+          </Sider>
+          <Content className="content"> 
+              {children}
+          </Content>
+        </Layout>
+        <Footer className="footer">footer</Footer>
+      </Layout>
+    </>
+  );
+
+  // return (
+  //   <div className='h-screen w-screen bg-slate-100'>
+  //       <div className='flex '>
+  //         <div className='fixed z-20 h-full w-64 border-r-1 border-dashed '>
+  //           <SideBarAdmin></SideBarAdmin>
+  //         </div>
+  //         <div className='ml-[256px]'>
+  //           {children}
+  //         </div>
+  //       </div>
+  //         <ToastContainer/>
+  //     </div>
+  // )
 }
