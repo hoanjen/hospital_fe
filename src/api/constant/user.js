@@ -8,4 +8,5 @@ export const  USER_URL= {
    USERS:'users/profile',
    HEALFORM:'health-forms',
    UPDATEPROFILE:'/users/profile',
+   GETUSERBYID: '/users'
 }
