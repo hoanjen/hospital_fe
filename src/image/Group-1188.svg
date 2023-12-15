@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="863.088" height="42.045" viewBox="0 0 863.088 42.045">
+  <g id="Group_1188" data-name="Group 1188" transform="translate(-867.148 -541.457)">
+    <g id="Group_1187" data-name="Group 1187" transform="translate(1276.966 541.457)">
+      <path id="Path_1053" data-name="Path 1053" d="M985.874,559.862h-.167a5.357,5.357,0,0,1-5.393-4.941,5.274,5.274,0,0,1,4.164-5.491v-5.146a10.378,10.378,0,0,0-9.242,11.024,10.492,10.492,0,0,0,10.531,9.644h5.2v-5.089Z" transform="translate(-975.212 -533.566)" fill="#3060ad"/>
+      <path id="Path_1054" data-name="Path 1054" d="M993.617,548.391v5.385a5.276,5.276,0,0,1-5.275,5.275h0a5.275,5.275,0,0,1-5.157-4.179h-5.146a10.377,10.377,0,0,0,10.865,9.253,10.639,10.639,0,0,0,9.8-10.5v-5.237Z" transform="translate(-967.319 -522.095)" fill="#3060ad"/>
+      <path id="Path_1055" data-name="Path 1055" d="M998.692,550.722a10.374,10.374,0,0,0-10.865-9.25,10.636,10.636,0,0,0-9.8,10.494V557.2h5.089v-5.385a5.274,5.274,0,0,1,10.433-1.1Z" transform="translate(-967.361 -541.457)" fill="#3060ad"/>
+      <path id="Path_1056" data-name="Path 1056" d="M987.338,544.268h-5.192v5.089H987.4a5.47,5.47,0,0,1,5.393,4.938,5.275,5.275,0,0,1-4.164,5.5v5.142a10.376,10.376,0,0,0,9.242-11.024,10.49,10.49,0,0,0-10.535-9.64Z" transform="translate(-955.848 -533.608)" fill="#3060ad"/>
+      <path id="Path_1057" data-name="Path 1057" d="M982.849,563.752h0a2.846,2.846,0,0,1-2.844-2.848V547.3a2.846,2.846,0,1,1,5.692,0v13.6a2.847,2.847,0,0,1-2.848,2.848Z" transform="translate(-961.827 -533.083)" fill="#e1001c"/>
+      <path id="Path_1058" data-name="Path 1058" d="M978.212,549.094h0a2.845,2.845,0,0,1,2.844-2.844h13.6a2.846,2.846,0,0,1,0,5.692h-13.6a2.846,2.846,0,0,1-2.844-2.848Z" transform="translate(-966.834 -528.073)" fill="#e1001c"/>
+    </g>
+    <line id="Line_71" data-name="Line 71" x2="382.543" transform="translate(867.148 561.546)" fill="none" stroke="#3060ad" stroke-miterlimit="10" stroke-width="1"/>
+    <line id="Line_72" data-name="Line 72" x2="382.543" transform="translate(1347.693 561.546)" fill="none" stroke="#3060ad" stroke-miterlimit="10" stroke-width="1"/>
+  </g>
+</svg>

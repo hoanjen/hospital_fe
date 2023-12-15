@@ -13,7 +13,10 @@ export default function Signin(props) {
     const dispatch = useDispatch();
     
 
-
+    const clear = () => {
+        setEmail('');
+        setPassword('');
+    }
     const signin = async () => {
 
         const tmp = await axios.post(`${USER_URL.LOGIN}`, { email, password });
@@ -26,7 +29,9 @@ export default function Signin(props) {
             setCookie('user_avatar', user.user.avatar);
             setCookie('user_name', user.user.fullName);
             setCookie('user_id', user.user.id);
+            clear();
             dispatch(setDsForm(false));
+            
         } else {
             toast.error(tmp?.response?.data?.message);
             

@@ -13,17 +13,20 @@ import Notify from "@/components/admin/Notify";
 import { Outlet } from 'react-router-dom';
 const { Header, Footer, Sider, Content } = Layout;
 const inter = Inter({ subsets: ["latin"] });
+import Logo from '@/image/logo.png';
+import { ToastContainer } from 'react-toastify';
+
 
 export default function AdminLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
   return (
     <>
       <Layout className="layout">
-        <ToastContainer/>
+        <ToastContainer></ToastContainer>
         <Header className="header">
           <div className={"header__logo " + (collapsed && "header__hidden")}>
-            {/* <img src={logo} alt="logo" className="header__logo--img" /> */}
-            <h1>LOGO Trang web</h1>
+            <img src={Logo.src} alt="logo" className="header__logo--img" />
+            
           </div>
           <div className="header__nav">
             <div className="header__nav--left">
@@ -46,7 +49,7 @@ export default function AdminLayout({ children }) {
           <Sider className="sider" collapsed={collapsed} theme="light">
               <SideBarAdmin/>
           </Sider>
-          <Content className="content"> 
+          <Content className="content "> 
               {children}
           </Content>
         </Layout>
