@@ -28,7 +28,7 @@ export default function Profile() {
    }
 
    return (
-      <div className="h-screen flex justify-center mb-10">
+      <div className=" flex justify-center mb-10">
          <div className="flex">
             <div className="bg-white h-64 mt-10 rounded-lg overflow-hidden cursor-pointer">
                <div onClick={() => { setActive(1) }} className={active === 1 ? "w-72 p-3  border-bluehome mt-3 border-l-4 bg-sky-100" : "w-72 mt-3 p-3 border-l-4 border-white hover:border-sky-100 hover:bg-sky-100"}>Hồ sơ</div>

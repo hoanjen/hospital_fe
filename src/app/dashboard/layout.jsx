@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // import { useParams } from 'next/navigation';
 const inter = Inter({ subsets: ['latin'] })
 
-import Footer from '@/components/Home/footer';
+
 
 export default function RootLayout({ children }) {
 
@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
         <div className='mt-[62px]'>
           {children}
         </div>
-        <Footer></Footer>
+        
       </div>
 
       <ToastContainer />

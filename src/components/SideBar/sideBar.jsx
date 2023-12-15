@@ -30,6 +30,7 @@ export default function SideBar() {
       deleteCookie('user_avatar');
       deleteCookie('user_name');
       deleteCookie('user_id');
+      setAvatarr('NULL')
       setAvatarr('NULL');
       setUserFullName('NULL');
       deleteCookie('access_token');
@@ -43,8 +44,8 @@ export default function SideBar() {
       if (getCookie('user_name')){
          setUserFullName(getCookie('user_name'));
       }
-      if (getCookie('user_name')){
-         setAvatarr(getCookie('user_name'));
+      if (getCookie('user_avatar')){
+         setAvatarr(getCookie('user_avatar'));
       }
       
    })
@@ -61,7 +62,11 @@ export default function SideBar() {
          return (
          <div  className=' ' >
             <div onClick={() => { router.push(`/dashboard/profile/${userId}`) }}>
+              
+                  
                {userFullName}
+
+
             </div>
             <div  className=''>            
                   {logoutButton ? <div onClick={() => { signout()}}  className='absolute z-20 right-0 top-16 rounded-md bg-white p-2'>Đăng xuất</div> : ''}
@@ -79,7 +84,7 @@ export default function SideBar() {
    return (
       <div className='flex flex-row bg-white text-black font-semibold shadow-lg shadow-black-500/50 border-b-2 w-screen justify-between relative'>
          <div className='cursor-pointer p-4 text-lg ml-28 flex items-center' onClick={() => router.push('/dashboard')}><img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" /> <div>Bệnh Viện Đa Khoa Hà Nội</div></div>
-         <div className='flex flex-row'>
+         <div className='flex flex-row items-center'>
             <div className='cursor-pointer p-4 text-l mr-4' onClick={() => router.push('/dashboard/specialist')}>
                Đặt khám
             </div>
@@ -87,7 +92,12 @@ export default function SideBar() {
             <div className='cursor-pointer p-4 text-lg mr-4'>Store</div>
             <div className='cursor-pointer p-4 text-lg mr-4'>Tin Y tế</div>
             <div className='cursor-pointer p-4 text-lg mr-4' onClick={() => router.push('/admin/main')}>Dành cho nhân viên Y tế</div>
-            <div onPointerEnter={() => { setLogoutButton(true) }} onPointerLeave={() => { setLogoutButton(false) }} className='cursor-pointer p-4 text-lg mr-4 relative '>
+            <div>
+               {avatarr !== 'NULL' ? <div className="">
+                  <img onClick={() => { router.push(`/dashboard/profile/${userId}`) }} className="w-12 h-12 cursor-pointer object-cover  rounded-full" src={avatarr} alt="" />
+               </div>  : ''}
+            </div>
+            <div onPointerEnter={() => { setLogoutButton(true) }} onPointerLeave={() => { setLogoutButton(false) }} className='cursor-pointer px-4 h-16 flex items-center text-lg mr-4 relative '>
                {checkLogin(userFullName !== 'NULL')}
             </div>
             

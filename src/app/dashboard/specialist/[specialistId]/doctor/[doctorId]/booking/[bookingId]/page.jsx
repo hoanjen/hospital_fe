@@ -8,6 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment/moment"
 import Signin from '@/components/auth/signin';
+import dayjs from 'dayjs';
 
 export default function Booking() {
    const pathname = useParams();
@@ -85,7 +86,7 @@ export default function Booking() {
                      </div>
                      <div className="flex justify-between border-t-1 p-2">
                         <div className="opacity-90">Ngày sinh</div>
-                        <div className="font-normal">{user.dateOfBirth ? user.dateOfBirth : 'Chưa cập nhật'}</div>
+                        <div className="font-normal">{user.dateOfBirth ? moment(user.dateOfBirth).format('DD/MM/YYYY') : 'Chưa cập nhật'}</div>
                      </div>
                      <div className="flex justify-between border-t-1 p-2">
                         <div className="opacity-90">Số điện thoại</div>

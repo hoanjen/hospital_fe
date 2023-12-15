@@ -9,9 +9,13 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import dayjs from "dayjs";
 import { toast, ToastContainer } from 'react-toastify';
+import moment from "moment";
+
+
 export default function Information(){
-   const    onChange = (date, dateString) => {
-      setDate(dateString); 
+   const onChange = (date, toString) => {
+      console.log(toString);
+      setDate(moment(toString,"DD/MM/YYYY").toDate()); 
    };
    const [value, setValue] = useState(1);
    const onChange2 = (e) => {
@@ -31,19 +35,57 @@ export default function Information(){
       dateOfBirth: dayjs('15/10/2003'),
    };
    const [userProfile, setUserProfile] = useState('');
+   const [avatar, setAvatar] = useState('');
    const [name,setName] = useState('');
    const [phone, setPhone] = useState('');
-   const [date,setDate] = useState('14/10/2003');
+   const [date,setDate] = useState('');
    const [gender,setGender] = useState('');
    const [address, setAddress] = useState('');
    const [CMND, setCMND] = useState('');
    const [nation, setNation] = useState('');
    const [job, setJob] = useState('');
    const [BHYT, setBHYT] = useState('');
+   const [isChangeAv, setIsChangeAv] = useState(false);
+   const [isChangeAvInput, setIsChangeAvInput] = useState(false);
+   const [imgUrl, setImgUrl] = useState('');
+   const [imgCMND, setImgCMND] = useState('');
+   const [isChangeCMND, setIsChangeCMND] = useState(false);
+   const [isChangeCMNDInput, setIsChangeCMNDInput] = useState(false);
+   const [imgUrlCMND, setImgUrlCMND] = useState('');
+   const [isChangeBHYT, setIsChangeBHYT] = useState(false);
+   const [imgBHYT, setImgBHYT] = useState('');
+   const [imgAvatarUpdate, setImgAvatarUpdate] = useState('');
+   const [imgCMNDUpdate, setImgCMNDUpdate] = useState('');
+   const [imgBHYTUpdate, setImgBHYTUpdate] = useState('');
+   const [isChangeBHYTInput, setIsChangeBHYTInput] = useState(false);
+   const [imgUrlBHYT, setImgUrlBHYT] = useState('');
    const updateProfile = async () => {
-      const tmp = await axios.put(`${USER_URL.UPDATEPROFILE}`, {fullName:name,phone,date,gender,address,CMND,nation,job,BHYT});
+      const data = new FormData();
+      data.append("fullName", name);
+      data.append("phoneNumber", phone);
+      data.append("gender", gender);
+      data.append("address", address);
+      data.append("cmndNumber", CMND);
+      data.append("nation", nation);
+      data.append("codeInsurance", BHYT);
+      console.log(date,"--------", userProfile.dateOfBirth);
+
+      if (date !== moment(userProfile.dateOfBirth).format("DD/MM/YYYY")) {
+         data.append("dateOfBirth", date);
+      }
+      if(imgAvatarUpdate !== ''){
+         data.append("avatar", imgAvatarUpdate);
+      }
+      if (imgCMNDUpdate !== '') {
+         data.append("cmndImg", imgCMNDUpdate);
+      }
+      if (imgBHYTUpdate !== '') {
+         data.append("insuranceImg", imgBHYTUpdate);
+      }
+      const tmp = await axios.put(`${USER_URL.UPDATEPROFILE}`, data);
       if (tmp?.data?.code === 200) {
          toast.success('Thay đổi thông tin thành công');
+         callProfileById();
          setChangeInfo(false);
 
       } else {
@@ -57,20 +99,29 @@ export default function Information(){
       const userDetail = user.data.data;
       setUserProfile(user.data.data);
       setName(userDetail.fullName);
-      if(userDetail.phone){
-         setPhone(userDetail.phone)
+      if (userDetail.phoneNumber){
+         setPhone(userDetail.phoneNumber)
       }
       if (userDetail.address) {
          setAddress(userDetail.address)
       }
-      if (userDetail.date) {
-         setDate(userDetail.date)
+      if (userDetail.cmndImg) {
+         setImgCMND(userDetail.cmndImg)
+      }
+      if (userDetail.insuranceImg) {
+         setImgBHYT(userDetail.insuranceImg)
+      }
+      if (userDetail.avatar) {
+         setAvatar(userDetail.avatar)
+      }
+      if (userDetail.dateOfBirth) {
+         setDate(moment(userDetail.dateOfBirth).format("DD/MM/YYYY"));
       }
       if (userDetail.gender) {
          setGender(userDetail.gender)
       }
-      if (userDetail.CMND) {
-         setCMND(userDetail.CMND)
+      if (userDetail.cmndNumber) {
+         setCMND(userDetail.cmndNumber)
       }
       if (userDetail.nation) {
          setNation(userDetail.nation)
@@ -78,13 +129,40 @@ export default function Information(){
       if (userDetail.job) {
          setJob(userDetail.job)
       }  
-      if (userDetail.BHYT) {
-         setBHYT(userDetail.BHYT)
+      if (userDetail.codeInsurance) {
+         setBHYT(userDetail.codeInsurance)
       }
       setIsloading(false);
       console.log(user.data.data);
    }
 
+   const changeAvatar = (file) => {
+      setImgAvatarUpdate(file)
+      const fs = new FileReader();
+      console.log(fs.readAsDataURL(file));
+      fs.onload = (e) => {
+         setImgUrl(e.target.result);
+         setIsChangeAvInput(true);
+      }
+   }
+   const changeCMND = (file) => {
+      setImgCMNDUpdate(file)
+      const fs = new FileReader();
+      console.log(fs.readAsDataURL(file));
+      fs.onload = (e) => {
+         setImgUrlCMND(e.target.result);
+         setIsChangeCMNDInput(true);
+      }
+   }
+   const changeBHYT= (file) => {
+      setImgBHYTUpdate(file)
+      const fs = new FileReader();
+      console.log(fs.readAsDataURL(file));
+      fs.onload = (e) => {
+         setImgUrlBHYT(e.target.result);
+         setIsChangeBHYTInput(true);
+      }
+   }
    useEffect(() => {
       callProfileById();
    }, [])
@@ -92,14 +170,95 @@ export default function Information(){
 
 
    return (
-      <div className="mt-10 ml-5 w-[1140px]">
+      <div className="mt-10 ml-5 w-[1140px] ">
          {changeInfo ? <div>
             <div className="font-semibold py-5 text-xl">Hồ sơ</div>
-            <div className="bg-white rounded-lg p-5 pt-16 w-[1140px] flex justify-around">
+            <div className="bg-white rounded-lg p-5 pt-16 w-[1140px] flex justify-around mb-10">
                <div className="">
                   <div>
                      <h2 className="text-lg font-medium pb-4">Điều chỉnh thông tin</h2>
                   </div>
+                  <div>
+                     <div className=" font-medium text-gray-700">Ảnh đại diện</div>
+                     {
+                        !isChangeAv ? 
+                     <div className="flex flex-col items-center m-5">
+                        <div className="w-32 h-32">
+                           <img className="object-cover w-32 h-32 rounded-md" src={avatar} alt="" />
+                        </div>
+                              <div onClick={() => { setIsChangeAv(true); }} className="text-bluehome cursor-pointer p-2 text-center">Thay đổi</div>
+                     </div> :
+                     <div className={!isChangeAvInput ? "flex flex-col" : "flex flex-col items-center"}>
+                        <div className="w-32 h-32 flex items-center m-5">
+                             <div>
+                                 {
+                                       !isChangeAvInput ? <input onChange={(e) => { changeAvatar(e.target.files[0]); }} type="file" name="image" id="image" /> : 
+                                          <div className="w-32 h-32">
+                                             <img className="object-cover w-32 h-32 rounded-md" src={imgUrl} alt="" />
+                                          </div>
+                                 }
+                             </div>
+                        </div>
+                        <div onClick={() => {setIsChangeAv(false); setIsChangeAvInput(false);}} className="text-bluehome cursor-pointer p-2 self-center">Hủy thay đổi</div>
+                     </div>
+
+                     }
+                  </div>
+                  <div>
+                     <div className=" font-medium text-gray-700">Chứng minh nhân dân</div>
+                     {
+                        !isChangeCMND ?
+                           <div className="flex flex-col items-center m-5">
+                              <div className="w-72 h-48">
+                                 <img className="object-cover w-72 h-48 rounded-md" src={imgCMND} alt="" />
+                              </div>
+                              <div onClick={() => { setIsChangeCMND(true); }} className="text-bluehome cursor-pointer p-2 text-center">Thay đổi</div>
+                           </div> :
+                           <div className={!isChangeCMNDInput ? "flex flex-col" : "flex flex-col items-center"}>
+                              <div className="w-72 h-48 flex items-center m-5">
+                                 <div>
+                                    {
+                                       !isChangeCMNDInput ? <input onChange={(e) => { changeCMND(e.target.files[0]); }} type="file" name="image" id="image" /> :
+                                          <div className="w-72 h-48">
+                                             <img className="object-cover w-72 h-48 rounded-md" src={imgUrlCMND} alt="" />
+                                          </div>
+                                    }
+                                 </div>
+                              </div>
+                              <div onClick={() => { setIsChangeCMND(false); setIsChangeCMNDInput(false); }} className="text-bluehome cursor-pointer p-2 self-center">Hủy thay đổi</div>
+                           </div>
+
+                     }
+                  </div>
+                  <div>
+                     <div className=" font-medium text-gray-700">Thẻ bảo hiểm y tế</div>
+                     {
+                        !isChangeBHYT ?
+                           <div className="flex flex-col items-center m-5">
+                              <div className="w-72 h-48">
+                                 <img className="object-cover w-72 h-48 rounded-md" src={imgBHYT} alt="" />
+                              </div>
+                              <div onClick={() => { setIsChangeBHYT(true); }} className="text-bluehome cursor-pointer p-2 text-center">Thay đổi</div>
+                           </div> :
+                           <div className={!isChangeBHYTInput ? "flex flex-col" : "flex flex-col items-center"}>
+                              <div className="w-72 h-48 flex items-center m-5">
+                                 <div>
+                                    {
+                                       !isChangeBHYTInput ? <input onChange={(e) => { changeBHYT(e.target.files[0]); }} type="file" name="image" id="image" /> :
+                                          <div className="w-72 h-48">
+                                             <img className="object-cover w-72 h-48 rounded-md" src={imgUrlBHYT} alt="" />
+                                          </div>
+                                    }
+                                 </div>
+                              </div>
+                              <div onClick={() => { setIsChangeBHYT(false); setIsChangeBHYTInput(false); }} className="text-bluehome cursor-pointer p-2 self-center">Hủy thay đổi</div>
+                           </div>
+                     }
+                  </div>
+                  
+                  
+               </div>
+               <div>
                   <div className="my-4">
                      <label className="block text-sm font-medium text-gray-700">Họ và tên <span className="text-red-500">*</span></label>
                      <input value={name || ''} onChange={(e) => { setName(e.target.value) }} type="text" placeholder="Họ và tên" className="mt-1 px-3 py-2 block w-full shadow-sm placeholder:text-sm border focus:border-bluehome border-gray-200 rounded-md "></input>
@@ -112,21 +271,19 @@ export default function Information(){
                      <label className="block text-sm font-medium text-gray-700">Ngày sinh <span className="text-red-500">*</span></label>
                      <div className="mt-2">
                         <Space direction="vertical">
-                           <DatePicker defaultValue={dayjs(date,'DD/MM/YYYY')} className="w-96 h-10" onChange={onChange} format={'DD/MM/YYYY'} />
+                           <DatePicker defaultValue={dayjs(date, 'DD/MM/YYYY')} className="w-96 h-10" onChange={onChange} format={'DD/MM/YYYY'} />
 
                         </Space>
-                     </div>   
+                     </div>
                   </div>
                   <div className="my-4">
                      <label htmlFor="gender" className="block text-sm font-medium text-gray-700">Giới tính<span className="text-red-500">*</span></label>
-                     <Radio.Group defaultValue={gender === 'Name' ? 1 : gender === 'Nữ' ? 2 : 3} onChange={onChange2}>
+                     <Radio.Group defaultValue={gender === 'Nam' ? 1 : gender == 'Nữ' ? 2 : 3} onChange={onChange2}>
                         <Radio value={1}>Nam</Radio>
                         <Radio value={2}>Nữ</Radio>
                         <Radio value={3}>Khác</Radio>
                      </Radio.Group>
                   </div>
-               </div>
-               <div>
                   <div className="my-4">
                      <label htmlFor="address" className="block text-sm font-medium text-gray-700">Địa chỉ cụ thể</label>
                      <input value={address || ''} onChange={(e) => { setAddress(e.target.value) }} type="text" placeholder="Số nhà, tên đường" className="mt-1 px-3 py-2 focus:ring-primary focus:border-primary block w-full shadow-sm placeholder:text-sm border border-gray-200 rounded-md ng-untouched ng-pristine ng-valid"></input>
@@ -178,11 +335,11 @@ export default function Information(){
                      </div>
                      <div className="flex justify-between mt-3">
                         <div>Điện thoại</div>
-                           <div className="font-medium">{userProfile.number ? userProfile.number : 'Chưa cập nhật'}</div>
+                           <div className="font-medium">{userProfile.phoneNumber ? userProfile.phoneNumber : 'Chưa cập nhật'}</div>
                      </div>
                      <div className="flex justify-between mt-3">
                         <div>Ngày sinh</div>
-                           <div className="font-medium">{userProfile.date ? userProfile.date : 'Chưa cập nhật'}</div>
+                           <div className="font-medium">{userProfile.dateOfBirth ? moment(userProfile.dateOfBirth).format("DD/MM/YYYY") : 'Chưa cập nhật'}</div>
                      </div>
                      <div className="flex justify-between mt-3">
                         <div>Giới tính</div>
@@ -190,18 +347,18 @@ export default function Information(){
                      </div>
                      <div className="flex justify-between mt-3">
                         <div>Địa chỉ</div>
-                           <div className="font-medium">{userProfile.address ? userProfile.addresss : 'Chưa cập nhật'}</div>
+                           <div className="font-medium">{userProfile.address ? userProfile.address : 'Chưa cập nhật'}</div>
                      </div>
                   </div>
                   <div className="font-medium mt-5">Thông tin bổ sung</div>
                   <div>
                      <div className="flex justify-between mt-3">
                         <div>Mã BHYT</div>
-                           <div className="font-medium">{userProfile.BHYT ? userProfile.BHYT : 'Chưa cập nhật'}</div>
+                           <div className="font-medium">{userProfile.codeInsurance ? userProfile.codeInsurance : 'Chưa cập nhật'}</div>
                      </div>
                      <div className="flex justify-between mt-3">
                         <div>Số CMND/CCCD</div>
-                           <div className="font-medium">{userProfile.CMND ? userProfile.CMND : 'Chưa cập nhật'}</div>
+                           <div className="font-medium">{userProfile.cmndNumber ? userProfile.cmndNumber : 'Chưa cập nhật'}</div>
                      </div>
                      <div className="flex justify-between mt-3">
                         <div>Dân tộc</div>

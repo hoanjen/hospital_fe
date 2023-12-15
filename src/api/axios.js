@@ -4,7 +4,7 @@ import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 
 const instance = axios.create({
    baseURL: process.env.BASE_URL,
-   timeout: 5000,
+   timeout: 10000,
    headers: { 'X-Custom-Header': 'foobar' }
 });
 

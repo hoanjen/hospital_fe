@@ -9,8 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 const inter = Inter({ subsets: ['latin'] })
-
-
+import Script from 'next/script';
+import Footer from '@/components/Home/footer';
 
 export default function RootLayout({ children }) {
 
@@ -18,16 +18,23 @@ export default function RootLayout({ children }) {
 
    return (
       <html lang="en">
+         <head>
+            
+         </head>
          <body className={inter.className}>
+            
             <Providers>
                <div >
                   <div >
                      {children}
                   </div>
+                   <Footer></Footer>
                </div>
                
             </Providers>
+            
          </body>
+        
       </html>
    )
 }
