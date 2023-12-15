@@ -2,20 +2,16 @@
 
 import { Inter } from 'next/font/google'
 import SideBar from '../../components/SideBar/sideBar'
-import { Providers } from "../provider";
+// import { Providers } from "../provider";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+// import { useEffect, useState } from 'react';
+// import { useParams } from 'next/navigation';
 const inter = Inter({ subsets: ['latin'] })
 
 import Footer from '@/components/Home/footer';
 
-
-
 export default function RootLayout({ children }) {
-
-
 
   return (
     <div >
