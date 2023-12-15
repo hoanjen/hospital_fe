@@ -2,7 +2,8 @@
 
 import { ADMIN_URL } from "@/api/constant/admin";
 import axios from "@/api/axios";
-
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 export const getListDoctor = async () => {
   try {
     const result = await axios.get(`${ADMIN_URL.DOCTOR}`);
@@ -23,11 +24,12 @@ export const deleteRecord = async (id) => {
   try {
     const result = await axios.delete(`${ADMIN_URL.DOCTOR}/${id}`);
     console.log("result: ",result);
-    if (result.data.code === 200) {
+    if (result?.data?.code === 200) {
       console.log("Record deleted successfully:", result);
       return result.data;
     } else {
-      console.error("Deletion failed with status:", result.data.code);
+      toast.error(`${result.response.data.message}`);
+      console.error("Deletion failed with status:", result.response.data.message);
       throw new Error("Failed to delete record");
     }
   } catch (error) {
