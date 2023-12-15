@@ -35,7 +35,7 @@ export default function Hospital() {
       { imgSrc: maskG51.src, title: "CHẨN ĐOÁN HÌNH ẢNH & CAN THIỆP KỸ THUẬT CAO" },
    ])
    return (
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center mb-10">
          <div className="flex mb-10">
             <div className="mr-10">
                <img className="w-48" src="https://cdn.bookingcare.vn/fo/2022/03/29/145205-logo-da-khoa-ha-noi.png" alt="" />

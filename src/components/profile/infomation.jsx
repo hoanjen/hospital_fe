@@ -161,13 +161,14 @@ export default function Information(){
             <div className="bg-white rounded-lg p-5 w-[550px]">
                <div className="flex items-center p-6">
                   <div className="">
-                     <img className="w-16 rounded-full" src={userProfile.avatar} alt="" />
+                     <img className="w-16 object-cover h-16 rounded-full" src={userProfile.avatar} alt="" />
                   </div>
                   <div className="pl-5">
                         <div className="font-semibold text-lg">{userProfile.fullName}</div>
                         <div className="opacity-70 text-sm">Mã BN: {userProfile.id}</div>
                   </div>
                </div>
+               
                <div>
                   <div className="font-medium">Thông tin cơ bản</div>
                   <div>

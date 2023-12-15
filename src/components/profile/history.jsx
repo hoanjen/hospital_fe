@@ -107,7 +107,7 @@ export default function History() {
                                {item.id} 
                             </th>
                             <td className="px-6 py-4">
-                               {item.doctor.name}
+                               {item.doctor?.name}
                             </td>
                             <td className="px-6 py-4">
                                  {item.workingTime.startTime} - {item.workingTime.endTime}

@@ -8,7 +8,7 @@ import group1208 from "../../image/Group-1208.svg"
 export default function Footer (){
 
     return (
-        <div className="mt-10 relative flex justify-center"> 
+        <div className="relative flex justify-center"> 
             <img className="w-full max-h-[480px] object-cover" src={backmin.src} alt="" />
             <div className="flex justify-center absolute top-8 w-[1031px] text-white">
                 <div>
