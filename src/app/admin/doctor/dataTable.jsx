@@ -5,6 +5,7 @@ import React from "react";
 import { Button} from "antd";
 import { EditOutlined , EyeOutlined} from "@ant-design/icons";
 import DeleteRecord from "./deleteRecord";
+import EditRecord from "./editRecord";
 function DataTable(props) {
   const { doctors, onReload } = props;
   const data = doctors.data.results;
@@ -41,7 +42,7 @@ function DataTable(props) {
         return (
           <>
             <Button icon={<EyeOutlined />} size="small" style={buttonStyle}/>
-            <Button icon={<EditOutlined />} size="small" style={buttonStyle}/>
+            <EditRecord record={record} onReload={onReload}/>
             <DeleteRecord record={record} onReload={onReload}/>
           </>
         );

@@ -37,3 +37,21 @@ export const deleteRecord = async (id) => {
     throw error;
   }
 };
+
+export const editRecord = async (id, options) => {
+  try {
+    const result = await axios.put(`${ADMIN_URL.DOCTOR}/${id}`, options);
+    console.log("result: ",result);
+    if (result?.data?.code === 200) {
+      console.log("Record deleted successfully:", result);
+      return result.data;
+    } else {
+      toast.error(`${result.response.data.message}`);
+      console.error("Deletion failed with status:", result.response.data.message);
+      throw new Error("Failed to delete record");
+    }
+  } catch (error) {
+    console.error("Error deleting record:", error);
+    throw error;
+  }
+};

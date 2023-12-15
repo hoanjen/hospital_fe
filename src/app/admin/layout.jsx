@@ -7,15 +7,12 @@ import { Inter } from "next/font/google";
 import SideBarAdmin from "../../components/SideBar/sideBarAdmin";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import Notify from "@/components/admin/Notify";
 import { Outlet } from 'react-router-dom';
 const { Header, Footer, Sider, Content } = Layout;
 const inter = Inter({ subsets: ["latin"] });
 import Logo from '@/image/logo.png';
-import { ToastContainer } from 'react-toastify';
-
 
 export default function AdminLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
