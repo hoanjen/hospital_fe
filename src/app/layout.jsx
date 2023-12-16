@@ -11,16 +11,20 @@ import { useParams } from 'next/navigation';
 const inter = Inter({ subsets: ['latin'] });
 import Script from 'next/script';
 import Footer from '@/components/Home/footer';
+import Link from '@/components/Home/link';
+import { USER_URL } from '@/api/constant/user';
+import axios from '@/api/axios';
+import { selectUserLogin, setProfile } from './redux/userLogin/userLoginSlice.js';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head></head>
+      <Link></Link>
       <body className={inter.className}>
         <Providers>
           <div>
             <div>{children}</div>
-            <Footer></Footer>
           </div>
         </Providers>
       </body>
