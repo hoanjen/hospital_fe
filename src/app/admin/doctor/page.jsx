@@ -1,17 +1,16 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { getListDoctor } from "../services/doctor.service.jsx";
-import DataTable from "./dataTable";
+import { useEffect, useState } from 'react';
+import { getListDoctor } from '../services/doctor.service.jsx';
+import DataTable from './dataTable';
 
-import React from "react";
-import { Flex, Spin } from "antd";
+import React from 'react';
+import { Flex, Spin } from 'antd';
 
 export default function Doctor() {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [departments, setDepartments] = useState([]);
-
 
   const fetchApi = async () => {
     try {

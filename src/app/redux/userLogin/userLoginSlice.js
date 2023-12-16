@@ -1,13 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  name: "NULL",
-  avatar: "NULL",
-  dsForm: false
+  name: 'NULL',
+  avatar: 'NULL',
+  dsForm: false,
+  profile: 'NULL',
 };
 
 export const userLoginSlice = createSlice({
-  name: "userLogin",
+  name: 'userLogin',
   initialState,
   reducers: {
     setName: (state, action) => {
@@ -18,10 +19,13 @@ export const userLoginSlice = createSlice({
     },
     setDsForm: (state, action) => {
       state.dsForm = action.payload;
-    }
+    },
+    setProfile: (state, action) => {
+      state.profile = action.payload;
+    },
   },
 });
 
-export const { setName, setAvatar, setDsForm } = userLoginSlice.actions;
+export const { setName, setAvatar, setDsForm, setProfile } = userLoginSlice.actions;
 export const selectUserLogin = (state) => state.userLogin;
 export default userLoginSlice.reducer;

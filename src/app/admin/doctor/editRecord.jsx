@@ -1,14 +1,14 @@
-import { Button, Form, Input, InputNumber, message, Modal } from "antd";
-import { EditOutlined } from "@ant-design/icons";
-import { useState } from "react";
-import { editRecord } from "../services/doctor.service";
+import { Button, Form, Input, InputNumber, message, Modal } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import { editRecord } from '../services/doctor.service';
 const { TextArea } = Input;
 
 function EditRecord(props) {
   const { record, onReload } = props;
   console.log(record);
   const buttonStyle = {
-    marginRight: "5px",
+    marginRight: '5px',
   };
 
   const [showModal, setShowModal] = useState(false);
@@ -17,7 +17,7 @@ function EditRecord(props) {
   const rules = [
     {
       required: true,
-      message: "Bắt buộc!",
+      message: 'Bắt buộc!',
     },
   ];
 
@@ -33,16 +33,16 @@ function EditRecord(props) {
     const response = await editRecord(record.id, values);
     if (response) {
       messageApi.open({
-        type: "success",
-        content: "Cập nhật thành công",
+        type: 'success',
+        content: 'Cập nhật thành công',
         duration: 4,
       });
       onReload();
       setShowModal(false);
     } else {
       messageApi.open({
-        type: "error",
-        content: "Cập nhật không thành công!",
+        type: 'error',
+        content: 'Cập nhật không thành công!',
         duration: 4,
       });
     }
@@ -50,28 +50,12 @@ function EditRecord(props) {
 
   return (
     <>
-      <Button
-        icon={<EditOutlined />}
-        primary
-        size="small"
-        style={buttonStyle}
-        onClick={handleShowModal}
-      />
+      <Button icon={<EditOutlined />} primary size="small" style={buttonStyle} onClick={handleShowModal} />
 
-      <Modal
-        open={showModal}
-        onCancel={handleCancel}
-        title="Chỉnh sửa bác sĩ"
-        footer={null}
-      >
+      <Modal open={showModal} onCancel={handleCancel} title="Chỉnh sửa bác sĩ" footer={null}>
         {contextHolder}
 
-        <Form
-          name="edit"
-          form={form}
-          onFinish={handleSubmit}
-          initialValues={record}
-        >
+        <Form name="edit" form={form} onFinish={handleSubmit} initialValues={record}>
           <Form.Item label="Tên bác sĩ" name="name" rules={rules}>
             <Input />
           </Form.Item>

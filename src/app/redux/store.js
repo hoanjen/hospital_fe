@@ -1,6 +1,6 @@
-"use client";
-import { configureStore } from "@reduxjs/toolkit";
-import userLoginSlice from "./userLogin/userLoginSlice";
+'use client';
+import { configureStore } from '@reduxjs/toolkit';
+import userLoginSlice from './userLogin/userLoginSlice';
 
 export const store = configureStore({
   reducer: {
