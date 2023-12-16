@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { Table } from "antd";
-import React from "react";
-import { Button } from "antd";
-import { EyeOutlined } from "@ant-design/icons";
-import DeleteRecord from "./deleteRecord";
-import EditRecord from "./editRecord";
-import { getListDepartment } from "../services/department.service.jsx";
+import { useEffect, useState } from 'react';
+import { Table } from 'antd';
+import React from 'react';
+import { Button } from 'antd';
+import { EyeOutlined } from '@ant-design/icons';
+import DeleteRecord from './deleteRecord';
+import EditRecord from './editRecord';
+import { getListDepartment } from '../services/department.service.jsx';
 function DataTable(props) {
   const { doctors, onReload } = props;
   const data = doctors.data.results;
@@ -32,45 +32,44 @@ function DataTable(props) {
   // const [dataDepartment] = departments.data.results;
 
   const buttonStyle = {
-    marginRight: "5px",
+    marginRight: '5px',
   };
   const columns = [
     {
-      title: "STT",
-      dataIndex: "index",
-      key: "index",
+      title: 'STT',
+      dataIndex: 'index',
+      key: 'index',
       render: (_, record, index) => index + 1,
     },
     {
-      title: "Tên bác sĩ",
-      dataIndex: "name",
-      key: "name",
+      title: 'Tên bác sĩ',
+      dataIndex: 'name',
+      key: 'name',
     },
     {
-      title: "Chuyên khoa",
-      dataIndex: "departmentId",
-      key: "departmentId",
+      title: 'Chuyên khoa',
+      dataIndex: 'departmentId',
+      key: 'departmentId',
       render: (text, record) => {
         const departmentsFiltered = departments.filter((item) => item.id === record.departments[0]);
         const department = departmentsFiltered.length > 0 ? departmentsFiltered[0] : null;
-        return department ? department.name : "Chưa xét khoa";
-
+        return department ? department.name : 'Chưa xét khoa';
       },
     },
     {
-      title: "Trình độ",
-      dataIndex: "degree",
-      key: "degree",
+      title: 'Trình độ',
+      dataIndex: 'degree',
+      key: 'degree',
     },
     {
-      title: "Năm kinh nghiệm",
-      dataIndex: "experience",
-      key: "experience",
+      title: 'Năm kinh nghiệm',
+      dataIndex: 'experience',
+      key: 'experience',
     },
 
     {
-      title: "Hành động",
-      key: "actions",
+      title: 'Hành động',
+      key: 'actions',
       render: (_, record) => {
         return (
           <>
@@ -84,7 +83,7 @@ function DataTable(props) {
   ];
   return (
     <>
-      <Table dataSource={data} columns={columns} rowKey={"id"} />
+      <Table dataSource={data} columns={columns} rowKey={'id'} />
     </>
   );
 }

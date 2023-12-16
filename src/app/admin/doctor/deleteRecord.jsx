@@ -1,20 +1,20 @@
-'use client'
+'use client';
 
-import { Button, Popconfirm } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
-import { deleteRecord } from "../services/doctor.service.jsx";
+import { Button, Popconfirm } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
+import { deleteRecord } from '../services/doctor.service.jsx';
 function DeleteRecord(props) {
   const { record, onReload } = props;
-  
+
   const handleDelete = async () => {
     const response = await deleteRecord(record.id);
     if (response) {
       onReload();
-      alert("Xóa thành công");
+      alert('Xóa thành công');
     } else {
-      alert("Xóa không thành công");
+      alert('Xóa không thành công');
     }
-    console.log("id: ",record.id);
+    console.log('id: ', record.id);
   };
   return (
     <>

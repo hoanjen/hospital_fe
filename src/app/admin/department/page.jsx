@@ -1,8 +1,5 @@
-
-"use client"
+'use client';
 
 export default function Department() {
-   return (
-      <div>Quản lý chuyên khoa</div>
-   )
+  return <div>Quản lý chuyên khoa</div>;
 }

@@ -1,13 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  name: "NULL",
-  avatar: "NULL",
-  dsForm: false
+  name: 'NULL',
+  avatar: 'NULL',
+  dsForm: false,
 };
 
 export const userLoginSlice = createSlice({
-  name: "userLogin",
+  name: 'userLogin',
   initialState,
   reducers: {
     setName: (state, action) => {
@@ -18,7 +18,7 @@ export const userLoginSlice = createSlice({
     },
     setDsForm: (state, action) => {
       state.dsForm = action.payload;
-    }
+    },
   },
 });
 

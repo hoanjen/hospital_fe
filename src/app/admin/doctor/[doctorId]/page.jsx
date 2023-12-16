@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 // pages/admin/doctor/[id].jsx
 // import React from "react";
@@ -38,8 +38,7 @@
 //   return <>Trang chi tiết</>
 // }
 function DoctorDetail() {
-  return <>OK</>
+  return <>OK</>;
 }
-
 
 export default DoctorDetail;
