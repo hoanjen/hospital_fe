@@ -13,6 +13,7 @@ const { Header, Footer, Sider, Content } = Layout;
 const inter = Inter({ subsets: ['latin'] });
 import Logo from '@/image/logo.png';
 import { ToastContainer } from 'react-toastify';
+import Footerr from "@/components/Home/footer";
 
 export default function AdminLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
