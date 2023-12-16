@@ -10,6 +10,8 @@ import { Flex, Spin } from "antd";
 export default function Doctor() {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [departments, setDepartments] = useState([]);
+
 
   const fetchApi = async () => {
     try {

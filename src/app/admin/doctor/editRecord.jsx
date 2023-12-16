@@ -2,8 +2,11 @@ import { Button, Form, Input, InputNumber, message, Modal } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { editRecord } from "../services/doctor.service";
+const { TextArea } = Input;
+
 function EditRecord(props) {
   const { record, onReload } = props;
+  console.log(record);
   const buttonStyle = {
     marginRight: "5px",
   };
@@ -27,8 +30,7 @@ function EditRecord(props) {
   };
 
   const handleSubmit = async (values) => {
-    
-    const response = await editRecord(record.id ,values);
+    const response = await editRecord(record.id, values);
     if (response) {
       messageApi.open({
         type: "success",
@@ -64,23 +66,30 @@ function EditRecord(props) {
       >
         {contextHolder}
 
-        <Form name="edit" form={form} onFinish={handleSubmit} initialValues={record}>
-          <Form.Item label="Tên bác sĩ" name="name" rules={rules} >
-          <Input />
+        <Form
+          name="edit"
+          form={form}
+          onFinish={handleSubmit}
+          initialValues={record}
+        >
+          <Form.Item label="Tên bác sĩ" name="name" rules={rules}>
+            <Input />
           </Form.Item>
 
           <Form.Item label="Trình độ" name="degree" rules={rules}>
-          <Input />
+            <Input />
           </Form.Item>
 
           <Form.Item label="Năm kinh nghiệm" name="experience" rules={rules}>
-          <InputNumber min={1} />
+            <InputNumber min={1} />
+          </Form.Item>
+
+          <Form.Item label="Mô tả" name="description" rules={rules}>
+            <TextArea showCount maxLength={1000} placeholder="can resize" />
           </Form.Item>
 
           <Form.Item>
-            <Button htmlType="submit">
-              Cập nhật
-            </Button>
+            <Button htmlType="submit">Cập nhật</Button>
           </Form.Item>
         </Form>
       </Modal>
