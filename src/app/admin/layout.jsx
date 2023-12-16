@@ -54,18 +54,4 @@ export default function AdminLayout({ children }) {
       </Layout>
     </>
   );
-
-  // return (
-  //   <div className='h-screen w-screen bg-slate-100'>
-  //       <div className='flex '>
-  //         <div className='fixed z-20 h-full w-64 border-r-1 border-dashed '>
-  //           <SideBarAdmin></SideBarAdmin>
-  //         </div>
-  //         <div className='ml-[256px]'>
-  //           {children}
-  //         </div>
-  //       </div>
-  //         <ToastContainer/>
-  //     </div>
-  // )
 }
