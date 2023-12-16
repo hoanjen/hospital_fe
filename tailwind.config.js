@@ -62,6 +62,18 @@ module.exports = {
         'title-sm': ['20px', '26px'],
         'title-xsm': ['18px', '24px'],
       },
+      borderWidth: {
+        '1': '1px'
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic':
+          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+      colors: {
+        'bluehome': '#1975DC',
+        'bluepadding': '#EFF6FF'
+      },
       spacing: {
         4.5: '1.125rem',
         5.5: '1.375rem',

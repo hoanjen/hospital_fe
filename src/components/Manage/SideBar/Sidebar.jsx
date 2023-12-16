@@ -8,7 +8,7 @@ import { useParams } from 'next/navigation';
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation();
   const { pathname } = location;
-
+  const [currentPath, setCurrentPath] = useState(pathname);
   const path = useParams();
   const router = useRouter(path);
 
@@ -96,9 +96,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item Welcome --> */}
               <li>
                 <NavLink
-                  onClick={() => router.push('/manage')}
+                  onClick={() => {
+                    {
+                      router.push('/manage');
+                    }
+                    setCurrentPath('/manage');
+                  }}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname === '/manage' && 'bg-graydark dark:bg-meta-4'
+                    currentPath === '/manage' && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
                   <svg fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="18px" height="18px">
@@ -111,9 +116,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item Order Medical Form --> */}
               <li>
                 <NavLink
-                  onClick={() => router.push('/manage/order-medical-form')}
+                  onClick={() => {
+                    router.push('/manage/order-medical-form');
+                    setCurrentPath('/manage/order-medical-form');
+                  }}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('order-medical-form') && 'bg-graydark dark:bg-meta-4'
+                    currentPath === '/manage/order-medical-form' && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
                   <svg
@@ -158,9 +166,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item Profile --> */}
               <li>
                 <NavLink
-                  onClick={() => router.push('/manage/profile')}
+                  onClick={() => {
+                    router.push('/manage/profile');
+                    setCurrentPath('/manage/profile');
+                  }}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('profile') && 'bg-graydark dark:bg-meta-4'
+                    currentPath.includes('profile') && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
                   <svg
@@ -187,9 +198,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item History --> */}
               <li>
                 <NavLink
-                  onClick={() => router.push('/manage/history-order')}
+                  onClick={() => {
+                    router.push('/manage/history-order');
+                    setCurrentPath('/manage/history-order');
+                  }}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('history-order') && 'bg-graydark dark:bg-meta-4'
+                    currentPath === '/manage/history-order' && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
                   <svg
@@ -218,9 +232,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item Profile --> */}
               <li>
                 <NavLink
-                  onClick={() => router.push('/manage/approve-medical-form')}
+                  onClick={() => {
+                    router.push('/manage/approve-medical-form');
+                    setCurrentPath('/manage/approve-medical-form');
+                  }}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('approve-medical-form') && 'bg-graydark dark:bg-meta-4'
+                    currentPath === '/manage/approve-medical-form' && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
                   <svg
@@ -250,9 +267,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item Chart --> */}
               <li>
                 <NavLink
-                  onClick={() => router.push('/manage/chart-order')}
+                  onClick={() => {
+                    router.push('/manage/chart-order');
+                    setCurrentPath('/manage/chart-order');
+                  }}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('chart-order') && 'bg-graydark dark:bg-meta-4'
+                    currentPath.includes('/manage/chart-order') && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
                   <svg
@@ -290,14 +310,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
             <ul className="mb-6 flex flex-col gap-1.5">
               {/* <!-- Menu Item System Management --> */}
-              <SidebarLinkGroup activeCondition={pathname.includes('manage/manage')}>
+              <SidebarLinkGroup activeCondition={currentPath.includes('manage/manage')}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          pathname.includes('manage/manage') && 'bg-graydark dark:bg-meta-4'
+                          currentPath.includes('manage/manage') && 'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -351,7 +371,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
                           <li>
                             <NavLink
-                              onClick={() => router.push('/manage/manage-users')}
+                              onClick={() => {
+                                router.push('/manage/manage-users');
+                                setCurrentPath('/manage/manage-users');
+                              }}
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')
@@ -362,7 +385,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           </li>
                           <li>
                             <NavLink
-                              onClick={() => router.push('/manage/manage-roles')}
+                              onClick={() => {
+                                router.push('/manage/manage-roles');
+                                setCurrentPath('/manage/manage-roles');
+                              }}
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')
@@ -380,14 +406,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               </SidebarLinkGroup>
               {/* <!-- Menu Item System Management --> */}
               {/* <!-- Menu Item System Directory --> */}
-              <SidebarLinkGroup activeCondition={pathname.includes('directory')}>
+              <SidebarLinkGroup activeCondition={currentPath.includes('directory')}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          pathname.includes('directory') && 'bg-graydark dark:bg-meta-4'
+                          currentPath.includes('directory') && 'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -441,7 +467,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
                           <li>
                             <NavLink
-                              onClick={() => router.push('/manage/directory-departments')}
+                              onClick={() => {
+                                router.push('/manage/directory-departments');
+                                setCurrentPath('/manage/directory-departments');
+                              }}
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')
@@ -452,7 +481,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           </li>
                           <li>
                             <NavLink
-                              onClick={() => router.push('/manage/directory-doctors')}
+                              onClick={() => {
+                                router.push('/manage/directory-doctors');
+                                setCurrentPath('/manage/directory-doctors');
+                              }}
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')
@@ -463,7 +495,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           </li>
                           <li>
                             <NavLink
-                              onClick={() => router.push('/manage/directory-schedules')}
+                              onClick={() => {
+                                router.push('/manage/directory-schedules');
+                                setCurrentPath('/manage/directory-schedules');
+                              }}
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                 (isActive && '!text-white')

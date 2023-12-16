@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 
 const DropdownUser = (props) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const avatar = getCookie('user_avatar');
+  const name = getCookie('user_name');
   const trigger = useRef(null);
   const dropdown = useRef(null);
 
@@ -11,12 +14,7 @@ const DropdownUser = (props) => {
   useEffect(() => {
     const clickHandler = ({ target }) => {
       if (!dropdown.current) return;
-      if (
-        !dropdownOpen ||
-        dropdown.current.contains(target) ||
-        trigger.current.contains(target)
-      )
-        return;
+      if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) return;
       setDropdownOpen(false);
     };
     document.addEventListener('click', clickHandler);
@@ -35,26 +33,17 @@ const DropdownUser = (props) => {
 
   return (
     <div className="relative">
-      <Link
-        ref={trigger}
-        onClick={() => setDropdownOpen(!dropdownOpen)}
-        className="flex items-center gap-4"
-        to="#"
-      >
+      <Link ref={trigger} onClick={() => setDropdownOpen(!dropdownOpen)} className="flex items-center gap-4" to="#">
         <span className="hidden text-right lg:block">
-          <span className="block text-sm font-medium text-black dark:text-white">
-            {props.user?.fullName}
-          </span>
+          <span className="block text-sm font-medium text-black dark:text-white">{name}</span>
         </span>
 
-        <span className="h-8 w-8 rounded-full">
-          <img src={props.user?.avatar} alt="User" />
+        <span className="h-8 w-8 rounded-full overflow-hidden">
+          <img src={avatar} alt="User" />
         </span>
 
         <svg
-          className={`hidden fill-current sm:block ${
-            dropdownOpen ? 'rotate-180' : ''
-          }`}
+          className={`hidden fill-current sm:block ${dropdownOpen ? 'rotate-180' : ''}`}
           width="12"
           height="8"
           viewBox="0 0 12 8"

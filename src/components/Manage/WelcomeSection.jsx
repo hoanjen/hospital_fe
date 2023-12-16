@@ -1,4 +1,4 @@
-import WelcomeBg from '../../image/custom-1.svg'
+import WelcomeBg from '../../image/custom-1.svg';
 
 const WelcomeSection = (props) => {
   return (
@@ -17,12 +17,8 @@ const WelcomeSection = (props) => {
             <h2 className="text-2xl mb-4">
               Chào mừng trở lại, <strong>{props.user?.fullName}</strong>!
             </h2>
-            <p className="text-dark my-2 text-lg">
-              Hệ thống đặt lịch khám bệnh hàng đầu tại Việt Nam
-            </p>
-            <p className="italic">
-              Đặt lịch dễ dàng, chăm sóc tận tâm cùng YouMed
-            </p>
+            <p className="text-dark my-2 text-lg">Hệ thống đặt lịch khám bệnh hàng đầu tại Việt Nam</p>
+            <p className="italic">Đặt lịch dễ dàng, chăm sóc tận tâm cùng YouMed</p>
           </div>
         </div>
       </div>

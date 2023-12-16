@@ -10,12 +10,7 @@ const DropdownNotification = () => {
   useEffect(() => {
     const clickHandler = ({ target }) => {
       if (!dropdown.current) return;
-      if (
-        !dropdownOpen ||
-        dropdown.current.contains(target) ||
-        trigger.current.contains(target)
-      )
-        return;
+      if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) return;
       setDropdownOpen(false);
     };
     document.addEventListener('click', clickHandler);
@@ -78,11 +73,8 @@ const DropdownNotification = () => {
               to="#"
             >
               <p className="text-sm">
-                <span className="text-black dark:text-white">
-                  Edit your information in a swipe
-                </span>{' '}
-                Sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim.
+                <span className="text-black dark:text-white">Edit your information in a swipe</span> Sint occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.
               </p>
 
               <p className="text-xs">12 May, 2025</p>
@@ -94,10 +86,8 @@ const DropdownNotification = () => {
               to="#"
             >
               <p className="text-sm">
-                <span className="text-black dark:text-white">
-                  It is a long established fact
-                </span>{' '}
-                that a reader will be distracted by the readable.
+                <span className="text-black dark:text-white">It is a long established fact</span> that a reader will be
+                distracted by the readable.
               </p>
 
               <p className="text-xs">24 Feb, 2025</p>
@@ -109,11 +99,8 @@ const DropdownNotification = () => {
               to="#"
             >
               <p className="text-sm">
-                <span className="text-black dark:text-white">
-                  There are many variations
-                </span>{' '}
-                of passages of Lorem Ipsum available, but the majority have
-                suffered
+                <span className="text-black dark:text-white">There are many variations</span> of passages of Lorem Ipsum
+                available, but the majority have suffered
               </p>
 
               <p className="text-xs">04 Jan, 2025</p>
@@ -125,11 +112,8 @@ const DropdownNotification = () => {
               to="#"
             >
               <p className="text-sm">
-                <span className="text-black dark:text-white">
-                  There are many variations
-                </span>{' '}
-                of passages of Lorem Ipsum available, but the majority have
-                suffered
+                <span className="text-black dark:text-white">There are many variations</span> of passages of Lorem Ipsum
+                available, but the majority have suffered
               </p>
 
               <p className="text-xs">01 Dec, 2024</p>
