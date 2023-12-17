@@ -6,7 +6,6 @@ import axios from '@/api/axios';
 export const getListDepartment = async () => {
   try {
     const result = await axios.get(`${ADMIN_URL.DEPARTMENTS}`);
-
     if (result?.data?.code === 200) {
       console.log('Request successful:', result.data);
       return result?.data?.data?.results;

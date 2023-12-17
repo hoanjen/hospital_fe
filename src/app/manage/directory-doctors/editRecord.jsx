@@ -2,13 +2,12 @@ import { Button, Form, Image, Input, InputNumber, message, Modal, Upload, Select
 import { EditOutlined, UploadOutlined, DeleteOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { editRecord } from '../services/doctor.service';
+import { getListDepartment } from '../services/department.service';
+import Swal from 'sweetalert2';
 const { TextArea } = Input;
 
 function EditRecord(props) {
   const { record, onReload, departments } = props;
-
-  const departmentsFiltered = departments.filter((item) => item.id === record.departments[0]);
-  const department = departmentsFiltered.length > 0 ? departmentsFiltered[0] : null;
 
   const buttonStyle = {
     marginRight: '5px',
@@ -44,19 +43,19 @@ function EditRecord(props) {
 
   const handleSubmit = async (values) => {
     const response = await editRecord(record.id, values);
-    if (response) {
-      messageApi.open({
-        type: 'success',
-        content: 'Cập nhật thành công',
-        duration: 4,
+    if (response.data?.code === 200) {
+      Swal.fire({
+        title: 'Thông báo!',
+        text: response.data?.message,
+        icon: 'success',
       });
       onReload();
       setShowModal(false);
     } else {
-      messageApi.open({
-        type: 'error',
-        content: 'Cập nhật không thành công!',
-        duration: 4,
+      Swal.fire({
+        title: 'Thông báo!',
+        text: response.response?.data.message,
+        icon: 'error',
       });
     }
   };
@@ -65,13 +64,14 @@ function EditRecord(props) {
     <>
       <Button icon={<EditOutlined />} primary size="small" style={buttonStyle} onClick={handleShowModal} />
 
-      <Modal open={showModal} onCancel={handleCancel} title="Chỉnh sửa bác sĩ" footer={null}>
+      <Modal open={showModal} onCancel={handleCancel} title="Cập nhật bác sĩ" footer={null}>
         {contextHolder}
 
-        <Form name="edit" 
-          form={form} 
-          onFinish={handleSubmit} 
-          initialValues={record} 
+        <Form
+          name="edit"
+          form={form}
+          onFinish={handleSubmit}
+          initialValues={record}
           labelCol={{ span: 7 }}
           wrapperCol={{ span: 14 }}
           layout="horizontal"
@@ -79,26 +79,35 @@ function EditRecord(props) {
         >
           <Form.Item label="Ảnh đại diện" name="image" rules={rules}>
             <div style={{ position: 'relative', display: 'inline-block' }}>
-              <Image width="200px" height="250px" 
-                src={deleteImage ? null : image} 
-                style={{ border: '2px solid #ddd', borderRadius: '8px', objectFit: 'cover' }} 
+              <Image
+                width="200px"
+                height="250px"
+                src={deleteImage ? null : image}
+                style={{ border: '2px solid #ddd', borderRadius: '8px', objectFit: 'cover' }}
               />
               {!deleteImage && (
-                <CloseCircleOutlined onClick={handleDeleteImage}
-                style={{ position: 'absolute', top: '5px', right: '5px', boder: '1px solid #ddd' }}/>
+                <CloseCircleOutlined
+                  onClick={handleDeleteImage}
+                  style={{ position: 'absolute', top: '5px', right: '5px', boder: '1px solid #ddd' }}
+                />
               )}
-
             </div>
           </Form.Item>
+
           <Form.Item label="Tên bác sĩ" name="name" rules={rules}>
             <Input />
           </Form.Item>
 
-          <Form.Item label="Chuyên khoa" name="departments">
-          <Select defaultValue={department ? department.name : '0'}>
-            <Select.Option value="0">{department ? department.name : 'Chưa xét khoa'}</Select.Option>
-          </Select>
+          <Form.Item label="Chuyên khoa" name="department">
+            <Select>
+              {departments?.map((department) => (
+                <Select.Option key={department.id} value={department.id}>
+                  {department ? department.name : 'Chưa xét khoa'}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
+
           <Form.Item label="Trình độ" name="degree" rules={rules}>
             <Input />
           </Form.Item>
@@ -107,7 +116,7 @@ function EditRecord(props) {
             <InputNumber min={1} />
           </Form.Item>
 
-          <Form.Item label="Mô tả" name="description" rules={rules}>
+          <Form.Item label="Chi tiết" name="description" rules={rules}>
             <TextArea showCount maxLength={1000} placeholder="can resize" />
           </Form.Item>
 

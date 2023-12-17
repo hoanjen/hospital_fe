@@ -13,15 +13,13 @@ import CreateRecord from './createRecord';
 function DataTable(props) {
   const { doctors, onReload, totalPages } = props;
   const data = doctors.data.results;
-  // console.log(data)
   const [departments, setDepartments] = useState([]);
-  
+
   const fetchApi = async () => {
     try {
       const result = await getListDepartment();
       onReload();
       setDepartments(result);
-      
     } catch (error) {
       console.log(error);
     }
@@ -29,8 +27,6 @@ function DataTable(props) {
   useEffect(() => {
     fetchApi();
   }, []);
-
-  // const [dataDepartment] = departments.data.results;
 
   const buttonStyle = {
     marginRight: '5px',
@@ -53,7 +49,7 @@ function DataTable(props) {
       dataIndex: 'departmentId',
       key: 'departmentId',
       render: (text, record) => {
-        const departmentsFiltered = departments.filter((item) => item.id === record.departments[0]);
+        const departmentsFiltered = departments.filter((item) => item.id === record.department);
         const department = departmentsFiltered.length > 0 ? departmentsFiltered[0] : null;
         return <div style={{ fontSize: '1rem' }}>{department ? department.name : 'Chưa xét khoa'}</div>;
       },
@@ -78,7 +74,7 @@ function DataTable(props) {
         return (
           <>
             <Button icon={<EyeOutlined />} size="small" style={buttonStyle} />
-            <EditRecord record={record} onReload={onReload} departments={departments}/>
+            <EditRecord record={record} onReload={onReload} departments={departments} />
             <DeleteRecord record={record} onReload={onReload} />
           </>
         );
@@ -88,7 +84,7 @@ function DataTable(props) {
   return (
     <>
       <div>
-        <CreateRecord onReload={onReload}/>
+        <CreateRecord onReload={onReload} departments={departments} />
 
         <Table
           dataSource={data}
@@ -98,7 +94,7 @@ function DataTable(props) {
           pagination={{
             pageSize: doctors.data.limit,
             total: totalPages,
-            onChange: (page) => page = doctors.data.page,
+            onChange: (page) => (page = doctors.data.page),
           }}
         />
       </div>

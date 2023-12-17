@@ -3,29 +3,45 @@
 import { Button, Popconfirm } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { deleteRecord } from '../services/doctor.service';
+import Swal from 'sweetalert2';
+
 function DeleteRecord(props) {
   const { record, onReload } = props;
-  console.log(record)
+
   const handleDelete = async () => {
-    const response = await deleteRecord(record.id);
-    if (response) {
-      onReload();
-      alert('Xóa thành công');
-    } else {
-      alert('Xóa không thành công');
-    }
-    console.log('id: ', record.id);
+    Swal.fire({
+      title: 'Bạn có chắc chắn?',
+      text: 'Muốn xóa bác sĩ này!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Xóa',
+      cancelButtonText: 'Hủy',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const response = await deleteRecord(record.id);
+        if (response.data?.code === 200) {
+          Swal.fire({
+            title: 'Thông báo!',
+            text: response.data?.message,
+            icon: 'success',
+          });
+          onReload();
+        } else {
+          Swal.fire({
+            title: 'Thông báo!',
+            text: response.response?.data.message,
+            icon: 'error',
+          });
+        }
+      }
+    });
   };
+
   return (
     <>
-      <Popconfirm
-        title="Delete"
-        description="Bạn có chắc chắn muốn xóa không?"
-        onConfirm={handleDelete}
-        okType="danger"
-      >
-        <Button icon={<DeleteOutlined />} danger size="small" />
-      </Popconfirm>
+      <Button icon={<DeleteOutlined />} primary size="small" onClick={handleDelete} />
     </>
   );
 }
