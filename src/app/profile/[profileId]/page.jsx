@@ -26,7 +26,7 @@ export default function Profile() {
   };
 
   return (
-    <div className=" flex justify-center mb-10">
+    <div className=" flex justify-center mb-10 min-h-[1200px]">
       <div className="flex">
         <div className="bg-white h-64 mt-10 rounded-lg overflow-hidden cursor-pointer">
           <div

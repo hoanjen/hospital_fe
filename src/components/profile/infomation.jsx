@@ -469,157 +469,185 @@ export default function Information() {
           </div>
         </div>
       ) : !isloading ? (
-        <div>
-          <div className="font-semibold py-5 text-xl">Hồ sơ</div>
-          <div className="bg-white rounded-lg p-5 w-[550px]">
-            <div className="flex items-center p-6">
-              <div className="">
-                <img className="w-16 object-cover h-16 rounded-full" src={userProfile.avatar} alt="" />
+        <div className='flex'>
+          <div>
+            <div className="font-semibold py-5 text-xl">Hồ sơ</div>
+            <div className="bg-white rounded-lg p-5 w-[550px]">
+              <div className="flex items-center p-6">
+                <div className="">
+                  <img className="w-16 object-cover h-16 rounded-full" src={userProfile.avatar} alt="" />
+                </div>
+                <div className="pl-5">
+                  <div className="font-semibold text-lg">{userProfile.fullName}</div>
+                  <div className="opacity-70 text-sm">Mã BN: {userProfile.id}</div>
+                </div>
               </div>
-              <div className="pl-5">
-                <div className="font-semibold text-lg">{userProfile.fullName}</div>
-                <div className="opacity-70 text-sm">Mã BN: {userProfile.id}</div>
-              </div>
-            </div>
 
-            <div>
-              <div className="font-medium">Thông tin cơ bản</div>
               <div>
-                <div className="flex justify-between mt-3">
-                  <div>Họ và tên</div>
-                  <div className="font-medium">{userProfile.fullName}</div>
-                </div>
-                <div className="flex justify-between mt-3">
-                  <div>Điện thoại</div>
-                  <div className="font-medium">
-                    {userProfile.phoneNumber ? userProfile.phoneNumber : 'Chưa cập nhật'}
+                <div className="font-medium">Thông tin cơ bản</div>
+                <div>
+                  <div className="flex justify-between mt-3">
+                    <div>Họ và tên</div>
+                    <div className="font-medium">{userProfile.fullName}</div>
+                  </div>
+                  <div className="flex justify-between mt-3">
+                    <div>Điện thoại</div>
+                    <div className="font-medium">
+                      {userProfile.phoneNumber ? userProfile.phoneNumber : 'Chưa cập nhật'}
+                    </div>
+                  </div>
+                  <div className="flex justify-between mt-3">
+                    <div>Ngày sinh</div>
+                    <div className="font-medium">
+                      {userProfile.dateOfBirth ? moment(userProfile.dateOfBirth).format('DD/MM/YYYY') : 'Chưa cập nhật'}
+                    </div>
+                  </div>
+                  <div className="flex justify-between mt-3">
+                    <div>Giới tính</div>
+                    <div className="font-medium">{userProfile.gender ? userProfile.gender : 'Chưa cập nhật'}</div>
+                  </div>
+                  <div className="flex justify-between mt-3">
+                    <div>Địa chỉ</div>
+                    <div className="font-medium">{userProfile.address ? userProfile.address : 'Chưa cập nhật'}</div>
                   </div>
                 </div>
-                <div className="flex justify-between mt-3">
-                  <div>Ngày sinh</div>
-                  <div className="font-medium">
-                    {userProfile.dateOfBirth ? moment(userProfile.dateOfBirth).format('DD/MM/YYYY') : 'Chưa cập nhật'}
+                <div className="font-medium mt-5">Thông tin bổ sung</div>
+                <div>
+                  <div className="flex justify-between mt-3">
+                    <div>Mã BHYT</div>
+                    <div className="font-medium">
+                      {userProfile.codeInsurance ? userProfile.codeInsurance : 'Chưa cập nhật'}
+                    </div>
                   </div>
-                </div>
-                <div className="flex justify-between mt-3">
-                  <div>Giới tính</div>
-                  <div className="font-medium">{userProfile.gender ? userProfile.gender : 'Chưa cập nhật'}</div>
-                </div>
-                <div className="flex justify-between mt-3">
-                  <div>Địa chỉ</div>
-                  <div className="font-medium">{userProfile.address ? userProfile.address : 'Chưa cập nhật'}</div>
+                  <div className="flex justify-between mt-3">
+                    <div>Số CMND/CCCD</div>
+                    <div className="font-medium">{userProfile.cmndNumber ? userProfile.cmndNumber : 'Chưa cập nhật'}</div>
+                  </div>
+                  <div className="flex justify-between mt-3">
+                    <div>Dân tộc</div>
+                    <div className="font-medium">{userProfile.nation ? userProfile.nation : 'Chưa cập nhật'}</div>
+                  </div>
+                  <div className="flex justify-between mt-3">
+                    <div>Nghề nghiệp</div>
+                    <div className="font-medium">{userProfile.job ? userProfile.job : 'Chưa cập nhật'}</div>
+                  </div>
+                  <div className="flex justify-between mt-3">
+                    <div>Email</div>
+                    <div className="font-medium">{userProfile.email}</div>
+                  </div>
                 </div>
               </div>
-              <div className="font-medium mt-5">Thông tin bổ sung</div>
-              <div>
-                <div className="flex justify-between mt-3">
-                  <div>Mã BHYT</div>
-                  <div className="font-medium">
-                    {userProfile.codeInsurance ? userProfile.codeInsurance : 'Chưa cập nhật'}
-                  </div>
-                </div>
-                <div className="flex justify-between mt-3">
-                  <div>Số CMND/CCCD</div>
-                  <div className="font-medium">{userProfile.cmndNumber ? userProfile.cmndNumber : 'Chưa cập nhật'}</div>
-                </div>
-                <div className="flex justify-between mt-3">
-                  <div>Dân tộc</div>
-                  <div className="font-medium">{userProfile.nation ? userProfile.nation : 'Chưa cập nhật'}</div>
-                </div>
-                <div className="flex justify-between mt-3">
-                  <div>Nghề nghiệp</div>
-                  <div className="font-medium">{userProfile.job ? userProfile.job : 'Chưa cập nhật'}</div>
-                </div>
-                <div className="flex justify-between mt-3">
-                  <div>Email</div>
-                  <div className="font-medium">{userProfile.email}</div>
-                </div>
-              </div>
-            </div>
 
-            <div
-              onClick={() => {
-                setChangeInfo(true);
-              }}
-              className="flex justify-end mt-5 cursor-pointer"
-            >
-              <div className="p-2 w-40 text-center bg-bluehome text-white rounded-md">Thay đổi thông tin</div>
+              <div
+                onClick={() => {
+                  setChangeInfo(true);
+                }}
+                className="flex justify-end mt-5 cursor-pointer"
+              >
+                <div className="p-2 w-40 text-center bg-bluehome text-white rounded-md">Thay đổi thông tin</div>
+              </div>
             </div>
           </div>
+          <div className="bg-white rounded-lg p-5 w-[550px] mt-[68px] ml-5">
+              <div className="font-medium mt-10">Thẻ căn cước công dân</div>
+              <div className="w-72 h-48">
+                <img className="object-cover w-72 h-48 rounded-md m-5 cursor-not-allowed" src={imgCMND} alt="" />
+              </div>
+
+              <div className="font-medium mt-10">Thẻ bảo hiểm y tế</div>
+              <div className="w-72 h-48">
+                <img className="object-cover w-72 h-48 rounded-md m-5 cursor-not-allowed" src={imgBHYT} alt="" />
+              </div>
+              
+            </div>
         </div>
       ) : (
-        <div>
-          <div className="font-semibold py-5 text-xl">Hồ sơ</div>
-          <div className="bg-white rounded-lg p-5 w-[550px]">
-            <div className="flex items-center p-6">
-              <div className="">
-                <Skeleton width={64} height={64}></Skeleton>
-              </div>
-              <div className="pl-5">
-                <Skeleton width={200} height={25}></Skeleton>
-                <Skeleton width={300} height={25}></Skeleton>
-              </div>
-            </div>
-            <div>
-              <Skeleton width={200} height={25}></Skeleton>
+            <div className='flex'>
               <div>
-                <div className="flex justify-between mt-2">
-                  <Skeleton width={140} height={25}></Skeleton>
-                  <Skeleton width={140} height={25}></Skeleton>
-                </div>
-                <div className="flex justify-between mt-2">
-                  <Skeleton width={140} height={25}></Skeleton>
-                  <Skeleton width={140} height={25}></Skeleton>
-                </div>
-                <div className="flex justify-between mt-2">
-                  <Skeleton width={140} height={25}></Skeleton>
-                  <Skeleton width={140} height={25}></Skeleton>
-                </div>
-                <div className="flex justify-between mt-2">
-                  <Skeleton width={140} height={25}></Skeleton>
-                  <Skeleton width={140} height={25}></Skeleton>
-                </div>
-                <div className="flex justify-between mt-2">
-                  <Skeleton width={140} height={25}></Skeleton>
-                  <Skeleton width={140} height={25}></Skeleton>
-                </div>
-              </div>
-              <br />
-              <Skeleton width={200} height={25}></Skeleton>
-              <div>
-                <div className="flex justify-between mt-2">
-                  <Skeleton width={140} height={25}></Skeleton>
-                  <Skeleton width={140} height={25}></Skeleton>
-                </div>
-                <div className="flex justify-between mt-2">
-                  <Skeleton width={140} height={25}></Skeleton>
-                  <Skeleton width={140} height={25}></Skeleton>
-                </div>
-                <div className="flex justify-between mt-2">
-                  <Skeleton width={140} height={25}></Skeleton>
-                  <Skeleton width={140} height={25}></Skeleton>
-                </div>
-                <div className="flex justify-between mt-2">
-                  <Skeleton width={140} height={25}></Skeleton>
-                  <Skeleton width={140} height={25}></Skeleton>
-                </div>
-                <div className="flex justify-between mt-2">
-                  <Skeleton width={140} height={25}></Skeleton>
-                  <Skeleton width={140} height={25}></Skeleton>
-                </div>
-              </div>
-            </div>
+                <div className="font-semibold py-5 text-xl">Hồ sơ</div>
+                <div className="bg-white rounded-lg p-5 w-[550px]">
+                  <div className="flex items-center p-6">
+                    <div className="">
+                      <Skeleton width={64} height={64}></Skeleton>
+                    </div>
+                    <div className="pl-5">
+                      <Skeleton width={200} height={25}></Skeleton>
+                      <Skeleton width={300} height={25}></Skeleton>
+                    </div>
+                  </div>
+                  <div>
+                    <Skeleton width={200} height={25}></Skeleton>
+                    <div>
+                      <div className="flex justify-between mt-2">
+                        <Skeleton width={140} height={25}></Skeleton>
+                        <Skeleton width={140} height={25}></Skeleton>
+                      </div>
+                      <div className="flex justify-between mt-2">
+                        <Skeleton width={140} height={25}></Skeleton>
+                        <Skeleton width={140} height={25}></Skeleton>
+                      </div>
+                      <div className="flex justify-between mt-2">
+                        <Skeleton width={140} height={25}></Skeleton>
+                        <Skeleton width={140} height={25}></Skeleton>
+                      </div>
+                      <div className="flex justify-between mt-2">
+                        <Skeleton width={140} height={25}></Skeleton>
+                        <Skeleton width={140} height={25}></Skeleton>
+                      </div>
+                      <div className="flex justify-between mt-2">
+                        <Skeleton width={140} height={25}></Skeleton>
+                        <Skeleton width={140} height={25}></Skeleton>
+                      </div>
+                    </div>
+                    <br />
+                    <Skeleton width={200} height={25}></Skeleton>
+                    <div>
+                      <div className="flex justify-between mt-2">
+                        <Skeleton width={140} height={25}></Skeleton>
+                        <Skeleton width={140} height={25}></Skeleton>
+                      </div>
+                      <div className="flex justify-between mt-2">
+                        <Skeleton width={140} height={25}></Skeleton>
+                        <Skeleton width={140} height={25}></Skeleton>
+                      </div>
+                      <div className="flex justify-between mt-2">
+                        <Skeleton width={140} height={25}></Skeleton>
+                        <Skeleton width={140} height={25}></Skeleton>
+                      </div>
+                      <div className="flex justify-between mt-2">
+                        <Skeleton width={140} height={25}></Skeleton>
+                        <Skeleton width={140} height={25}></Skeleton>
+                      </div>
+                      <div className="flex justify-between mt-2">
+                        <Skeleton width={140} height={25}></Skeleton>
+                        <Skeleton width={140} height={25}></Skeleton>
+                      </div>
+                    </div>
+                  </div>
 
-            <div
-              onClick={() => {
-                setChangeInfo(true);
-              }}
-              className="flex justify-end mt-5 cursor-pointer"
-            >
-              <Skeleton width={150} height={40}></Skeleton>
+                  <div onClick={() => {
+                    setChangeInfo(true);
+                  }}
+                    className="flex justify-end mt-5 cursor-pointer"
+                  >
+                    <Skeleton width={150} height={40}></Skeleton>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg p-5 w-[550px] mt-[68px] ml-5">
+                <Skeleton className='mt-10' width={250} height={24}></Skeleton>
+                <div className="w-72 h-48">
+                  <Skeleton className="object-cover w-72 h-48 rounded-md m-5 cursor-not-allowed" width={288} height={192}></Skeleton>
+                  
+                </div>
+
+                <Skeleton className='mt-10' width={250} height={24}></Skeleton>
+                <div className="w-72 h-48">
+                  <Skeleton className="object-cover w-72 h-48 rounded-md m-5 cursor-not-allowed" width={288} height={192}></Skeleton>
+                </div>
+
+              </div>
             </div>
-          </div>
-        </div>
       )}
     </div>
   );

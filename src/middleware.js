@@ -7,10 +7,10 @@ export async function middleware(request, params) {
   // const historyy =await (await fetch(`https://medical-booking.onrender.com/api/v1/user/${user_id}`, { method: "GET"})).json();
   // console.log(historyy)
   if (!token || !token.value) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+    return NextResponse.redirect(new URL('/', request.url));
   }
 }
 
 export const config = {
-  matcher: ['/dashboard/specialist/:path*/doctor/:path*/booking/:path*', '/dashboard/profile/:path*', '/'],
+  matcher: ['/specialist/:path*/doctor/:path*/booking/:path*', '/profile/:path*'],
 };

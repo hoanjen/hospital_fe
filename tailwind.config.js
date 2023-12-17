@@ -72,7 +72,10 @@ module.exports = {
       },
       colors: {
         'bluehome': '#1975DC',
-        'bluepadding': '#EFF6FF'
+        'bluepadding': '#EFF6FF',
+        'slate': '#f1f5f9',
+        'blue500': '#3b82f6',
+        'slate300': '#cbd5e1'
       },
       spacing: {
         4.5: '1.125rem',
@@ -220,12 +223,15 @@ module.exports = {
       backgroundImage: {
         video: "url('../assets/images/video/video.png')",
       },
-      content: {
-        'icon-copy': 'url("../assets/images/icon/icon-copy-alt.svg")',
-      },
+      content: [
+        './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+        './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+        './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+      ],
       transitionProperty: { width: 'width', stroke: 'stroke' },
       borderWidth: {
         6: '6px',
+        'w1': '1px'
       },
       boxShadow: {
         default: '0px 8px 13px -3px rgba(0, 0, 0, 0.07)',

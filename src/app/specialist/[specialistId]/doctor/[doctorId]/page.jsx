@@ -25,7 +25,7 @@ export default function DoctorDetailPage() {
   const [isLoading, setIsLoading] = useState('false');
   const callDoctorDetailById = async () => {
     const list = await axios.get(`${USER_URL.DOCTOR}/${pathname.doctorId}`);
-    console.log(list.data.data.departments[0].description);
+    console.log(list.data.data, "11111111111111111111");
     setDoctor(list.data.data);
   };
 
@@ -50,7 +50,7 @@ export default function DoctorDetailPage() {
           onClick={() => {
             if (getCookie('user_name')) {
               router.push(
-                `/dashboard/specialist/${pathname.specialistId}/doctor/${pathname.doctorId}/booking/${workingTime}`,
+                `/specialist/${pathname.specialistId}/doctor/${pathname.doctorId}/booking/${workingTime}`,
               );
             } else {
               dispatch(setDsForm(true));
@@ -74,7 +74,7 @@ export default function DoctorDetailPage() {
           onClick={() => {
             if (getCookie('user_name')) {
               router.push(
-                `/dashboard/specialist/${pathname.specialistId}/doctor/${pathname.doctorId}/booking/${workingTime}`,
+                `/specialist/${pathname.specialistId}/doctor/${pathname.doctorId}/booking/${workingTime}`,
               );
             } else {
               dispatch(setDsForm(true));
@@ -95,12 +95,12 @@ export default function DoctorDetailPage() {
     }
   };
   return (
-    <div className="h-screen">
+    <div className="h-screen mt-30">
       <div className="flex justify-center mt-10 ">
         <div className="bg-white rounded-2xl w-[900px] ">
           <div className=" m-5">
             <div className="flex">
-              <div className="w-44 h-44 rounded-full overflow-hidden">
+              <div className="w-44 text-g h-44 rounded-full overflow-hidden">
                 {doctor === '' ? (
                   <Skeleton className="pt-5" width={176} height={176} />
                 ) : (
@@ -139,7 +139,7 @@ export default function DoctorDetailPage() {
                 <div className="flex mt-2">
                   <div>Chuyên khoa: </div>
                   <div className="pl-2 text-blue-600">
-                    {doctor === '' ? <Skeleton width={75} height={20}></Skeleton> : doctor.departments[0].name}
+                    {doctor === '' ? <Skeleton width={75} height={20}></Skeleton> : doctor.department.name}
                   </div>
                 </div>
                 <div className="flex mt-2">
