@@ -40,7 +40,9 @@ export default function Doctor() {
     );
   }
 
-  return <div className="m-5">
-  <DataTable doctors={doctors} onReload={handleReload} totalPages={totalPages} />
-  </div>;
+  return (
+    <div className="m-5">
+      <DataTable doctors={doctors} onReload={handleReload} totalPages={totalPages} />
+    </div>
+  );
 }

@@ -2,8 +2,10 @@ import { Button, Form, Image, Input, InputNumber, message, Modal, Upload, Select
 import { PlusOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { createRecord } from '../services/doctor.service';
+import Swal from 'sweetalert2';
+
 export default function CreateRecord(props) {
-  const { onReload } = props;
+  const { onReload, departments } = props;
   const { TextArea } = Input;
   const [showModal, setShowModal] = useState(false);
   const [form] = Form.useForm();
@@ -11,7 +13,7 @@ export default function CreateRecord(props) {
   const rules = [
     {
       required: true,
-      message: 'Bắt buộc!',
+      message: 'Trường này là bắt buộc !',
     },
   ];
 
@@ -24,21 +26,20 @@ export default function CreateRecord(props) {
   };
 
   const handleSubmit = async (values) => {
-    console.log(values);
     const response = await createRecord(values);
-    if (response) {
-      messageApi.open({
-        type: 'success',
-        content: 'Thêm mới thành công',
-        duration: 4,
+    if (response.data?.code === 201) {
+      Swal.fire({
+        title: 'Thông báo!',
+        text: response.data?.message,
+        icon: 'success',
       });
       onReload();
       setShowModal(false);
     } else {
-      messageApi.open({
-        type: 'error',
-        content: 'Thêm mới không thành công!',
-        duration: 4,
+      Swal.fire({
+        title: 'Thông báo!',
+        text: response.response?.data.message,
+        icon: 'error',
       });
     }
   };
@@ -48,7 +49,7 @@ export default function CreateRecord(props) {
       <Button className="mb-5" htmlType="submit" onClick={handleShowModal}>
         + Thêm mới
       </Button>
-      <Modal open={showModal} onCancel={handleCancel} title="Thêm bác sĩ" footer={null}>
+      <Modal open={showModal} onCancel={handleCancel} title="Thêm mới bác sĩ" footer={null}>
         {contextHolder}
         <Form
           name="create"
@@ -62,27 +63,26 @@ export default function CreateRecord(props) {
           <Form.Item label="Tên bác sĩ" name="name">
             <Input />
           </Form.Item>
-          {/* <Form.Item label="Chuyên khoa">
-            <Select>
-              <Select.Option value="1">Chuyên khoa 1</Select.Option>
-            </Select>
-          </Form.Item> */}
 
-          <Form.Item label="Trình độ" name="degree">
+          <Form.Item label="Chuyên khoa" name="department">
             <Select>
-              <Select.Option value="1">Trình độ 1</Select.Option>
+              {departments?.map((department) => (
+                <Select.Option key={department.id} value={department.id}>
+                  {department ? department.name : 'Chưa xét khoa'}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
-          {/* <Form.Item label="DatePicker">
-            <DatePicker />
-          </Form.Item> */}
-          {/* <Form.Item label="RangePicker">
-            <RangePicker />
-          </Form.Item> */}
+
+          <Form.Item label="Trình độ" name="degree">
+            <Input />
+          </Form.Item>
+
           <Form.Item label="Năm kinh nghiệm" name="experience">
             <InputNumber />
           </Form.Item>
-          <Form.Item label="Mô tả" name="description">
+
+          <Form.Item label="Chi tiết" name="description">
             <TextArea rows={4} />
           </Form.Item>
 
@@ -94,6 +94,7 @@ export default function CreateRecord(props) {
               </div>
             </Upload>
           </Form.Item>
+
           <Form.Item>
             <Button htmlType="submit">Thêm mới</Button>
           </Form.Item>
