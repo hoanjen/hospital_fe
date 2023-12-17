@@ -7,7 +7,7 @@ import { useParams } from 'next/navigation';
 export default function SpecialistPage() {
   const pathname = useParams();
   return (
-    <div className="flex flex-col items-center h-screen">
+    <div className="flex flex-col items-center min-h-[1000px]">
       <div>
         <div
           onClick={() => {
@@ -17,7 +17,7 @@ export default function SpecialistPage() {
         >
           Lựa chọn bác sĩ khám bệnh
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-20">
           <DoctorList specialistId={pathname.specialistId}></DoctorList>
         </div>
       </div>

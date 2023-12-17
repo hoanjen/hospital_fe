@@ -2,30 +2,35 @@
 
 import { Inter } from 'next/font/google';
 import './globals.css';
-import SideBar from '../components/SideBar/sideBar';
 import { Providers } from './provider';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
 const inter = Inter({ subsets: ['latin'] });
-import Script from 'next/script';
 import Footer from '@/components/Home/footer';
 import Link from '@/components/Home/link';
-import { USER_URL } from '@/api/constant/user';
-import axios from '@/api/axios';
-import { selectUserLogin, setProfile } from './redux/userLogin/userLoginSlice.js';
-import { useSelector, useDispatch } from 'react-redux';
+import SideBar from '../components/SideBar/sideBar';
+import { usePathname } from 'next/navigation';
+
+
 
 export default function RootLayout({ children }) {
+  const pathname = usePathname()
+  
   return (
     <html lang="en">
       <Link></Link>
       <body className={inter.className}>
         <Providers>
-          <div>
-            <div>{children}</div>
+          <div className="flex flex-col bg-slate h-full">
+            <div className={pathname.includes("manage") ? "hidden" :"fixed z-20 w-screen"}>
+              <SideBar></SideBar>
+            </div>
+            <div>
+              <div className={pathname.includes("manage") ? "" : "mt-[62px]"}>{children}</div>
+            </div>
+            <Footer></Footer>
           </div>
+          <ToastContainer />
         </Providers>
       </body>
     </html>

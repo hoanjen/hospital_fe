@@ -1,6 +1,6 @@
 'use client';
 
-import SpecialistList from '../../../components/PageRedirect/specialistList';
+import SpecialistList from '../../components/PageRedirect/specialistList';
 
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';

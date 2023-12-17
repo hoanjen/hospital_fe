@@ -11,7 +11,7 @@ export default function SpecialistList() {
   const [specialistList, setSpecialistList] = useState([]);
   const [isLoanding, setIsLoanding] = useState(false);
   const callDepartments = async () => {
-    const list = await axios.get(`${USER_URL.DEPARTMENTS}`);
+    const list = await axios.get(`${USER_URL.DEPARTMENTS}?limit=100`);
     setSpecialistList(list.data.data.results);
     console.log(list.data.data.results);
   };

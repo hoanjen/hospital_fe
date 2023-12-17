@@ -1,8 +1,8 @@
 'use client';
 
-import DoctorList from '../../components/Home/doctorList';
-import Hopital from '../../components/Home/hospital';
-import SpecialistlList from '../../components/Home/specialistList';
+import DoctorList from '../components/Home/doctorList';
+import Hopital from '../components/Home/hospital';
+import SpecialistlList from '../components/Home/specialistList';
 import { useState, useEffect } from 'react';
 
 export default function Home() {
@@ -87,9 +87,9 @@ export default function Home() {
           alt=""
         />
         <div className="absolute z-10 top-1/4 w-[630px] left-[32%] text-center text-white">
-          <div className="font-bold text-4xl">Ứng dụng đặt khám</div>
+          <div className="font-bold text-4xl">Bệnh Viện Đa Khoa Hà Nội</div>
           <div className="text-lg mt-2 font-medium">
-            Đặt khám với hơn 475 bác sĩ, 50 phòng khám trên YouMed để có số thứ tự và khung giờ khám trước.
+            Đặt khám với hơn 475 bác sĩ, 50 phòng khám trên ứng dụng để có số thứ tự và khung giờ khám trước.
           </div>
           <div></div>
           <div></div>

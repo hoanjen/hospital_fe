@@ -13,6 +13,8 @@ import ForgotPassword from '../auth/forgotPassword';
 import axios from '@/api/axios';
 import { USER_URL } from '@/api/constant/user';
 import { toast, ToastContainer } from 'react-toastify';
+import Logo from '@/image/shortCutLogo.jpg';
+
 
 export default function SideBar() {
   const router = useRouter();
@@ -60,7 +62,7 @@ export default function SideBar() {
         <div className=" ">
           <div
             onClick={() => {
-              router.push(`/dashboard/profile/${userId}`);
+              router.push(`/profile/${userId}`);
             }}
           >
             {userFullName}
@@ -96,19 +98,20 @@ export default function SideBar() {
   };
 
   return (
-    <div className="flex flex-row bg-white text-black font-semibold shadow-lg shadow-black-500/50 border-b-2 w-screen justify-between relative">
-      <div className="cursor-pointer p-4 text-lg ml-28 flex items-center" onClick={() => router.push('/dashboard')}>
-        <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />{' '}
-        <div>Bệnh Viện Đa Khoa Hà Nội</div>
+    <div className="flex flex-row bg-white text-black font-semibold shadow-lg shadow-black-500/50 border-slate-200 w-screen justify-between relative">
+      
+      <div className="cursor-pointer text-lg ml-28 flex items-center" onClick={() => router.push('/')}>
+        <img className="w-16 h-16 mr-2" src={Logo.src} alt="logo" />{' '}
+        <div className='text-center'>Bệnh Viện Đa Khoa Hà Nội</div>
       </div>
       <div className="flex flex-row items-center">
-        <div className="cursor-pointer p-4 text-l mr-4" onClick={() => router.push('/dashboard/specialist')}>
+        <div className="cursor-pointer p-4 text-l mr-4" onClick={() => router.push('/specialist')}>
           Đặt khám
         </div>
         <div className="cursor-pointer p-4 text-lg mr-4">Tư vấn trực tuyến</div>
         <div className="cursor-pointer p-4 text-lg mr-4">Store</div>
         <div className="cursor-pointer p-4 text-lg mr-4">Tin Y tế</div>
-        <div className="cursor-pointer p-4 text-lg mr-4" onClick={() => router.push('/admin/main')}>
+        <div className="cursor-pointer p-4 text-lg mr-4" onClick={() => router.push('/manage')}>
           Dành cho nhân viên Y tế
         </div>
         <div>
@@ -116,7 +119,7 @@ export default function SideBar() {
             <div className="">
               <img
                 onClick={() => {
-                  router.push(`/dashboard/profile/${userId}`);
+                  router.push(`/profile/${userId}`);
                 }}
                 className="w-12 h-12 cursor-pointer object-cover  rounded-full"
                 src={avatarr}

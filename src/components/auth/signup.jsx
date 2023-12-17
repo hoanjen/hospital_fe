@@ -7,6 +7,9 @@ import { toast, ToastContainer } from 'react-toastify';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { selectUserLogin, setAvatar, setDsForm, setName } from '@/app/redux/userLogin/userLoginSlice';
 import { useDispatch } from 'react-redux';
+import Logo from '@/image/shortCutLogo.jpg';
+
+
 export default function Signup(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,21 +34,22 @@ export default function Signup(props) {
     <div className="">
       <section className="">
         <div className="flex flex-col w-[500px] items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-white dark:text-white">
-            <img
-              className="w-8 h-8 mr-2"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-              alt="logo"
-            />
-            BV Đa Khoa Hà Nội
-          </a>
+          
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-2xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8 relative">
+            <div className='mt-6 relative'>
+              <a href="#" className="flex items-center justify-center text-2xl font-semibold dark:text-white">
+                <img
+                  className="w-16 h-16 mr-2"
+                  src={Logo.src}
+                  alt="logo"
+                />
+                BV Đa Khoa Hà Nội
+              </a>
               <div
                 onClick={() => {
-                  props.hiddenSignup(false);
+                  dispatch(setDsForm(false));
                 }}
-                className="absolute p-1 m-4 top-0 right-0 cursor-pointer hover:text-red-500 rounded-full"
+                className="absolute p-1 m-4 top-[-24px] right-0 cursor-pointer hover:text-red-500 rounded-full"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -58,6 +62,10 @@ export default function Signup(props) {
                   <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                 </svg>
               </div>
+            </div>
+            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              
+              
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Đăng ký tài khoản của bạn
               </h1>
