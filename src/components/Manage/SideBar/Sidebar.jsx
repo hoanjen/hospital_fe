@@ -171,7 +171,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     setCurrentPath('/manage/profile');
                   }}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    currentPath.includes('profile') && 'bg-graydark dark:bg-meta-4'
+                    currentPath === '/manage/profile' && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
                   <svg
@@ -272,7 +272,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     setCurrentPath('/manage/chart-order');
                   }}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    currentPath.includes('/manage/chart-order') && 'bg-graydark dark:bg-meta-4'
+                    currentPath ==='/manage/chart-order' && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
                   <svg
