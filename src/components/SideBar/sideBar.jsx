@@ -25,6 +25,7 @@ export default function SideBar() {
   const [logoutButton, setLogoutButton] = useState(false);
   const [displaySignup, setDisplaySignup] = useState(false);
   const [displayForgot, setDisplayForgot] = useState(false);
+  const [toggle, setToggle] = useState(false);
   const dispatch = useDispatch();
   const signout = () => {
     deleteCookie('user_avatar');
@@ -59,28 +60,46 @@ export default function SideBar() {
   const checkLogin = (isLogin) => {
     if (isLogin) {
       return (
-        <div className=" ">
-          <div
-            onClick={() => {
-              router.push(`/profile/${userId}`);
-            }}
-          >
-            {userFullName}
+        <div onClick={() => { setToggle(!toggle)}}>
+          <button id="dropdownDefaultButton" className="text-black text-lg  rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-blue600 dark:hover:bg-blue700 dark:focus:ring-bluebg-blue800" type="button">{userFullName} <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+          </svg>
+          </button>
+
+
+          <div id="dropdown" className={toggle ? "z-10 absolute mt-2 bg-white divide-y divide-gray100 rounded-lg shadow w-44 dark:bg-gray700" : "z-10 hidden mt-2 bg-white divide-y divide-gray100 rounded-lg shadow w-44 dark:bg-gray700"}>
+            <ul className="py-2 text-sm text-gray700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+              <li onClick={() => {
+                router.push(`/profile/${userId}`);
+              }}>
+                <a  className="flex items-center px-4 py-2 hover:bg-gray100 dark:hover:bg-gray600 dark:hover:text-white">
+
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="mr-2 bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                  </svg>
+
+                  Hồ Sơ
+                  
+                  </a>
+              </li>
+              <li onClick={() => {
+                signout();
+              }}>
+                
+                <a  className="flex items-center px-4 py-2 hover:bg-gray100 dark:hover:bg-gray600 dark:hover:text-white">
+
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="mr-2 bi bi-box-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                  </svg>
+                  Sign out
+                  
+                  </a>
+              </li>
+            </ul>
           </div>
-          <div className="">
-            {logoutButton ? (
-              <div
-                onClick={() => {
-                  signout();
-                }}
-                className="absolute z-20 right-0 top-16 rounded-md bg-white p-2"
-              >
-                Đăng xuất
-              </div>
-            ) : (
-              ''
-            )}
-          </div>
+
         </div>
       );
     } else {
@@ -141,6 +160,7 @@ export default function SideBar() {
         >
           {checkLogin(userFullName !== 'NULL')}
         </div>
+        
       </div>
 
       <div

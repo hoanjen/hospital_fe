@@ -61,6 +61,7 @@ export default function Information() {
     const data = new FormData();
     data.append('fullName', name);
     data.append('phoneNumber', phone);
+    data.append('job', job);
     data.append('gender', gender);
     data.append('address', address);
     data.append('cmndNumber', CMND);
@@ -174,7 +175,7 @@ export default function Information() {
                 <h2 className="text-lg font-medium pb-4">Điều chỉnh thông tin</h2>
               </div>
               <div>
-                <div className=" font-medium text-gray-700">Ảnh đại diện</div>
+                <div className=" font-medium text-gray700">Ảnh đại diện</div>
                 {!isChangeAv ? (
                   <div className="flex flex-col items-center m-5">
                     <div className="w-32 h-32">
@@ -222,7 +223,7 @@ export default function Information() {
                 )}
               </div>
               <div>
-                <div className=" font-medium text-gray-700">Chứng minh nhân dân</div>
+                <div className=" font-medium text-gray700">Chứng minh nhân dân</div>
                 {!isChangeCMND ? (
                   <div className="flex flex-col items-center m-5">
                     <div className="w-72 h-48">
@@ -270,7 +271,7 @@ export default function Information() {
                 )}
               </div>
               <div>
-                <div className=" font-medium text-gray-700">Thẻ bảo hiểm y tế</div>
+                <div className=" font-medium text-gray700">Thẻ bảo hiểm y tế</div>
                 {!isChangeBHYT ? (
                   <div className="flex flex-col items-center m-5">
                     <div className="w-72 h-48">
@@ -320,8 +321,20 @@ export default function Information() {
             </div>
             <div>
               <div className="my-4">
-                <label className="block text-sm font-medium text-gray-700">
-                  Họ và tên <span className="text-red-500">*</span>
+                <label className="block text-sm font-medium text-gray700">
+                  Email <span className="text-red500">*</span>
+                </label>
+                <input
+                  value={userProfile.email || ''}
+                  type="text"
+                  placeholder="Họ và tên"
+                  disabled="true"
+                  className="mt-1 px-3 py-2 block w-full shadow-sm cursor-not-allowed placeholder:text-sm border focus:border-bluehome border-gray200 rounded-md "
+                ></input>
+              </div>
+              <div className="my-4">
+                <label className="block text-sm font-medium text-gray700">
+                  Họ và tên <span className="text-red500">*</span>
                 </label>
                 <input
                   value={name || ''}
@@ -330,12 +343,12 @@ export default function Information() {
                   }}
                   type="text"
                   placeholder="Họ và tên"
-                  className="mt-1 px-3 py-2 block w-full shadow-sm placeholder:text-sm border focus:border-bluehome border-gray-200 rounded-md "
+                  className="mt-1 px-3 py-2 block w-full shadow-sm placeholder:text-sm border focus:border-bluehome border-gray200 rounded-md "
                 ></input>
               </div>
               <div className="my-4">
-                <label className="block text-sm font-medium text-gray-700">
-                  Số điện thoại <span className="text-red-500">*</span>
+                <label className="block text-sm font-medium text-gray700">
+                  Số điện thoại <span className="text-red500">*</span>
                 </label>
                 <input
                   value={phone || ''}
@@ -347,12 +360,12 @@ export default function Information() {
                   inputMode="numeric"
                   pattern="[0-9]*"
                   digitonly=""
-                  className="mt-1 px-3 py-2 focus:ring-primary focus:border-primary block w-full shadow-sm placeholder:text-sm border border-gray-200 rounded-md ng-untouched ng-pristine ng-valid"
+                  className="mt-1 px-3 py-2 focus:ring-primary focus:border-primary block w-full shadow-sm placeholder:text-sm border border-gray200 rounded-md ng-untouched ng-pristine ng-valid"
                 />
               </div>
               <div className="my-4">
-                <label className="block text-sm font-medium text-gray-700">
-                  Ngày sinh <span className="text-red-500">*</span>
+                <label className="block text-sm font-medium text-gray700">
+                  Ngày sinh <span className="text-red500">*</span>
                 </label>
                 <div className="mt-2">
                   <Space direction="vertical">
@@ -366,8 +379,8 @@ export default function Information() {
                 </div>
               </div>
               <div className="my-4">
-                <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
-                  Giới tính<span className="text-red-500">*</span>
+                <label htmlFor="gender" className="block text-sm font-medium text-gray700">
+                  Giới tính<span className="text-red500">*</span>
                 </label>
                 <Radio.Group defaultValue={gender === 'Nam' ? 1 : gender == 'Nữ' ? 2 : 3} onChange={onChange2}>
                   <Radio value={1}>Nam</Radio>
@@ -376,7 +389,7 @@ export default function Information() {
                 </Radio.Group>
               </div>
               <div className="my-4">
-                <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="address" className="block text-sm font-medium text-gray700">
                   Địa chỉ cụ thể
                 </label>
                 <input
@@ -386,12 +399,12 @@ export default function Information() {
                   }}
                   type="text"
                   placeholder="Số nhà, tên đường"
-                  className="mt-1 px-3 py-2 focus:ring-primary focus:border-primary block w-full shadow-sm placeholder:text-sm border border-gray-200 rounded-md ng-untouched ng-pristine ng-valid"
+                  className="mt-1 px-3 py-2 focus:ring-primary focus:border-primary block w-full shadow-sm placeholder:text-sm border border-gray200 rounded-md ng-untouched ng-pristine ng-valid"
                 ></input>
               </div>
               <div className="my-4 flex ">
                 <div className="mr-5">
-                  <label className="block text-sm font-medium text-gray-700">Số CMND/CCCD</label>
+                  <label className="block text-sm font-medium text-gray700">Số CMND/CCCD</label>
                   <input
                     value={CMND || ''}
                     onChange={(e) => {
@@ -402,11 +415,11 @@ export default function Information() {
                     inputMode="numeric"
                     pattern="[0-9]*"
                     digitonly=""
-                    className="mt-1 px-3 py-2 focus:ring-primary focus:border-primary block w-full shadow-sm placeholder:text-sm border border-gray-200 rounded-md ng-pristine ng-valid ng-touched"
+                    className="mt-1 px-3 py-2 focus:ring-primary focus:border-primary block w-full shadow-sm placeholder:text-sm border border-gray200 rounded-md ng-pristine ng-valid ng-touched"
                   ></input>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Dân tộc</label>
+                  <label className="block text-sm font-medium text-gray700">Dân tộc</label>
                   <input
                     value={nation || ''}
                     onChange={(e) => {
@@ -417,12 +430,12 @@ export default function Information() {
                     inputMode="numeric"
                     pattern="[0-9]*"
                     digitonly=""
-                    className="mt-1 px-3 py-2 focus:ring-primary focus:border-primary block w-full shadow-sm placeholder:text-sm border border-gray-200 rounded-md ng-pristine ng-valid ng-touched"
+                    className="mt-1 px-3 py-2 focus:ring-primary focus:border-primary block w-full shadow-sm placeholder:text-sm border border-gray200 rounded-md ng-pristine ng-valid ng-touched"
                   ></input>
                 </div>
               </div>
               <div className="my-4">
-                <label className="block text-sm font-medium text-gray-700">Nghề nghiệp</label>
+                <label className="block text-sm font-medium text-gray700">Nghề nghiệp</label>
                 <input
                   value={job || ''}
                   onChange={(e) => {
@@ -433,11 +446,11 @@ export default function Information() {
                   inputMode="numeric"
                   pattern="[0-9]*"
                   digitonly=""
-                  className="mt-1 px-3 py-2 focus:border-bluehome block w-full shadow-sm placeholder:text-sm border border-gray-200 rounded-md ng-pristine ng-valid ng-touched"
+                  className="mt-1 px-3 py-2 focus:border-bluehome block w-full shadow-sm placeholder:text-sm border border-gray200 rounded-md ng-pristine ng-valid ng-touched"
                 ></input>
               </div>
               <div className="my-4">
-                <label htmlFor="hiCardCode" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="hiCardCode" className="block text-sm font-medium text-gray700">
                   Mã thẻ BHYT
                 </label>
                 <input
@@ -449,7 +462,7 @@ export default function Information() {
                   type="text"
                   nz-input=""
                   placeholder="Mã số trên thẻ Bảo hiểm y tế"
-                  className="mt-1 px-3 py-2 focus:ring-primary focus:border-primary block w-full shadow-sm placeholder:text-sm border border-gray-200 rounded-md ng-untouched ng-pristine ng-valid"
+                  className="mt-1 px-3 py-2 focus:ring-primary focus:border-primary block w-full shadow-sm placeholder:text-sm border border-gray200 rounded-md ng-untouched ng-pristine ng-valid"
                 />
               </div>
               <div className="flex justify-end mt-5 cursor-pointer">

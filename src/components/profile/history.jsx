@@ -35,11 +35,11 @@ export default function History() {
 
   const dsStatus = (status) => {
     if (status === 'accepted') {
-      return <div className="p-2 min-w-[110px] text-white bg-green-500 text-center rounded-md">Thành công</div>;
+      return <div className="p-2 min-w-[110px] text-white bg-green500 text-center rounded-md">Thành công</div>;
     } else if (status === 'pending') {
-      return <div className="p-2 min-w-[110px] text-white bg-yellow-400   text-center rounded-md">Chờ duyệt</div>;
+      return <div className="p-2 min-w-[110px] text-white bg-yellow400   text-center rounded-md">Chờ duyệt</div>;
     } else {
-      return <div className="p-2 min-w-[110px] text-white bg-red-500   text-center rounded-md">Từ chối</div>;
+      return <div className="p-2 min-w-[110px] text-white bg-red500   text-center rounded-md">Từ chối</div>;
     }
   };
 
@@ -47,14 +47,14 @@ export default function History() {
     <div className="w-[1140px] mt-10 ml-5">
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <caption className="text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-            <div className="text-lg p-5 font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+          <caption className="text-lg font-semibold text-left rtl:text-right text-gray900 bg-white dark:text-white dark:bg-gray-800">
+            <div className="text-lg p-5 font-semibold text-left rtl:text-right text-gray900 bg-white dark:text-white dark:bg-gray-800">
               Lịch sử đặt khám
             </div>
-            <div className="bg-orange-50 p-4">
-              <div className="flex items-center text-orange-600 ">
+            <div className="bg-orange50 p-4">
+              <div className="flex items-center text-orange600 ">
                 <label className="ml-1 font-medium">Lưu ý</label>
-                <div className="text-base ml-2 text-gray-900 font-normal">
+                <div className="text-base ml-2 text-gray900 font-normal">
                   * Nếu bệnh nhân bận việc không đến khám được vui lòng hủy lịch khám đã đặt và đặt lại ngày khác. Xin
                   cảm ơn!
                 </div>
@@ -62,7 +62,7 @@ export default function History() {
             </div>
           </caption>
 
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead className="text-xs text-gray700 uppercase bg-gray-50 dark:bg-gray700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Mã phiếu
@@ -91,8 +91,8 @@ export default function History() {
             {history.length > 0
               ? history.map((item, index) => {
                   return (
-                    <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray700">
+                      <th scope="row" className="px-6 py-4 font-medium text-gray900 whitespace-nowrap dark:text-white">
                         {item.id}
                       </th>
                       <td className="px-6 py-4">{item.doctor?.name}</td>
@@ -102,12 +102,12 @@ export default function History() {
                       <td className="px-6 py-4">{item.numberOrder}</td>
                       <td className="px-6 py-4">{item.note}</td>
                       <td className="px-6 py-2">{dsStatus(item.status)}</td>
-                      <td className="px-6 py-4 text-right">
+                      <td className="px-6 py-4 text-right ">
                         <a
                           onClick={() => {
                             cancelBooking(item.id);
                           }}
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          className="font-medium text-blue600 dark:text-blue500 hover:underline cursor-pointer" 
                         >
                           Hủy lịch
                         </a>
@@ -119,8 +119,8 @@ export default function History() {
             {history === ''
               ? [1, 2, 3, 4, 5, 6].map((item, key) => {
                   return (
-                    <tr key={key} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <tr key={key} className="bg-white border-b dark:bg-gray-800 dark:border-gray700">
+                      <th scope="row" className="px-6 py-4 font-medium text-gray900 whitespace-nowrap dark:text-white">
                         <Skeleton></Skeleton>
                       </th>
                       <td className="px-6 py-4">
@@ -152,7 +152,7 @@ export default function History() {
         ) : (
           <div className="bg-slate-100 p-4">
             <div className=" text-center">
-              <div className="text-base ml-2 text-gray-900 font-normal">Không có dữ liệu</div>
+              <div className="text-base ml-2 text-gray900 font-normal">Không có dữ liệu</div>
             </div>
           </div>
         )}
