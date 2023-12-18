@@ -1,5 +1,12 @@
 'use client';
 
-export default function ManageUser() {
-  return <h1>Manage User</h1>;
+import React from 'react';
+import DataTable from './dataTable';
+
+export default function User() {
+  return (
+    <div className="m-5">
+      <DataTable />
+    </div>
+  );
 }
