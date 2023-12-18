@@ -59,7 +59,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <NavLink onClick={() => router.push('/dashboard')}>
+        <NavLink onClick={() => router.push('/')}>
           <img src={Logo.src} alt="Logo" />
         </NavLink>
 

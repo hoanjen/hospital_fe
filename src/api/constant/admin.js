@@ -2,6 +2,7 @@ export const ADMIN_URL = {
   LOGIN: 'auth/login',
   REGISTER: 'auth/register',
   DEPARTMENTS: 'departments',
+  USER: 'users',
   DOCTOR: 'doctors',
   WORKINGTIME: 'working-times',
   BOOKING: 'health-forms',
