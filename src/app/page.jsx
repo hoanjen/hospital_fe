@@ -15,7 +15,7 @@ export default function Home() {
           <div className="p-3 min-w-[300px] border-b-bluehome text-blue-700 border-b-4">Bệnh Viện</div>
           <div
             onClick={() => {
-              setClickSubMenu('ck');
+              
             }}
             className="p-3 min-w-[300px] border-b-4 hover:border-b-bluehome"
           >
@@ -23,7 +23,7 @@ export default function Home() {
           </div>
           <div
             onClick={() => {
-              setClickSubMenu('bs');
+              
             }}
             className="p-3 min-w-[300px] border-b-4 hover:border-b-bluehome"
           >
@@ -36,7 +36,7 @@ export default function Home() {
         <div className="flex text-center text-lg font-semibold mt-5 cursor-pointer">
           <div
             onClick={() => {
-              setClickSubMenu('bv');
+              
             }}
             className="p-3 min-w-[300px] border-b-4 hover:border-b-bluehome"
           >
@@ -45,7 +45,7 @@ export default function Home() {
           <div className="p-3 min-w-[300px] border-b-4 border-b-bluehome text-blue-700">Chuyên Khoa</div>
           <div
             onClick={() => {
-              setClickSubMenu('bs');
+              
             }}
             className="p-3 min-w-[300px] border-b-4 hover:border-b-bluehome"
           >
@@ -58,7 +58,7 @@ export default function Home() {
         <div className="flex text-center text-lg font-semibold mt-5 cursor-pointer">
           <div
             onClick={() => {
-              setClickSubMenu('bv');
+              
             }}
             className="p-3 min-w-[300px] hover:border-b-bluehome border-b-4 "
           >
@@ -66,7 +66,7 @@ export default function Home() {
           </div>
           <div
             onClick={() => {
-              setClickSubMenu('ck');
+              
             }}
             className="p-3 min-w-[300px] border-b-4 hover:border-b-bluehome"
           >

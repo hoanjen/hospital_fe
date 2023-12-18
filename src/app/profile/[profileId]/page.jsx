@@ -1,17 +1,24 @@
 'use client';
-
+import { deleteCookie } from 'cookies-next';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Information from '@/components/profile/infomation';
 import Account from '@/components/profile/account';
 import History from '@/components/profile/history';
+import {toast} from 'react-toastify'
+import { useRouter } from 'next/navigation';
+import { selectUserLogin, setAvatar, setActive, setDsForm } from '@/app/redux/userLogin/userLoginSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 export default function Profile() {
+  const router = useRouter();
   const param = useParams('/profile');
   const handle = () => {
     console.log(param);
   };
-  const [active, setActive] = useState(1);
+  const number =  useSelector(selectUserLogin);
+  const [active, setActive] = useState(number.active);
   const backInfo = () => {
     setActive(1);
   };
@@ -20,9 +27,21 @@ export default function Profile() {
       return <Information></Information>;
     } else if (active === 2) {
       return <Account toInfo={backInfo}></Account>;
-    } else {
+    } else if(active === 3) {
       return <History></History>;
+    } else{
+      signout();
+      router.push('/');
     }
+  };
+
+
+  const signout = () => {
+    deleteCookie('user_avatar');
+    deleteCookie('user_name');
+    deleteCookie('user_id');
+    deleteCookie('access_token');
+    toast.success('Đăng xuất thành công');
   };
 
   return (

@@ -19,6 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Link></Link>
+      
       <body className={inter.className}>
         <Providers>
           <div className="flex flex-col bg-slate h-full">

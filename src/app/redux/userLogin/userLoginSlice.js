@@ -5,12 +5,16 @@ const initialState = {
   avatar: 'NULL',
   dsForm: false,
   profile: 'NULL',
+  active: 1
 };
 
 export const userLoginSlice = createSlice({
   name: 'userLogin',
   initialState,
   reducers: {
+    setActive: (state, action) => {
+      state.active = action.payload;
+    },
     setName: (state, action) => {
       state.name = action.payload;
     },
@@ -26,6 +30,6 @@ export const userLoginSlice = createSlice({
   },
 });
 
-export const { setName, setAvatar, setDsForm, setProfile } = userLoginSlice.actions;
+export const { setName, setAvatar, setDsForm, setProfile, setActive } = userLoginSlice.actions;
 export const selectUserLogin = (state) => state.userLogin;
 export default userLoginSlice.reducer;

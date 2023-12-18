@@ -2,7 +2,7 @@
 
 import axios from '@/api/axios';
 import { USER_URL } from '@/api/constant/user';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,7 +11,13 @@ import Signin from '@/components/auth/signin';
 import dayjs from 'dayjs';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { selectUserLogin, setAvatar, setActive, setDsForm } from '@/app/redux/userLogin/userLoginSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCookie } from 'cookies-next';
+
 export default function Booking() {
+  const dispatch = useDispatch();
+  const router = useRouter()
   const pathname = useParams();
   const [user, setUser] = useState('');
   const [doctor, setDoctor] = useState('');
@@ -29,6 +35,8 @@ export default function Booking() {
     if (mes?.data?.code === 201) {
       toast.success('Đặt lịch thành công');
       setIsLoading(false);
+      dispatch(setActive(3));
+      router.push(`/profile/${getCookie('user_id')}`);
       
     }
     toast.error(mes?.response?.data?.message);
