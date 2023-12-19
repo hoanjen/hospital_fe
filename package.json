@@ -13,6 +13,7 @@
     "@ant-design/icons": "^5.2.6",
     "@reduxjs/toolkit": "^1.9.7",
     "antd": "^5.12.1",
+    "antd-img-crop": "^4.18.0",
     "axios": "^1.6.1",
     "chart.js": "^4.4.1",
     "cookies-next": "^4.0.0",

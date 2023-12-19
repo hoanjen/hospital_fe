@@ -7,9 +7,11 @@ import ViewRecord from './viewRecord';
 import CreateRecord from './createRecord';
 import EditRecord from './editRecord';
 import DeleteRecord from './deleteRecord';
+import { getListRole } from '../services/role.service';
 
 const DataTable = () => {
   const [users, setUsers] = useState([]);
+  const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [limitPage, setLimitPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
@@ -28,6 +30,8 @@ const DataTable = () => {
       setTotalPage(result.data.totalPages);
       setTotalResult(result.data.totalResults);
       setLimitPage(result.data.limit);
+      const result_roles = await getListRole();
+      setRoles(result_roles.data?.results);
     } catch (error) {
       console.log(error);
     } finally {
@@ -85,24 +89,13 @@ const DataTable = () => {
       title: <div style={{ fontSize: '1rem' }}>STT</div>,
       dataIndex: 'index',
       key: 'index',
+      width: 60,
       render: (_, record, index) => <div style={{ fontSize: '1rem' }}>{index + 1}</div>,
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
-      // filters: [
-      //   {
-      //     text: 'Joe',
-      //     value: 'Joe',
-      //   },
-      //   {
-      //     text: 'Jim',
-      //     value: 'Jim',
-      //   },
-      // ],
-      // filteredValue: filteredInfo.name || null,
-      // onFilter: (value, record) => record.name.includes(value),
       sorter: (a, b) => a.email.localeCompare(b.email),
       sortOrder: sortedInfo.columnKey === 'email' ? sortedInfo.order : null,
       ellipsis: true,
@@ -143,6 +136,7 @@ const DataTable = () => {
       title: 'Giới tính',
       dataIndex: 'gender',
       key: 'gender',
+      width: 120,
       sorter: (a, b) => a.gender.localeCompare(b.gender),
       sortOrder: sortedInfo.columnKey === 'gender' ? sortedInfo.order : null,
       ellipsis: true,
@@ -158,12 +152,13 @@ const DataTable = () => {
     {
       title: <div style={{ fontSize: '1rem' }}>Hành động</div>,
       key: 'actions',
+      width: 120,
       render: (_, record) => {
         return (
           <>
-            <ViewRecord record={record} onReload={onReload} />
-            <EditRecord record={record} onReload={onReload} />
-            <DeleteRecord record={record} onReload={onReload} />
+            <ViewRecord record={record} onReload={onReload} roles={roles} />
+            <EditRecord record={record} onReload={onReload} roles={roles} />
+            <DeleteRecord record={record} onReload={onReload} roles={roles} />
           </>
         );
       },
@@ -176,7 +171,7 @@ const DataTable = () => {
           marginBottom: 16,
         }}
       >
-        <CreateRecord onReload={onReload}></CreateRecord>
+        <CreateRecord onReload={onReload} roles={roles}></CreateRecord>
         <Button onClick={clearFilters}>Xóa bộ lọc</Button>
         <Button onClick={clearAll}>Xóa bộ lọc và sắp xếp</Button>
       </Space>
