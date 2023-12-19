@@ -9,23 +9,9 @@ import queryString from 'query-string';
 import { USER_URL } from '@/api/constant/user';
 import axios from '@/api/axios';
 import { useParams } from 'next/navigation';
+import moment from 'moment';
 
 
-export const getListHistory = async (option, filter) => {
-   try {
-      const queryParams = queryString.stringify({ ...option, ...filter });
-      const result = await axios.get(`${USER_URL.HEALFORM}/?userId=${path.profileId}?${queryParams}`);
-      if (result?.data?.code === 200) {
-         console.log('Request successful:', result.data);
-         return result.data;
-      } else {
-         console.error('Request failed with status:', result.data.code);
-         throw new Error('Failed to fetch data');
-      }
-   } catch (error) {
-      console.error('An error occurred:', error);
-   }
-};
 
 const DataTable = () => {
    const path = useParams();
@@ -42,7 +28,9 @@ const DataTable = () => {
 
    const fetchApi = async (option, filter) => {
       try {
+         console.log(11111);
          const result = await getListHistory(option, filter);
+         console.log(result);
          setHistorys(result);
          setCurrentPage(result.data.page);
          setTotalPage(result.data.totalPages);
@@ -52,6 +40,31 @@ const DataTable = () => {
          console.log(error);
       } finally {
          setLoading(false);
+      }
+   };
+   const dsStatus = (status) => {
+      if (status === 'accepted') {
+        return <div className="p-2 min-w-[110px] text-white bg-green500 text-center rounded-md">Thành công</div>;
+      } else if (status === 'pending') {
+        return <div className="p-2 min-w-[110px] text-white bg-yellow400   text-center rounded-md">Chờ duyệt</div>;
+      } else {
+        return <div className="p-2 min-w-[110px] text-white bg-red500   text-center rounded-md">Từ chối</div>;
+      }
+    };
+
+   const getListHistory = async (option, filter) => {
+      try {
+         const queryParams = queryString.stringify({ ...option, ...filter });
+         const result = await axios.get(`${USER_URL.HEALFORM}/?userId=${path.profileId}&populate=doctor,workingTime${queryParams}`);
+         if (result?.data?.code === 200) {
+            console.log('Request successful:', result.data);
+            return result.data;
+         } else {
+            console.error('Request failed with status:', result.data.code);
+            throw new Error('Failed to fetch data');
+         }
+      } catch (error) {
+         console.error('An error occurred:', error);
       }
    };
 
@@ -105,12 +118,13 @@ const DataTable = () => {
          title: <div style={{ fontSize: '1rem' }}>STT</div>,
          dataIndex: 'index',
          key: 'index',
+         width: 60,
          render: (_, record, index) => <div style={{ fontSize: '1rem' }}>{index + 1}</div>,
       },
       {
-         title: 'Email',
-         dataIndex: 'email',
-         key: 'email',
+         title: 'Mã phiếu',
+         dataIndex: 'id',
+         key: 'id',
          // filters: [
          //   {
          //     text: 'Joe',
@@ -123,56 +137,76 @@ const DataTable = () => {
          // ],
          // filteredValue: filteredInfo.name || null,
          // onFilter: (value, record) => record.name.includes(value),
-         sorter: (a, b) => a.email.localeCompare(b.email),
-         sortOrder: sortedInfo.columnKey === 'email' ? sortedInfo.order : null,
+         sorter: (a, b) => a.id.localeCompare(b.id),
+         sortOrder: sortedInfo.columnKey === 'id' ? sortedInfo.order : null,
          ellipsis: true,
       },
       {
-         title: 'Họ và tên',
-         dataIndex: 'fullName',
-         key: 'fullName',
-         sorter: (a, b) => a.fullName.localeCompare(b.fullName),
-         sortOrder: sortedInfo.columnKey === 'fullName' ? sortedInfo.order : null,
+         title: 'Tên bác sĩ',
+         dataIndex: 'doctor',
+         key: 'doctor.name',
+         width: 180,
+         render: (doctor,record) =>{ return <div>{doctor.name}</div>},
+         sorter: (a, b) => a.doctor.name.localeCompare(b.doctor.name),
+         sortOrder: sortedInfo.columnKey === 'doctor.name' ? sortedInfo.order : null,
          ellipsis: true,
       },
       {
-         title: 'Ngày sinh',
-         dataIndex: 'dateOfBirth',
-         key: 'dateOfBirth',
-         sorter: (a, b) => {
-            const dateA = isValidDate(a.dateOfBirth) ? new Date(a.dateOfBirth) : null;
-            const dateB = isValidDate(b.dateOfBirth) ? new Date(b.dateOfBirth) : null;
-            if (dateA && dateB) {
-               return dateA - dateB;
-            } else if (dateA) {
-               return -1;
-            } else if (dateB) {
-               return 1;
-            } else {
-               return 0;
-            }
-         },
-         sortOrder: sortedInfo.columnKey === 'dateOfBirth' ? sortedInfo.order : null,
+         title: 'Chuyên Khoa',
+         dataIndex: 'department',
+         key: 'department',
+         width: 130,
+         sorter: (a, b) => a.department.localeCompare(b.department),
+         sortOrder: sortedInfo.columnKey === 'department' ? sortedInfo.order : null,
+         ellipsis: true,
+      },
+      {
+         title: 'Thời gian',
+         dataIndex: 'workingTime',
+         key: 'workingTime.startTime',
+         width: 200,
+         sorter: (a, b) => a.workingTime.startTime.localeCompare(b.workingTime.startTime),
+         sortOrder: sortedInfo.columnKey === 'workingTime.startTime' ? sortedInfo.order : null,
          ellipsis: true,
          render: (text, record) => {
-            const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
-            return new Date(text).toLocaleDateString('en-GB', options);
+            return <div>{text.startTime +"-" + text.endTime + " " + moment(text.createAt).format('DD/MM/YYYY')}</div>
          },
       },
       {
-         title: 'Giới tính',
-         dataIndex: 'gender',
-         key: 'gender',
-         sorter: (a, b) => a.gender.localeCompare(b.gender),
-         sortOrder: sortedInfo.columnKey === 'gender' ? sortedInfo.order : null,
+         title: 'Số thứ tự khám',
+         dataIndex: 'numberConfirm',
+         key: 'numberConfirm',
+         width: 150,
+         sorter: (a, b) => {
+            a < b
+         },
+         render: (text, record) => {
+            if(text === 0 ){
+               return <div>Chờ xác nhận</div>
+            }
+            return <div>{text}</div>
+         },
+         sortOrder: sortedInfo.columnKey === 'numberOrder' ? sortedInfo.order : null,
          ellipsis: true,
       },
       {
-         title: 'Địa chỉ',
-         dataIndex: 'address',
-         key: 'address',
-         sorter: (a, b) => a.address?.localeCompare(b.address),
-         sortOrder: sortedInfo.columnKey === 'address' ? sortedInfo.order : null,
+         title: 'Ghi chú',
+         dataIndex: 'note',
+         key: 'note',
+         sorter: (a, b) => a.note.localeCompare(b.note),
+         sortOrder: sortedInfo.columnKey === 'note' ? sortedInfo.order : null,
+         ellipsis: true,
+      },
+      {
+         title: 'Trạng thái',
+         dataIndex: 'status',
+         key: 'status',
+         width: 150,
+         sorter: (a, b) => a.status?.localeCompare(b.status),
+         render: (status)=> {
+            return dsStatus(status);
+         },
+         sortOrder: sortedInfo.columnKey === 'status' ? sortedInfo.order : null,
          ellipsis: true,
       },
       {
@@ -181,7 +215,7 @@ const DataTable = () => {
          render: (_, record) => {
             return (
                <>
-                  <ViewHistory record={record} onReload={onReload} />
+               
                   <UpdateHistory record={record} onReload={onReload} />
                </>
             );
@@ -195,11 +229,12 @@ const DataTable = () => {
                marginBottom: 16,
             }}
          >
-            <CreateRecord onReload={onReload}></CreateRecord>
+            
             <Button onClick={clearFilters}>Xóa bộ lọc</Button>
             <Button onClick={clearAll}>Xóa bộ lọc và sắp xếp</Button>
          </Space>
          <Table
+            
             columns={columns}
             dataSource={data}
             onChange={handleChange}
@@ -213,6 +248,7 @@ const DataTable = () => {
                   const filter = {};
                   option['limit'] = pageSize;
                   option['page'] = page;
+                  console.log("KKKKKKKKK");
                   fetchApi(option, filter);
                },
                pageSizeOptions: ['10', '30', '50'],

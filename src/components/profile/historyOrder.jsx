@@ -5,7 +5,7 @@ import DataTable from './dataTable';
 
 export default function HistoryOrder() {
    return (
-      <div className="m-5">
+      <div className="w-[1140px] mt-10 ml-5">
          <DataTable />
       </div>
    );
