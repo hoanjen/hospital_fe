@@ -9,7 +9,7 @@ import {toast} from 'react-toastify'
 import { useRouter } from 'next/navigation';
 import { selectUserLogin, setAvatar, setActive, setDsForm } from '@/app/redux/userLogin/userLoginSlice';
 import { useDispatch, useSelector } from 'react-redux';
-
+import HistoryOrder from '@/components/profile/historyOrder';
 
 export default function Profile() {
   const router = useRouter();
@@ -28,7 +28,7 @@ export default function Profile() {
     } else if (active === 2) {
       return <Account toInfo={backInfo}></Account>;
     } else if(active === 3) {
-      return <History></History>;
+      return <HistoryOrder></HistoryOrder>;
     } else{
       signout();
       router.push('/');
