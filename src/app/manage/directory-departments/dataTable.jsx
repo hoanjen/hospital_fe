@@ -1,29 +1,71 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Table } from 'antd';
 import React from 'react';
-import { Button } from 'antd';
+import { Table, Flex, Spin, Button } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
-// import DeleteRecord from './deleteRecord';
-// import EditRecord from './editRecord';
-// import { getListDepartment } from '../services/department.service';
+import DeleteRecord from './deleteRecord';
+import EditRecord from './editRecord';
+import { getListDepartment } from '../services/department.service';
 
-function DataTable(props) {
-  const { departments, onReload } = props;
+function DataTable() {
+  const [departments, setDepartments] = useState([]);
   const data = departments;
-  console.log(data)
-  // const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
 
-  const buttonStyle = {
-    marginRight: '5px',
+  const fetchApi = async () => {
+    try {
+      const result = await getListDepartment();
+      setDepartments(result);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  useEffect(() => {
+    fetchApi();
+  }, []);
+
+  const handleReload = () => {
+    fetchApi();
+  };
+
+  if (loading) {
+    return (
+      <Flex gap="small" vertical>
+        <Spin size="large" />
+      </Flex>
+    );
+  }
   const columns = [
     {
       title: <div style={{ fontSize: '1rem' }}>STT</div>,
       dataIndex: 'index',
       key: 'index',
+      width: 50,
       render: (_, record, index) => <div style={{ fontSize: '1rem' }}>{index + 1}</div>,
+    },
+    {
+      title: <div style={{ fontSize: '1rem' }}>Ảnh</div>,
+      dataIndex: 'image',
+      key: 'image',
+      render: (image) => (
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <img
+            src={image}
+            alt="department"
+            style={{
+              width: '50px',
+              height: '50px',
+              border: '1px solid #fff', 
+              borderRadius: '50%', 
+              marginRight: '8px', 
+            }}
+          />
+        </div>
+      ),
     },
     {
       title: <div style={{ fontSize: '1rem' }}>Tên khoa</div>,
@@ -31,42 +73,19 @@ function DataTable(props) {
       key: 'name',
       render: (text) => <div style={{ fontSize: '1rem' }}>{text}</div>,
     },
-    // {
-    //   title: <div style={{ fontSize: '1rem' }}>Chuyên khoa</div>,
-    //   dataIndex: 'departmentId',
-    //   key: 'departmentId',
-    //   render: (text, record) => {
-    //     const departmentsFiltered = departments.filter((item) => item.id === record.departments[0]);
-    //     const department = departmentsFiltered.length > 0 ? departmentsFiltered[0] : null;
-    //     return <div style={{ fontSize: '1rem' }}>{department ? department.name : 'Chưa xét khoa'}</div>;
-    //   },
-    // },
-    // {
-    //   title: <div style={{ fontSize: '1rem' }}>Trình độ</div>,
-    //   dataIndex: 'degree',
-    //   key: 'degree',
-    //   render: (text) => <div style={{ fontSize: '1rem' }}>{text}</div>,
-    // },
-    // {
-    //   title: <div style={{ fontSize: '1rem' }}>Năm kinh nghiệm</div>,
-    //   dataIndex: 'experience',
-    //   key: 'experience',
-    //   render: (text) => <div style={{ fontSize: '1rem' }}>{text}</div>,
-    // },
-
-    // {
-    //   title: <div style={{ fontSize: '1rem' }}>Hành động</div>,
-    //   key: 'actions',
-    //   render: (_, record) => {
-    //     return (
-    //       <>
-    //         <Button icon={<EyeOutlined />} size="small" style={buttonStyle} />
-    //         {/* <EditRecord record={record} onReload={onReload} />
-    //         <DeleteRecord record={record} onReload={onReload} /> */}
-    //       </>
-    //     );
-    //   },
-    // },
+    {
+      title: <div style={{ fontSize: '1rem' }}>Hành động</div>,
+      key: 'actions',
+      render: (_, record) => {
+        return (
+          <>
+            
+            {/* <EditRecord record={record} onReload={handleReload} departments={departments} /> */}
+            <DeleteRecord record={record} onReload={handleReload}/>
+          </>
+        );
+      },
+    },
   ];
   return (
     <>
@@ -75,11 +94,6 @@ function DataTable(props) {
         columns={columns}
         rowKey={'id'}
         size="small"
-        // pagination={{
-        //   pageSize: totalPages.doctors.data.limit,
-        //   total: totalPages,
-        //   onChange: (page) => page = doctors.data.page,
-        // }}
       />
     </>
   );

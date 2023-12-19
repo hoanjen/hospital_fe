@@ -1,17 +1,10 @@
 import { Button, Form, Image, Input, InputNumber, message, Modal, Upload, Select } from 'antd';
 import { EditOutlined, UploadOutlined, DeleteOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import { editRecord } from '../services/doctor.service';
-import { getListDepartment } from '../services/department.service';
 import Swal from 'sweetalert2';
 const { TextArea } = Input;
-
 function EditRecord(props) {
-  const { record, onReload, departments } = props;
-
-  const buttonStyle = {
-    marginRight: '5px',
-  };
+  const { record, onReload } = props;
 
   const [showModal, setShowModal] = useState(false);
   const [form] = Form.useForm();
@@ -64,7 +57,7 @@ function EditRecord(props) {
     <>
       <Button icon={<EditOutlined />} primary size="small" className="mx-1" onClick={handleShowModal} />
 
-      <Modal open={showModal} onCancel={handleCancel} title="Cập nhật bác sĩ" footer={null}>
+      <Modal open={showModal} onCancel={handleCancel} title="Cập nhật chuyên khoa" footer={null}>
         {contextHolder}
 
         <Form

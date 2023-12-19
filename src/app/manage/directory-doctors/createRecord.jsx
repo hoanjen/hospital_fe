@@ -46,7 +46,7 @@ export default function CreateRecord(props) {
 
   return (
     <>
-      <Button className="mb-5" htmlType="submit" onClick={handleShowModal}>
+      <Button htmlType="submit" onClick={handleShowModal}>
         + Thêm mới
       </Button>
       <Modal open={showModal} onCancel={handleCancel} title="Thêm mới bác sĩ" footer={null}>

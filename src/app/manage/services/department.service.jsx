@@ -17,3 +17,33 @@ export const getListDepartment = async () => {
     console.error('An error occurred:', error);
   }
 };
+
+export const deleteRecord = async (id) => {
+  try {
+    const result = await axios.delete(`${ADMIN_URL.DEPARTMENTS}/${id}`);
+    return result;
+  } catch (error) {
+    console.error('Error deleting record:', error);
+    throw error;
+  }
+};
+
+export const editRecord = async (id, options) => {
+  try {
+    const result = await axios.put(`${ADMIN_URL.DEPARTMENTS}/${id}`, options);
+    return result;
+  } catch (error) {
+    console.error('Error deleting record:', error);
+    throw error;
+  }
+};
+
+export const createRecord = async (options) => {
+  try {
+    const result = await axios.post(`${ADMIN_URL.DEPARTMENTS}`, options);
+    return result;
+  } catch (error) {
+    console.error('Error deleting record:', error);
+    throw error;
+  }
+};
