@@ -19,7 +19,7 @@ function DataTable() {
     current: 1,
     totalResult: 1,
   });
-  console.log(pagination)
+  console.log(pagination);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
 
@@ -39,7 +39,6 @@ function DataTable() {
       setLoading(false);
     }
   };
-  
 
   useEffect(() => {
     fetchApi();
@@ -86,11 +85,19 @@ function DataTable() {
       title: <div style={{ fontSize: '1rem' }}>STT</div>,
       dataIndex: 'index',
       key: 'index',
-      width: 80,
+      width: 60,
       render: (_, record, index) => <div style={{ fontSize: '1rem' }}>{index + 1}</div>,
     },
     {
-      title: <div style={{ fontSize: '1rem' }}>Ảnh</div>,
+      title: <div style={{ fontSize: '1rem' }}>Tên chuyên khoa</div>,
+      dataIndex: 'name',
+      key: 'name',
+      sorter: (a, b) => a.name.localeCompare(b.name),
+      sortOrder: sortedInfo.columnKey === 'name' ? sortedInfo.order : null,
+      ellipsis: true,
+    },
+    {
+      title: <div style={{ fontSize: '1rem' }}>Ảnh minh họa</div>,
       dataIndex: 'image',
       key: 'image',
       render: (image) => (
@@ -101,31 +108,24 @@ function DataTable() {
             style={{
               width: '50px',
               height: '50px',
-              border: '1px solid #fff', 
-              borderRadius: '50%', 
-              marginRight: '8px', 
+              border: '1px solid #fff',
+              borderRadius: '50%',
+              marginRight: '8px',
             }}
           />
         </div>
       ),
     },
     {
-      title: <div style={{ fontSize: '1rem' }}>Tên khoa</div>,
-      dataIndex: 'name',
-      key: 'name',
-      sorter: (a, b) => a.name.localeCompare(b.name),
-      sortOrder: sortedInfo.columnKey === 'name' ? sortedInfo.order : null,
-      ellipsis: true,
-    },
-    {
       title: <div style={{ fontSize: '1rem' }}>Hành động</div>,
       key: 'actions',
+      width: 120,
       render: (_, record) => {
         return (
           <>
             <ViewRecord record={record} />
-            <EditRecord record={record} onReload={handleReload} departments={data}/>
-            <DeleteRecord record={record} onReload={handleReload}/>
+            <EditRecord record={record} onReload={handleReload} departments={data} />
+            <DeleteRecord record={record} onReload={handleReload} />
           </>
         );
       },
@@ -134,14 +134,14 @@ function DataTable() {
   return (
     <>
       <Space
-          style={{
-            marginBottom: 16,
-          }}
-        >
-          <CreateRecord onReload={handleReload}></CreateRecord>
-          <Button onClick={clearFilters}>Xóa bộ lọc</Button>
-          <Button onClick={clearAll}>Xóa bộ lọc và sắp xếp</Button>
-        </Space>
+        style={{
+          marginBottom: 16,
+        }}
+      >
+        <CreateRecord onReload={handleReload}></CreateRecord>
+        <Button onClick={clearFilters}>Xóa bộ lọc</Button>
+        <Button onClick={clearAll}>Xóa bộ lọc và sắp xếp</Button>
+      </Space>
       <Table
         onChange={handleChange}
         dataSource={data}
@@ -149,10 +149,10 @@ function DataTable() {
         rowKey={'id'}
         size="small"
         pagination={{
-            current: pagination.current,
-            total: pagination.totalResult,
-            onChange: (page, pageSize) => {
-              setPagination(prevPagination => ({
+          current: pagination.current,
+          total: pagination.totalResult,
+          onChange: (page, pageSize) => {
+            setPagination((prevPagination) => ({
               ...prevPagination,
               current: page,
               limitPage: pageSize,
