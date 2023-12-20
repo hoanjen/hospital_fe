@@ -1,38 +1,33 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import React from 'react';
-import { Button, Table, Flex, Spin, Space } from 'antd';
-import DeleteRecord from './deleteRecord';
-import EditRecord from './editRecord';
-import CreateRecord from './createRecord';
+import React, { useEffect, useState } from 'react';
+import { Button, Flex, Space, Spin, Table } from 'antd';
+import { getListRole } from '../services/role.service';
 import ViewRecord from './viewRecord';
-import { getListDepartment } from '../services/department.service';
+import CreateRecord from './createRecord';
+import EditRecord from './editRecord';
+import DeleteRecord from './deleteRecord';
 
-function DataTable() {
-  const [listDepartments, setDepartments] = useState([]);
-  const data = listDepartments?.data?.results;
+const DataTable = () => {
+  const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [pagination, setPagination] = useState({
-    limitPage: 1,
-    totalPage: 1,
-    current: 1,
-    totalResult: 1,
-  });
-  console.log(pagination);
+  const [limitPage, setLimitPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalResult, setTotalResult] = useState(1);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
 
+  const data = roles?.data?.results;
+
   const fetchApi = async (option, filter) => {
     try {
-      const result = await getListDepartment(option, filter);
-      setDepartments(result);
-      setPagination({
-        limitPage: result.data.limit,
-        totalPage: result.data.totalPages,
-        current: result.data.page,
-        totalResult: result.data.totalResults,
-      });
+      const result = await getListRole(option, filter);
+      setRoles(result);
+      setCurrentPage(result.data.page);
+      setTotalPage(result.data.totalPages);
+      setTotalResult(result.data.totalResults);
+      setLimitPage(result.data.limit);
     } catch (error) {
       console.log(error);
     } finally {
@@ -44,7 +39,7 @@ function DataTable() {
     fetchApi();
   }, []);
 
-  const handleReload = () => {
+  const onReload = () => {
     fetchApi();
   };
 
@@ -73,7 +68,7 @@ function DataTable() {
       <span>
         Hiển thị từ&nbsp;
         <span strong>{range[1] * (range[0] - 1) + 1}</span> đến&nbsp;
-        <span strong>{Math.min(range[1] * range[0], pagination.totalResult)}</span>
+        <span strong>{Math.min(range[1] * range[0], totalResult)}</span>
         &nbsp;trong tổng số&nbsp;
         <span strong>{total}</span> bản ghi
       </span>
@@ -89,32 +84,20 @@ function DataTable() {
       render: (_, record, index) => <div style={{ fontSize: '1rem' }}>{index + 1}</div>,
     },
     {
-      title: <div style={{ fontSize: '1rem' }}>Tên chuyên khoa</div>,
-      dataIndex: 'name',
-      key: 'name',
-      sorter: (a, b) => a.name.localeCompare(b.name),
-      sortOrder: sortedInfo.columnKey === 'name' ? sortedInfo.order : null,
+      title: 'Tên quyền',
+      dataIndex: 'roleName',
+      key: 'roleName',
+      sorter: (a, b) => a.roleName.localeCompare(b.roleName),
+      sortOrder: sortedInfo.columnKey === 'roleName' ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
-      title: <div style={{ fontSize: '1rem' }}>Ảnh minh họa</div>,
-      dataIndex: 'image',
-      key: 'image',
-      render: (image) => (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img
-            src={image}
-            alt="department"
-            style={{
-              width: '50px',
-              height: '50px',
-              border: '1px solid #fff',
-              borderRadius: '50%',
-              marginRight: '8px',
-            }}
-          />
-        </div>
-      ),
+      title: 'Index quyền',
+      dataIndex: 'roleIndex',
+      key: 'roleIndex',
+      sorter: (a, b) => a.roleIndex.localeCompare(b.roleIndex),
+      sortOrder: sortedInfo.columnKey === 'roleIndex' ? sortedInfo.order : null,
+      ellipsis: true,
     },
     {
       title: <div style={{ fontSize: '1rem' }}>Hành động</div>,
@@ -123,14 +106,15 @@ function DataTable() {
       render: (_, record) => {
         return (
           <>
-            <ViewRecord record={record} />
-            <EditRecord record={record} onReload={handleReload} departments={data} />
-            <DeleteRecord record={record} onReload={handleReload} />
+            <ViewRecord record={record} onReload={onReload} />
+            <EditRecord record={record} onReload={onReload} />
+            <DeleteRecord record={record} onReload={onReload} />
           </>
         );
       },
     },
   ];
+
   return (
     <>
       <Space
@@ -138,25 +122,20 @@ function DataTable() {
           marginBottom: 16,
         }}
       >
-        <CreateRecord onReload={handleReload}></CreateRecord>
+        <CreateRecord onReload={onReload} roles={roles}></CreateRecord>
         <Button onClick={clearFilters}>Xóa bộ lọc</Button>
         <Button onClick={clearAll}>Xóa bộ lọc và sắp xếp</Button>
       </Space>
       <Table
-        onChange={handleChange}
-        dataSource={data}
         columns={columns}
-        rowKey={'id'}
-        size="small"
+        dataSource={data}
+        onChange={handleChange}
         pagination={{
-          current: pagination.current,
-          total: pagination.totalResult,
+          current: currentPage,
+          total: totalResult,
           onChange: (page, pageSize) => {
-            setPagination((prevPagination) => ({
-              ...prevPagination,
-              current: page,
-              limitPage: pageSize,
-            }));
+            setCurrentPage(page);
+            setLimitPage(pageSize);
             const option = {};
             const filter = {};
             option['limit'] = pageSize;
@@ -169,11 +148,11 @@ function DataTable() {
           showSizeChanger: true,
           showPrevNextJumpers: false,
           showLessItems: true,
-          showTotal: () => handleTotal(pagination.totalResult, [pagination.current, pagination.limitPage]),
+          showTotal: () => handleTotal(totalResult, [currentPage, limitPage]),
         }}
       />
     </>
   );
-}
+};
 
 export default DataTable;

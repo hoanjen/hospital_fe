@@ -24,17 +24,13 @@ function DataTable() {
   const [sortedInfo, setSortedInfo] = useState({});
   const data = doctors?.data?.results;
   const departments = listDepartments?.data?.results;
-  console.log("departments: ",departments)
-  
+  console.log('departments: ', departments);
 
   const fetchData = async (option, filter) => {
     try {
-      const [doctorResult, departmentResult] = await Promise.all([
-        getListDoctor(option, filter),
-        getListDepartment(),
-      ]);
-      console.log("doctor: ",doctorResult);
-      console.log("department: ",departmentResult);
+      const [doctorResult, departmentResult] = await Promise.all([getListDoctor(option, filter), getListDepartment()]);
+      console.log('doctor: ', doctorResult);
+      console.log('department: ', departmentResult);
 
       setDoctors(doctorResult);
       setDepartments(departmentResult);
@@ -97,7 +93,7 @@ function DataTable() {
       title: <div style={{ fontSize: '0.9rem' }}>STT</div>,
       dataIndex: 'index',
       key: 'index',
-      width: 50,
+      width: 60,
       render: (_, record, index) => <div style={{ fontSize: '1rem' }}>{index + 1}</div>,
     },
     {
@@ -112,6 +108,12 @@ function DataTable() {
       title: <div style={{ fontSize: '1rem' }}>Chuyên khoa</div>,
       dataIndex: 'departmentId',
       key: 'departmentId',
+      sorter: (a, b) => {
+        const departmentA = departments.filter((item) => item.id == a.department);
+        const departmentB = departments.filter((item) => item.id == b.department);
+        return departmentA[0]?.name.localeCompare(departmentB[0]?.name);
+      },
+      sortOrder: sortedInfo.columnKey === 'departmentId' ? sortedInfo.order : null,
       render: (text, record) => {
         const departmentsFiltered = departments.filter((item) => item.id === record.department);
         const department = departmentsFiltered.length > 0 ? departmentsFiltered[0] : null;
@@ -138,10 +140,11 @@ function DataTable() {
     {
       title: <div style={{ fontSize: '1rem' }}>Hành động</div>,
       key: 'actions',
+      width: 120,
       render: (_, record) => {
         return (
           <>
-            <ViewRecord record={record} departments={departments}/>
+            <ViewRecord record={record} departments={departments} />
             <EditRecord record={record} onReload={handleReload} departments={departments} />
             <DeleteRecord record={record} onReload={handleReload} />
           </>
@@ -165,14 +168,14 @@ function DataTable() {
         <Table
           onChange={handleChange}
           dataSource={data}
-          columns={columns} 
+          columns={columns}
           rowKey={'id'}
           size="small"
           pagination={{
             current: pagination.current,
             total: pagination.totalResult,
             onChange: (page, pageSize) => {
-              setPagination(prevPagination => ({
+              setPagination((prevPagination) => ({
                 ...prevPagination,
                 current: page,
                 limitPage: pageSize,

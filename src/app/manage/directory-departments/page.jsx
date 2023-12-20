@@ -1,12 +1,19 @@
 'use client';
-
-import DataTable from './dataTable';
 import React from 'react';
+import { Tabs } from 'antd';
+import DataTable from './dataTable';
+const { TabPane } = Tabs;
+import BreadCrumb from '../../../components/Manage/Breadcrumb';
 
 export default function DirectoryDepartment() {
   return (
-    <div className="m-5">
-      <DataTable />
+    <div>
+      <BreadCrumb link="http://localhost:3000/manage" title_1="Quản trị hệ thống" title_2="Quản lý chuyên khoa" />
+      <Tabs defaultActiveKey="1" onChange={(key) => console.log(key)}>
+        <TabPane tab="Tất cả" key="1">
+          <DataTable />
+        </TabPane>
+      </Tabs>
     </div>
-  )
+  );
 }
