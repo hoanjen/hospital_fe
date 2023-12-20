@@ -1,21 +1,16 @@
-import { Button, Form, Spin, Input, InputNumber, message, Modal, Flex, Select } from 'antd';
+import { Button, Form, Spin, Input, Modal, Select } from 'antd';
 import Swal from 'sweetalert2';
-import { EditOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import { editRecord } from '../services/doctor.service';
+import { editRecord } from '../services/department.service';
 import UploadImage from '../services/upload.service';
-
 const { TextArea } = Input;
 
 function EditRecord(props) {
   const { record, onReload, departments } = props;
   const [showModal, setShowModal] = useState(false);
   const [form] = Form.useForm();
-  const [messageApi, contextHolder] = message.useMessage();
   const [newFileListAvatar, setNewFileListAvatar] = useState([]);
-
-  
-
   const rules = [
     {
       required: true,
@@ -50,7 +45,6 @@ function EditRecord(props) {
     }
   
     try {
-      
       const response = await editRecord(record.id, formData);
       if (response.data?.code === 200) {
         Swal.fire({
@@ -61,7 +55,6 @@ function EditRecord(props) {
         onReload();
         setShowModal(false);
       } else {
-        // Show error message
         Swal.fire({
           title: 'Thông báo!',
           text: response.response?.data.message,
@@ -69,7 +62,6 @@ function EditRecord(props) {
         });
       }
     } catch (error) {
-      // Handle errors if any
       console.error('Error updating record:', error);
     }
   };
@@ -77,8 +69,7 @@ function EditRecord(props) {
     <>
       <Button icon={<EditOutlined />} primary size="small" className="mx-1" onClick={handleShowModal} />
 
-      <Modal open={showModal} onCancel={handleCancel} title="Cập nhật bác sĩ" footer={null}>
-        {contextHolder}
+      <Modal open={showModal} onCancel={handleCancel} title="Cập nhật chuyên khoa" footer={null}>
 
         <Form
           name="edit"
@@ -90,15 +81,10 @@ function EditRecord(props) {
           layout="horizontal"
           style={{ maxWidth: 600 }}
         >
-          <Form.Item label="Ảnh đại diện" rules={rules}>
+          <Form.Item label="Ảnh chuyên khoa" rules={rules}>
             <UploadImage onFileListChange={setNewFileListAvatar} url={record.image} />
           </Form.Item>
-
-          <Form.Item label="Tên bác sĩ" name="name" rules={rules}>
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="Chuyên khoa" name="department">
+          <Form.Item label="Tên chuyên khoa" name="name">
             <Select>
               {departments?.map((department) => (
                 <Select.Option key={department.id} value={department.id}>
@@ -107,16 +93,7 @@ function EditRecord(props) {
               ))}
             </Select>
           </Form.Item>
-
-          <Form.Item label="Trình độ" name="degree" rules={rules}>
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="Năm kinh nghiệm" name="experience" rules={rules}>
-            <InputNumber min={1} />
-          </Form.Item>
-
-          <Form.Item label="Chi tiết" name="description" rules={rules}>
+          <Form.Item label="Mô tả" name="description" rules={rules}>
             <TextArea showCount maxLength={1000} placeholder="can resize" />
           </Form.Item>
 
