@@ -89,6 +89,7 @@ module.exports = {
         'yellow400': '#facc15',
         'green500': '#22c55e',
         'gray200': '#e5e7eb',
+        'gray50': '#F9FAFB',
       },
       spacing: {
         4.5: '1.125rem',

@@ -20,6 +20,7 @@ const DataTable = () => {
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
 
+
   const data = users?.data?.results;
 
   const fetchApi = async (option, filter) => {

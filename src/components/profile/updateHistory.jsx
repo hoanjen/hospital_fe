@@ -24,7 +24,7 @@ function DeleteHistory(props) {
    const { record, onReload } = props;
 
    const handleDelete = async () => {
-      if(record.status === "rejected"){
+      if (record.status === "rejected") {
          return;
       }
       Swal.fire({
@@ -59,7 +59,7 @@ function DeleteHistory(props) {
 
    return (
       <>
-         <div className={record.status === "rejected" ? "font-medium text-red500 cursor-not-allowed dark:text-blue500 hover:underline"  : "font-medium text-blue600 dark:text-blue500 hover:underline cursor-pointer"  } onClick={() => {handleDelete();}} >Hủy lịch</div>
+         <div className={record.status === "rejected" ? "font-medium text-red500 cursor-not-allowed dark:text-blue500 hover:underline" : "font-medium text-blue600 dark:text-blue500 hover:underline cursor-pointer"} onClick={() => { handleDelete(); }} >Hủy lịch</div>
       </>
    );
 }
