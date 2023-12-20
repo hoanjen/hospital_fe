@@ -29,7 +29,9 @@ export default function RootLayout({ children }) {
             <div>
               <div className={pathname.includes("manage") ? "" : "mt-[62px]"}>{children}</div>
             </div>
-            <Footer></Footer>
+            <div className={pathname.includes("manage") ? "hidden" : ""}>
+              <Footer></Footer>
+            </div>
           </div>
           <ToastContainer />
         </Providers>

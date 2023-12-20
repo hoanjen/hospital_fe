@@ -54,8 +54,8 @@ export default function WorkingTimeList(props) {
           }}
           className={
             index === chosseTime
-              ? 'bg-bluehome text-white cursor-pointer p-2 border-1 rounded-md m-1 text-center'
-              : 'hover:bg-bluehome hover:text-white cursor-pointer p-2 border-1 rounded-md m-1 text-center'
+              ? 'bg-bluehome text-white cursor-pointer p-2 border-1 border-gray600 rounded-md m-1 text-center'
+              : 'hover:bg-bluehome hover:text-white cursor-pointer p-2 border  only:rounded-md m-1 text-center'
           }
         >
           {item.startTime} {`-`} {item.endTime}
@@ -63,7 +63,7 @@ export default function WorkingTimeList(props) {
       );
     } else {
       return (
-        <div className="hover:bg-bluehome hover:text-white p-2 border-1 rounded-md m-1 text-center cursor-not-allowed">
+        <div className="hover:bg-bluehome hover:text-white p-2 border rounded-md m-1 text-center cursor-not-allowed">
           {item.startTime} {`-`} {item.endTime}
         </div>
       );

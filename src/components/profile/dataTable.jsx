@@ -23,12 +23,11 @@ const DataTable = () => {
    const [totalResult, setTotalResult] = useState(1);
    const [filteredInfo, setFilteredInfo] = useState({});
    const [sortedInfo, setSortedInfo] = useState({});
-
+   const [filterStatus, setFilterStatus] = useState('');
    const data = historys?.data?.results;
 
    const fetchApi = async (option, filter) => {
       try {
-         console.log(11111);
          const result = await getListHistory(option, filter);
          console.log(result);
          setHistorys(result);
@@ -55,7 +54,7 @@ const DataTable = () => {
    const getListHistory = async (option, filter) => {
       try {
          const queryParams = queryString.stringify({ ...option, ...filter });
-         const result = await axios.get(`${USER_URL.HEALFORM}/?userId=${path.profileId}&populate=doctor,workingTime${queryParams}`);
+         const result = await axios.get(`${USER_URL.HEALFORM}/?userId=${path.profileId}&populate=doctor,workingTime&${queryParams}`);
          if (result?.data?.code === 200) {
             console.log('Request successful:', result.data);
             return result.data;
@@ -89,8 +88,14 @@ const DataTable = () => {
       setFilteredInfo(filters);
       setSortedInfo(sorter);
    };
-   const clearFilters = () => {
-      setFilteredInfo({});
+   const healFormFilter = (status) => {
+      console.log(status, "1111111111111111111111")
+      setFilterStatus(status);
+      if(status !== ""){
+         fetchApi({},{status});
+      }else{
+         fetchApi();
+      }
    };
    const clearAll = () => {
       setFilteredInfo({});
@@ -215,7 +220,6 @@ const DataTable = () => {
          render: (_, record) => {
             return (
                <>
-               
                   <UpdateHistory record={record} onReload={onReload} />
                </>
             );
@@ -229,9 +233,11 @@ const DataTable = () => {
                marginBottom: 16,
             }}
          >
+            <Button onClick={() => healFormFilter("rejected")}>Lịch khám bị hủy</Button>
+            <Button onClick={() => healFormFilter("accepted")}>Lịch khám đã được duyệt</Button>
+            <Button onClick={() => healFormFilter("pending")}>Lịch khám đang chờ duyệt</Button>
+            <Button onClick={() => healFormFilter('')}>Xóa lọc lịch</Button>
             
-            <Button onClick={clearFilters}>Xóa bộ lọc</Button>
-            <Button onClick={clearAll}>Xóa bộ lọc và sắp xếp</Button>
          </Space>
          <Table
             
@@ -242,13 +248,16 @@ const DataTable = () => {
                current: currentPage,
                total: totalResult,
                onChange: (page, pageSize) => {
+                  console.log("1111111111", pageSize, page);
                   setCurrentPage(page);
                   setLimitPage(pageSize);
                   const option = {};
                   const filter = {};
+                  if(filterStatus !== ''){
+                     filter['status'] = filterStatus;
+                  }
                   option['limit'] = pageSize;
                   option['page'] = page;
-                  console.log("KKKKKKKKK");
                   fetchApi(option, filter);
                },
                pageSizeOptions: ['10', '30', '50'],
