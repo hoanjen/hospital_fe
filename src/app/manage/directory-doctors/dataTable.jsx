@@ -12,11 +12,7 @@ import ViewRecord from './viewRecord';
 
 function DataTable() {
   const [doctors, setDoctors] = useState([]);
-  const [departments, setDepartments] = useState([]);
-
-  console.log("doctors:", doctors)
-
-  const data = doctors?.data?.results;
+  const [listDepartments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
     limitPage: 1,
@@ -24,8 +20,11 @@ function DataTable() {
     current: 1,
     totalResult: 1,
   });
-  const [filters, setFilters] = useState({});
+  const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
+  const data = doctors?.data?.results;
+  const departments = listDepartments?.data?.results;
+  console.log("departments: ",departments)
   
 
   const fetchData = async (option, filter) => {
@@ -34,6 +33,8 @@ function DataTable() {
         getListDoctor(option, filter),
         getListDepartment(),
       ]);
+      console.log("doctor: ",doctorResult);
+      console.log("department: ",departmentResult);
 
       setDoctors(doctorResult);
       setDepartments(departmentResult);
@@ -68,7 +69,7 @@ function DataTable() {
   }
 
   const handleChange = (pagination, filters, sorter) => {
-    // console.log('Various parameters', pagination, filters, sorter);
+    console.log('Various parameters', pagination, filters, sorter);
     setFilteredInfo(filters);
     setSortedInfo(sorter);
   };
@@ -79,7 +80,6 @@ function DataTable() {
     setFilteredInfo({});
     setSortedInfo({});
   };
-
   const handleTotal = (total, range) => {
     return (
       <span>
@@ -130,7 +130,7 @@ function DataTable() {
       title: <div style={{ fontSize: '1rem' }}>Năm kinh nghiệm</div>,
       dataIndex: 'experience',
       key: 'experience',
-      sorter: (a, b) => a.experience.localeCompare(b.experience),
+      sorter: (a, b) => parseInt(a.experience, 10) - parseInt(b.experience, 10),
       sortOrder: sortedInfo.columnKey === 'experience' ? sortedInfo.order : null,
       ellipsis: true,
     },
@@ -141,7 +141,7 @@ function DataTable() {
       render: (_, record) => {
         return (
           <>
-            <ViewRecord record={record} onReload={handleReload}/>
+            <ViewRecord record={record} departments={departments}/>
             <EditRecord record={record} onReload={handleReload} departments={departments} />
             <DeleteRecord record={record} onReload={handleReload} />
           </>
@@ -152,18 +152,17 @@ function DataTable() {
   return (
     <>
       <div>
-      <Space
-        style={{
-          marginBottom: 16,
-        }}
-      >
-        <CreateRecord onReload={handleReload} departments={departments}></CreateRecord>
-        <Button onClick={clearFilters}>Xóa bộ lọc</Button>
-        <Button onClick={clearAll}>Xóa bộ lọc và sắp xếp</Button>
-      </Space>
+        <Space
+          style={{
+            marginBottom: 16,
+          }}
+        >
+          <CreateRecord onReload={handleReload} departments={departments}></CreateRecord>
+          <Button onClick={clearFilters}>Xóa bộ lọc</Button>
+          <Button onClick={clearAll}>Xóa bộ lọc và sắp xếp</Button>
+        </Space>
 
         <Table
-          onReload={handleReload}
           onChange={handleChange}
           dataSource={data}
           columns={columns} 
@@ -173,8 +172,11 @@ function DataTable() {
             current: pagination.current,
             total: pagination.totalResult,
             onChange: (page, pageSize) => {
-              pagination.page = page;
-              pagination.limitPage = pageSize;
+              setPagination(prevPagination => ({
+                ...prevPagination,
+                current: page,
+                limitPage: pageSize,
+              }));
               const option = {};
               const filter = {};
               option['limit'] = pageSize;

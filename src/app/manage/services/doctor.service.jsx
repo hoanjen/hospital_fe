@@ -35,7 +35,7 @@ export const editRecord = async (id, options) => {
     const result = await axios.put(`${ADMIN_URL.DOCTOR}/${id}`, options);
     return result;
   } catch (error) {
-    console.error('Error deleting record:', error);
+    console.error('Error editing record:', error);
     throw error;
   }
 };
@@ -45,7 +45,7 @@ export const createRecord = async (options) => {
     const result = await axios.post(`${ADMIN_URL.DOCTOR}`, options);
     return result;
   } catch (error) {
-    console.error('Error deleting record:', error);
+    console.error('Error creating record:', error);
     throw error;
   }
 };

@@ -2,27 +2,44 @@
 
 import { useEffect, useState } from 'react';
 import React from 'react';
-import { Table, Flex, Spin, Button } from 'antd';
-import { EyeOutlined } from '@ant-design/icons';
+import { Button, Table, Flex, Spin, Space } from 'antd';
 import DeleteRecord from './deleteRecord';
 import EditRecord from './editRecord';
+import CreateRecord from './createRecord';
+import ViewRecord from './viewRecord';
 import { getListDepartment } from '../services/department.service';
 
 function DataTable() {
-  const [departments, setDepartments] = useState([]);
-  const data = departments;
+  const [listDepartments, setDepartments] = useState([]);
+  const data = listDepartments?.data?.results;
   const [loading, setLoading] = useState(true);
+  const [pagination, setPagination] = useState({
+    limitPage: 1,
+    totalPage: 1,
+    current: 1,
+    totalResult: 1,
+  });
+  console.log(pagination)
+  const [filteredInfo, setFilteredInfo] = useState({});
+  const [sortedInfo, setSortedInfo] = useState({});
 
-  const fetchApi = async () => {
+  const fetchApi = async (option, filter) => {
     try {
-      const result = await getListDepartment();
+      const result = await getListDepartment(option, filter);
       setDepartments(result);
+      setPagination({
+        limitPage: result.data.limit,
+        totalPage: result.data.totalPages,
+        current: result.data.page,
+        totalResult: result.data.totalResults,
+      });
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchApi();
@@ -39,12 +56,37 @@ function DataTable() {
       </Flex>
     );
   }
+
+  const handleChange = (pagination, filters, sorter) => {
+    console.log('Various parameters', pagination, filters, sorter);
+    setFilteredInfo(filters);
+    setSortedInfo(sorter);
+  };
+  const clearFilters = () => {
+    setFilteredInfo({});
+  };
+  const clearAll = () => {
+    setFilteredInfo({});
+    setSortedInfo({});
+  };
+  const handleTotal = (total, range) => {
+    return (
+      <span>
+        Hiển thị từ&nbsp;
+        <span strong>{range[1] * (range[0] - 1) + 1}</span> đến&nbsp;
+        <span strong>{Math.min(range[1] * range[0], pagination.totalResult)}</span>
+        &nbsp;trong tổng số&nbsp;
+        <span strong>{total}</span> bản ghi
+      </span>
+    );
+  };
+
   const columns = [
     {
       title: <div style={{ fontSize: '1rem' }}>STT</div>,
       dataIndex: 'index',
       key: 'index',
-      width: 50,
+      width: 80,
       render: (_, record, index) => <div style={{ fontSize: '1rem' }}>{index + 1}</div>,
     },
     {
@@ -71,7 +113,9 @@ function DataTable() {
       title: <div style={{ fontSize: '1rem' }}>Tên khoa</div>,
       dataIndex: 'name',
       key: 'name',
-      render: (text) => <div style={{ fontSize: '1rem' }}>{text}</div>,
+      sorter: (a, b) => a.name.localeCompare(b.name),
+      sortOrder: sortedInfo.columnKey === 'name' ? sortedInfo.order : null,
+      ellipsis: true,
     },
     {
       title: <div style={{ fontSize: '1rem' }}>Hành động</div>,
@@ -79,8 +123,8 @@ function DataTable() {
       render: (_, record) => {
         return (
           <>
-            
-            {/* <EditRecord record={record} onReload={handleReload} departments={departments} /> */}
+            <ViewRecord record={record} />
+            <EditRecord record={record} onReload={handleReload} departments={data}/>
             <DeleteRecord record={record} onReload={handleReload}/>
           </>
         );
@@ -89,11 +133,44 @@ function DataTable() {
   ];
   return (
     <>
+      <Space
+          style={{
+            marginBottom: 16,
+          }}
+        >
+          <CreateRecord onReload={handleReload}></CreateRecord>
+          <Button onClick={clearFilters}>Xóa bộ lọc</Button>
+          <Button onClick={clearAll}>Xóa bộ lọc và sắp xếp</Button>
+        </Space>
       <Table
+        onChange={handleChange}
         dataSource={data}
         columns={columns}
         rowKey={'id'}
         size="small"
+        pagination={{
+            current: pagination.current,
+            total: pagination.totalResult,
+            onChange: (page, pageSize) => {
+              setPagination(prevPagination => ({
+              ...prevPagination,
+              current: page,
+              limitPage: pageSize,
+            }));
+            const option = {};
+            const filter = {};
+            option['limit'] = pageSize;
+            option['page'] = page;
+            fetchApi(option, filter);
+          },
+          pageSizeOptions: ['10', '30', '50'],
+          position: ['bottomRight'],
+          hideOnSinglePage: false,
+          showSizeChanger: true,
+          showPrevNextJumpers: false,
+          showLessItems: true,
+          showTotal: () => handleTotal(pagination.totalResult, [pagination.current, pagination.limitPage]),
+        }}
       />
     </>
   );

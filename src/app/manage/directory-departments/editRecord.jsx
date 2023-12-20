@@ -1,17 +1,16 @@
-import { Button, Form, Image, Input, InputNumber, message, Modal, Upload, Select } from 'antd';
-import { EditOutlined, UploadOutlined, DeleteOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import { Button, Form, Spin, Input, Modal, Select } from 'antd';
 import Swal from 'sweetalert2';
+import { EditOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import { editRecord } from '../services/department.service';
+import UploadImage from '../services/upload.service';
 const { TextArea } = Input;
-function EditRecord(props) {
-  const { record, onReload } = props;
 
+function EditRecord(props) {
+  const { record, onReload, departments } = props;
   const [showModal, setShowModal] = useState(false);
   const [form] = Form.useForm();
-  const [messageApi, contextHolder] = message.useMessage();
-  const [deleteImage, setDeleteImage] = useState(false);
-  const [image, setImage] = useState(record.image);
-
+  const [newFileListAvatar, setNewFileListAvatar] = useState([]);
   const rules = [
     {
       required: true,
@@ -27,38 +26,50 @@ function EditRecord(props) {
     form.resetFields();
   };
 
-  const handleDeleteImage = () => {
-    // Xử lý khi người dùng nhấn nút "Xóa ảnh"
-    setImage(null);
-    setDeleteImage(true);
-    onReload();
-  };
-
   const handleSubmit = async (values) => {
-    const response = await editRecord(record.id, values);
-    if (response.data?.code === 200) {
-      Swal.fire({
-        title: 'Thông báo!',
-        text: response.data?.message,
-        icon: 'success',
-      });
-      onReload();
-      setShowModal(false);
-    } else {
-      Swal.fire({
-        title: 'Thông báo!',
-        text: response.response?.data.message,
-        icon: 'error',
-      });
+    const formData = new FormData();
+    for (const key in values) {
+      if (values.hasOwnProperty(key) && values[key]) {
+        const value = values[key];
+        if (Array.isArray(value)) {
+          value.forEach((val) => {
+            formData.append(`${key}[]`, val);
+          });
+        } else {
+          formData.append(key, value);
+        }
+      }
+    }
+    if (newFileListAvatar.length > 0) {
+      formData.append('image', newFileListAvatar[0].originFileObj);
+    }
+  
+    try {
+      const response = await editRecord(record.id, formData);
+      if (response.data?.code === 200) {
+        Swal.fire({
+          title: 'Thông báo!',
+          text: response.data?.message,
+          icon: 'success',
+        });
+        onReload();
+        setShowModal(false);
+      } else {
+        Swal.fire({
+          title: 'Thông báo!',
+          text: response.response?.data.message,
+          icon: 'error',
+        });
+      }
+    } catch (error) {
+      console.error('Error updating record:', error);
     }
   };
-
   return (
     <>
       <Button icon={<EditOutlined />} primary size="small" className="mx-1" onClick={handleShowModal} />
 
       <Modal open={showModal} onCancel={handleCancel} title="Cập nhật chuyên khoa" footer={null}>
-        {contextHolder}
 
         <Form
           name="edit"
@@ -70,28 +81,10 @@ function EditRecord(props) {
           layout="horizontal"
           style={{ maxWidth: 600 }}
         >
-          <Form.Item label="Ảnh đại diện" name="image" rules={rules}>
-            <div style={{ position: 'relative', display: 'inline-block' }}>
-              <Image
-                width="200px"
-                height="250px"
-                src={deleteImage ? null : image}
-                style={{ border: '2px solid #ddd', borderRadius: '8px', objectFit: 'cover' }}
-              />
-              {!deleteImage && (
-                <CloseCircleOutlined
-                  onClick={handleDeleteImage}
-                  style={{ position: 'absolute', top: '5px', right: '5px', boder: '1px solid #ddd' }}
-                />
-              )}
-            </div>
+          <Form.Item label="Ảnh chuyên khoa" rules={rules}>
+            <UploadImage onFileListChange={setNewFileListAvatar} url={record.image} />
           </Form.Item>
-
-          <Form.Item label="Tên bác sĩ" name="name" rules={rules}>
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="Chuyên khoa" name="department">
+          <Form.Item label="Tên chuyên khoa" name="name">
             <Select>
               {departments?.map((department) => (
                 <Select.Option key={department.id} value={department.id}>
@@ -100,21 +93,12 @@ function EditRecord(props) {
               ))}
             </Select>
           </Form.Item>
-
-          <Form.Item label="Trình độ" name="degree" rules={rules}>
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="Năm kinh nghiệm" name="experience" rules={rules}>
-            <InputNumber min={1} />
-          </Form.Item>
-
-          <Form.Item label="Chi tiết" name="description" rules={rules}>
+          <Form.Item label="Mô tả" name="description" rules={rules}>
             <TextArea showCount maxLength={1000} placeholder="can resize" />
           </Form.Item>
 
           <Form.Item>
-            <Button htmlType="submit">Cập nhật</Button>
+            <Button htmlType="submit" className="bg-secondary">Cập nhật</Button>
           </Form.Item>
         </Form>
       </Modal>

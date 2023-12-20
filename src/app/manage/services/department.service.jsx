@@ -1,14 +1,16 @@
 'use client';
 
+import queryString from 'query-string';
 import { ADMIN_URL } from '@/api/constant/admin';
 import axios from '@/api/axios';
 
-export const getListDepartment = async () => {
+export const getListDepartment = async (option, filter) => {
   try {
-    const result = await axios.get(`${ADMIN_URL.DEPARTMENTS}`);
+    const queryParams = queryString.stringify({ ...option, ...filter });
+    const result = await axios.get(`${ADMIN_URL.DEPARTMENTS}?${queryParams}`);
     if (result?.data?.code === 200) {
       console.log('Request successful:', result.data);
-      return result?.data?.data?.results;
+      return result.data;
     } else {
       console.error('Request failed with status:', result.data.code);
       throw new Error('Failed to fetch data');
@@ -33,7 +35,7 @@ export const editRecord = async (id, options) => {
     const result = await axios.put(`${ADMIN_URL.DEPARTMENTS}/${id}`, options);
     return result;
   } catch (error) {
-    console.error('Error deleting record:', error);
+    console.error('Error editing record:', error);
     throw error;
   }
 };
@@ -43,7 +45,7 @@ export const createRecord = async (options) => {
     const result = await axios.post(`${ADMIN_URL.DEPARTMENTS}`, options);
     return result;
   } catch (error) {
-    console.error('Error deleting record:', error);
+    console.error('Error creating record:', error);
     throw error;
   }
 };
