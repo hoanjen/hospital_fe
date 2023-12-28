@@ -14,8 +14,8 @@ import axios from '@/api/axios';
 import { USER_URL } from '@/api/constant/user';
 import { toast, ToastContainer } from 'react-toastify';
 import Logo from '@/image/shortCutLogo.jpg';
-import Link from 'next/link';
 
+import Link from 'next/link';
 
 export default function SideBar() {
   const router = useRouter();
@@ -70,10 +70,8 @@ export default function SideBar() {
 
           <div id="dropdown" className={toggle ? "z-10 absolute mt-2 bg-white divide-y divide-gray100 rounded-lg shadow w-44 dark:bg-gray700" : "z-10 hidden mt-2 bg-white divide-y divide-gray100 rounded-lg shadow w-44 dark:bg-gray700"}>
             <ul className="py-2 text-sm text-gray700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-              {/* <li onClick={() => {
-                router.push(`/profile/${userId}`);
-              }}>
-                <a  className="flex items-center px-4 py-2 hover:bg-gray100 dark:hover:bg-gray600 dark:hover:text-white">
+              <Link href={`/profile/${userId}`}>
+                <div  className="flex items-center px-4 py-2 hover:bg-gray100 dark:hover:bg-gray600 dark:hover:text-white">
 
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="mr-2 bi bi-person-circle" viewBox="0 0 16 16">
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
@@ -82,11 +80,9 @@ export default function SideBar() {
 
                   Hồ Sơ
                   
-                  </a>
-              </li> */}
-              <Link href={`/profile/${userId}`}>
-                <div>abc</div>
+                  </div>
               </Link>
+              
               <li onClick={() => {
                 signout();
               }}>
@@ -128,15 +124,20 @@ export default function SideBar() {
         <div className='text-center'>Bệnh Viện Đa Khoa Hà Nội</div>
       </div>
       <div className="flex flex-row items-center">
-        <div className="cursor-pointer p-4 text-l mr-4" onClick={() => router.push('/specialist')}>
-          Đặt khám
-        </div>
+        <Link href={"/specialist"}  >
+          <div className="cursor-pointer p-4 text-lg mr-4">
+            Đặt khám
+          </div>
+        </Link>
+
         <div className="cursor-pointer p-4 text-lg mr-4">Tư vấn trực tuyến</div>
         <div className="cursor-pointer p-4 text-lg mr-4">Store</div>
         <div className="cursor-pointer p-4 text-lg mr-4">Tin Y tế</div>
-        <div className="cursor-pointer p-4 text-lg mr-4" onClick={() => router.push('/manage')}>
-          Dành cho nhân viên Y tế
-        </div>
+        <Link href={"/manage"}  >
+          <div className="cursor-pointer p-4 text-lg mr-4">
+            Dành cho nhân viên Y tế
+          </div>
+        </Link>
         <div>
           {avatarr !== 'NULL' ? (
             <div className="">

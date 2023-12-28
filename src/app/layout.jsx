@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const inter = Inter({ subsets: ['latin'] });
 import Footer from '@/components/Home/footer';
-import Link from '@/components/Home/link';
+
 import SideBar from '../components/SideBar/sideBar';
 import { usePathname } from 'next/navigation';
 
@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
   
   return (
     <html lang="en">
-      <Link></Link>
+
       
       <body className={inter.className}>
         <Providers>

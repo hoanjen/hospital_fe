@@ -107,7 +107,7 @@ export default function WorkingTimeList(props) {
           ) : listTime !== '' ? (
             [1, 2, 3, 4, 5].map((item, index) => {
               return (
-                <div>
+                <div key={item}>
                   <Skeleton width={125} height={32}></Skeleton>
                 </div>
               );
@@ -128,7 +128,7 @@ export default function WorkingTimeList(props) {
           ) : listTime !== '' ? (
             [1, 2, 3, 4, 5].map((item, index) => {
               return (
-                <div>
+                <div key={item}>
                   <Skeleton width={125} height={32}></Skeleton>
                 </div>
               );
