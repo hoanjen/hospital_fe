@@ -7,6 +7,8 @@ import Logo from '../../../image/benhvienhanoi.png';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
+
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation();
@@ -57,6 +59,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         document.querySelector('body')?.classList.remove('sidebar-expanded');
       }
    }
+    
   }, [sidebarExpanded]);
 
   return (
@@ -68,9 +71,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <NavLink onClick={() => router.push('/')}>
+        <Link href={'/'}>
           <img className='rounded-md' src={Logo.src} alt="Logo" />
-        </NavLink>
+        </Link>
 
         <button
           ref={trigger}
@@ -104,29 +107,26 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             <ul className="mb-6 flex flex-col gap-1.5">
               {/* <!-- Menu Item Welcome --> */}
               <li>
-                <NavLink
+                <Link href={`/manage`}
                   onClick={() => {
-                    {
-                      router.push('/manage');
-                    }
+                    
                     setCurrentPath('/manage');
                   }}
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    currentPath === '/manage' && 'bg-graydark dark:bg-meta-4'
-                  }`}
+                  className={currentPath !== '/manage/order-medical-form' && currentPath !== '/manage/order-medical-form' && currentPath !== '/manage/profile' && currentPath !== '/manage/history-order' && currentPath !== '/manage/approve-medical-form' && currentPath !== '/manage/chart-order' && currentPath !== '/manage/manage-users' && currentPath !== '/manage/manage-roles' && currentPath !== '/manage/directory-departments' && currentPath !== '/manage/directory-doctors' && currentPath !== '/manage/directory-schedules' ?  `group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 bg-graydark dark:bg-meta-4
+                    ` : 'group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4'}
                 >
                   <svg fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="18px" height="18px">
                     <path d="M 24.962891 1.0546875 A 1.0001 1.0001 0 0 0 24.384766 1.2636719 L 1.3847656 19.210938 A 1.0005659 1.0005659 0 0 0 2.6152344 20.789062 L 4 19.708984 L 4 46 A 1.0001 1.0001 0 0 0 5 47 L 18.832031 47 A 1.0001 1.0001 0 0 0 19.158203 47 L 30.832031 47 A 1.0001 1.0001 0 0 0 31.158203 47 L 45 47 A 1.0001 1.0001 0 0 0 46 46 L 46 19.708984 L 47.384766 20.789062 A 1.0005657 1.0005657 0 1 0 48.615234 19.210938 L 41 13.269531 L 41 6 L 35 6 L 35 8.5859375 L 25.615234 1.2636719 A 1.0001 1.0001 0 0 0 24.962891 1.0546875 z M 25 3.3222656 L 44 18.148438 L 44 45 L 32 45 L 32 26 L 18 26 L 18 45 L 6 45 L 6 18.148438 L 25 3.3222656 z M 37 8 L 39 8 L 39 11.708984 L 37 10.146484 L 37 8 z M 20 28 L 30 28 L 30 45 L 20 45 L 20 28 z" />
                   </svg>
                   Bảng điều khiển
-                </NavLink>
+                </Link>
               </li>
               {/* <!-- Menu Item Welcome --> */}
               {/* <!-- Menu Item Order Medical Form --> */}
               <li>
-                <NavLink
+                <Link href={'/manage/order-medical-form'}
                   onClick={() => {
-                    router.push('/manage/order-medical-form');
+                    
                     setCurrentPath('/manage/order-medical-form');
                   }}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -163,7 +163,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     />
                   </svg>
                   Đặt lịch khám bệnh
-                </NavLink>
+                </Link>
               </li>
               {/* <!-- Menu Item Order Medical Form --> */}
             </ul>
@@ -174,9 +174,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             <ul className="mb-6 flex flex-col gap-1.5">
               {/* <!-- Menu Item Profile --> */}
               <li>
-                <NavLink
+                <Link href={'/manage/profile'}
                   onClick={() => {
-                    router.push('/manage/profile');
+                    
                     setCurrentPath('/manage/profile');
                   }}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -201,14 +201,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     />
                   </svg>
                   Thông tin cá nhân
-                </NavLink>
+                </Link>
               </li>
               {/* <!-- Menu Item Profile --> */}
               {/* <!-- Menu Item History --> */}
               <li>
-                <NavLink
+                <Link href={'/manage/history-order'}
                   onClick={() => {
-                    router.push('/manage/history-order');
+                    
                     setCurrentPath('/manage/history-order');
                   }}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -229,7 +229,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     />
                   </svg>
                   Lịch sử khám bệnh
-                </NavLink>
+                </Link>
               </li>
               {/* <!-- Menu Item History --> */}
             </ul>
@@ -240,9 +240,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             <ul className="mb-6 flex flex-col gap-1.5">
               {/* <!-- Menu Item Profile --> */}
               <li>
-                <NavLink
+                <Link href={'/manage/approve-medical-form'}
                   onClick={() => {
-                    router.push('/manage/approve-medical-form');
+                   
                     setCurrentPath('/manage/approve-medical-form');
                   }}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -270,14 +270,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     </defs>
                   </svg>
                   Phê duyệt đơn khám
-                </NavLink>
+                </Link>
               </li>
               {/* <!-- Menu Item Profile --> */}
               {/* <!-- Menu Item Chart --> */}
               <li>
-                <NavLink
+                <Link href={'/manage/chart-order'}
                   onClick={() => {
-                    router.push('/manage/chart-order');
+                    
                     setCurrentPath('/manage/chart-order');
                   }}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -309,7 +309,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     </defs>
                   </svg>
                   Thống kê đơn khám
-                </NavLink>
+                </Link>
               </li>
               {/* <!-- Menu Item Chart --> */}
             </ul>
@@ -379,9 +379,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       <div className={`translate transform overflow-hidden ${!open && 'hidden'}`}>
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
                           <li>
-                            <NavLink
+                            <Link href={'/manage/manage-users'}
                               onClick={() => {
-                                router.push('/manage/manage-users');
                                 setCurrentPath('/manage/manage-users');
                               }}
                               className={({ isActive }) =>
@@ -389,13 +388,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                 (isActive && '!text-white')
                               }
                             >
+                              <div className='group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-white duration-300 ease-in-out hover:text-white '>
                               Quản lý tài khoản
-                            </NavLink>
+
+                              </div>
+                            </Link>
                           </li>
                           <li>
-                            <NavLink
+                            <Link href={'/manage/manage-roles'}
                               onClick={() => {
-                                router.push('/manage/manage-roles');
+                                
                                 setCurrentPath('/manage/manage-roles');
                               }}
                               className={({ isActive }) =>
@@ -403,8 +405,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Quản lý quyền
-                            </NavLink>
+                              <div className='group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-white duration-300 ease-in-out hover:text-white '>
+                                Quản lý quyền
+                              </div>
+                              
+                            </Link>
                           </li>
                         </ul>
                       </div>
@@ -475,9 +480,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       <div className={`translate transform overflow-hidden ${!open && 'hidden'}`}>
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
                           <li>
-                            <NavLink
+                            <Link href={'/manage/directory-departments'}
                               onClick={() => {
-                                router.push('/manage/directory-departments');
+                                
                                 setCurrentPath('/manage/directory-departments');
                               }}
                               className={({ isActive }) =>
@@ -485,13 +490,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Quản lý chuyên khoa
-                            </NavLink>
+                              <div className='group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-white duration-300 ease-in-out hover:text-white '>
+                                Quản lý chuyên khoa
+                              </div>
+                              
+                            </Link>
                           </li>
                           <li>
-                            <NavLink
+                            <Link href={'/manage/directory-doctors'}
                               onClick={() => {
-                                router.push('/manage/directory-doctors');
+                                
                                 setCurrentPath('/manage/directory-doctors');
                               }}
                               className={({ isActive }) =>
@@ -499,13 +507,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Quản lý bác sĩ
-                            </NavLink>
+                              
+                              <div className='group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-white duration-300 ease-in-out hover:text-white '>
+                                Quản lý bác sĩ
+                              </div>
+                            </Link>
                           </li>
                           <li>
-                            <NavLink
+                            <Link href={'/manage/directory-schedules'}
                               onClick={() => {
-                                router.push('/manage/directory-schedules');
+                                
                                 setCurrentPath('/manage/directory-schedules');
                               }}
                               className={({ isActive }) =>
@@ -513,8 +524,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Quản lý ca làm việc
-                            </NavLink>
+                              
+                              <div className='group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-white duration-300 ease-in-out hover:text-white '>
+                                Quản lý ca làm việc
+                              </div>
+                            </Link>
                           </li>
                         </ul>
                       </div>

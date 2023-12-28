@@ -97,8 +97,8 @@ export default function Profile() {
             Đăng xuất
           </div>
         </div>
-        {/* {pageProfile()} */}
-        <Information></Information>
+        {pageProfile()}
+        
       </div>
     </div>
   );
