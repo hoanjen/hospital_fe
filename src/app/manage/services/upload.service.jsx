@@ -44,7 +44,9 @@ const UploadImage = (props) => {
     const image = new Image();
     image.src = src;
     const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
+    if (typeof window !== undefined) {
+      imgWindow?.document.write(image.outerHTML);
+    }
   };
   return (
     <ImgCrop

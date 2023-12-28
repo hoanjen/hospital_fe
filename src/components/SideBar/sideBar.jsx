@@ -14,6 +14,7 @@ import axios from '@/api/axios';
 import { USER_URL } from '@/api/constant/user';
 import { toast, ToastContainer } from 'react-toastify';
 import Logo from '@/image/shortCutLogo.jpg';
+import Link from 'next/link';
 
 
 export default function SideBar() {
@@ -69,7 +70,7 @@ export default function SideBar() {
 
           <div id="dropdown" className={toggle ? "z-10 absolute mt-2 bg-white divide-y divide-gray100 rounded-lg shadow w-44 dark:bg-gray700" : "z-10 hidden mt-2 bg-white divide-y divide-gray100 rounded-lg shadow w-44 dark:bg-gray700"}>
             <ul className="py-2 text-sm text-gray700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-              <li onClick={() => {
+              {/* <li onClick={() => {
                 router.push(`/profile/${userId}`);
               }}>
                 <a  className="flex items-center px-4 py-2 hover:bg-gray100 dark:hover:bg-gray600 dark:hover:text-white">
@@ -82,7 +83,10 @@ export default function SideBar() {
                   Hồ Sơ
                   
                   </a>
-              </li>
+              </li> */}
+              <Link href={`/profile/${userId}`}>
+                <div>abc</div>
+              </Link>
               <li onClick={() => {
                 signout();
               }}>
