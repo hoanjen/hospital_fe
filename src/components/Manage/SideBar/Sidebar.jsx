@@ -1,3 +1,6 @@
+"use clients"
+
+
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../../../image/benhvienhanoi.png';
@@ -27,8 +30,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       if (!sidebarOpen || sidebar.current.contains(target) || trigger.current.contains(target)) return;
       setSidebarOpen(false);
     };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
+    if (typeof window !== undefined){
+      document.addEventListener('click', clickHandler);
+      return () => document.removeEventListener('click', clickHandler);
+    }
   });
 
   // close if the esc key is pressed
@@ -37,17 +42,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       if (!sidebarOpen || keyCode !== 27) return;
       setSidebarOpen(false);
     };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+    if (typeof window !== undefined) {
+      document.addEventListener('keydown', keyHandler);
+      return () => document.removeEventListener('keydown', keyHandler);
+    }
   });
 
   useEffect(() => {
     localStorage.setItem('sidebar-expanded', sidebarExpanded.toString());
-    if (sidebarExpanded) {
-      document.querySelector('body')?.classList.add('sidebar-expanded');
-    } else {
-      document.querySelector('body')?.classList.remove('sidebar-expanded');
-    }
+    if (typeof window !== undefined) {
+      if (sidebarExpanded) {
+        document.querySelector('body')?.classList.add('sidebar-expanded');
+      } else {
+        document.querySelector('body')?.classList.remove('sidebar-expanded');
+      }
+   }
   }, [sidebarExpanded]);
 
   return (

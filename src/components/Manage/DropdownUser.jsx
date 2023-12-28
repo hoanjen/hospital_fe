@@ -1,3 +1,6 @@
+"use clients"
+
+
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
@@ -17,8 +20,10 @@ const DropdownUser = (props) => {
       if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) return;
       setDropdownOpen(false);
     };
+    if (typeof window !== undefined) {
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
+    }
   });
 
   // close if the esc key is pressed
@@ -27,8 +32,10 @@ const DropdownUser = (props) => {
       if (!dropdownOpen || keyCode !== 27) return;
       setDropdownOpen(false);
     };
+    if (typeof window !== undefined) {
     document.addEventListener('keydown', keyHandler);
     return () => document.removeEventListener('keydown', keyHandler);
+    }
   });
 
   return (

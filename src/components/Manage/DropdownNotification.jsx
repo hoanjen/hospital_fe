@@ -1,3 +1,5 @@
+"use clients"
+
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -13,8 +15,10 @@ const DropdownNotification = () => {
       if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) return;
       setDropdownOpen(false);
     };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
+    if (typeof window !== undefined) {
+      document.addEventListener('click', clickHandler);
+      return () => document.removeEventListener('click', clickHandler);
+    }
   });
 
   // close if the esc key is pressed
@@ -23,8 +27,10 @@ const DropdownNotification = () => {
       if (!dropdownOpen || keyCode !== 27) return;
       setDropdownOpen(false);
     };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+    if (typeof window !== undefined) {
+      document.addEventListener('keydown', keyHandler);
+      return () => document.removeEventListener('keydown', keyHandler);
+    }
   });
 
   return (
