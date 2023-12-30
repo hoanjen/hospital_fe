@@ -44,7 +44,7 @@ export default function Booking() {
 
   const callWorkingTimeById = async () => {
     const workingTime = await axios.get(`${USER_URL.WORKINGTIME}/${pathname.bookingId}`);
-    console.log(pathname.bookingId);
+    console.log(workingTime);
     setWorkingTime(workingTime.data.data);
   };
 
@@ -215,7 +215,7 @@ export default function Booking() {
                 </div>
                 <div className="mt-3 flex justify-between">
                   <div>Ngày khám</div>
-                  <div>{moment(workingTime?.workingPlan?.dateOfBirth).format('DD/MM/YYYY')}</div>
+                  <div>{moment(workingTime?.workingPlan?.date).format('DD/MM/YYYY')}</div>
                 </div>
                 <div className="mt-3 flex justify-between">
                   <div>Giờ khám </div>

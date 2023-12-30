@@ -6,6 +6,8 @@ import axios from '@/api/axios';
 import { USER_URL } from '@/api/constant/user';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import moment from 'moment';
+
 
 export default function SpecialistList() {
   const [specialistList, setSpecialistList] = useState([]);
@@ -20,6 +22,7 @@ export default function SpecialistList() {
     setIsLoanding(true);
     callDepartments();
     setIsLoanding(false);
+    console.log(moment(Date.now()).format("DD/MM/YYYY"))
   }, []);
 
   return (
