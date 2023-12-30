@@ -4,7 +4,6 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Information from '@/components/profile/infomation';
 import Account from '@/components/profile/account';
-import History from '@/components/profile/history';
 import {toast} from 'react-toastify'
 import { useRouter } from 'next/navigation';
 import { selectUserLogin, setAvatar, setActive, setDsForm } from '@/app/redux/userLogin/userLoginSlice';
