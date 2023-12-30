@@ -7,42 +7,68 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import React from 'react';
+import { Empty } from 'antd';
 
 export default function WorkingTimeList(props) {
   const pathname = useParams();
   const [time7Day, setTime7Day] = useState([moment()]);
   const [indexClick, setIndexClick] = useState(0);
-  const [listTime, setListTime] = useState([]);
+  const [listTimeMorning, setListTimeMorning] = useState('');
+  const [listTimeAfternoon, setListTimeAfternoon] = useState('');
+  const [listRes,setListRes] = useState(null);
   const [chosseTime, setChosseTime] = useState();
-  const callWorkingTimebyDoctor = async (index) => {
-    let list;
-    if (index !== 0) {
-      list = await axios.get(
-        `${USER_URL.WORKINGTIME}?doctorId=${pathname.doctorId}&date=${time7Day[index].format(
-          'YYYY-MM-DD',
-        )}&populate=workingPlan`,
-      );
-    } else {
-      list = await axios.get(
-        `${USER_URL.WORKINGTIME}?doctorId=${pathname.doctorId}&date=${moment().format(
-          'YYYY-MM-DD',
-        )}&populate=workingPlan`,
-      );
-    }
-    setListTime(list.data.data.results);
-    if (list.data.data.results.length === 0) {
-      setListTime('');
-    }
+  const callWorkingTimebyDoctor = (indexs) => {
+    setListTimeMorning([]);
+    setListTimeAfternoon([]);
+    console.log(listRes);
+    let list1 = [];
+    let list2 = [];
+    listRes?.forEach((item, index) => {
+      if (moment(item.workingPlan.date).format("DD/MM/YYYY") === moment().add(indexs, 'days').format("DD/MM/YYYY") && item.startTime < '12:00'){
+        list1.push(item);
+
+        console.log("hiiiiiiiiiiiiiiiiiii")
+
+      }
+      setListTimeMorning(list1);
+      if (moment(item.workingPlan.date).format("DD/MM/YYYY") === moment().add(indexs, 'days').format("DD/MM/YYYY") && item.startTime > '12:00') {
+        list2.push(item);
+        console.log("hiiiiiiiiiiiiiiiiiii")
+
+      }
+      setListTimeAfternoon(list2);
+      
+    })
+
+    console.log(listTimeMorning);
+    console.log(listTimeAfternoon);
+
+  };
+  const callWorkingTimeListbyDoctor = async () => {
+    
+    const list = await axios.get(`${USER_URL.WORKINGTIME}/?doctorId=${pathname.doctorId}&populate=workingPlan&limit=100`);
+    setListRes(list.data.data.results);
+    console.log(list.data.data.results);
+    
   };
 
   useEffect(() => {
     const tmp = [];
-    for (let i = 0; i <= 6; i++) {
+    callWorkingTimeListbyDoctor();
+    for (let i = 1; i <= 7; i++) {
       tmp.push(moment().add(i, 'days'));
     }
+    
     setTime7Day(tmp);
-    callWorkingTimebyDoctor(0);
+    
   }, []);
+  useEffect(() => {
+
+    callWorkingTimebyDoctor(1);
+    
+    
+  }, [listRes])
 
   const displayRegis = (item, index) => {
     if (item.registeredQuantity < item.maxSlots) {
@@ -79,8 +105,7 @@ export default function WorkingTimeList(props) {
               onClick={() => {
                 setIndexClick(index);
                 setChosseTime();
-                callWorkingTimebyDoctor(index);
-                setListTime([]);
+                callWorkingTimebyDoctor(index+1);
               }}
               className={
                 indexClick === index
@@ -96,15 +121,13 @@ export default function WorkingTimeList(props) {
       </div>
       <div>
         <div className="my-3">Lịch khám đang có:</div>
-        <div className="border-b-1 m-2">Buổi sáng</div>
+        <div className="border-b-w1 m-2 text-lg font-medium">Buổi sáng</div>
         <div className="grid grid-cols-6">
-          {listTime.length > 0 && listTime !== '' ? (
-            listTime.map((item, index) => {
-              if (item.startTime < '12:00') {
-                return <div key={index}>{displayRegis(item, index)}</div>;
-              }
+          {listTimeMorning.length > 0 && listTimeMorning !== '' ? (
+            listTimeMorning.map((item, index) => {
+              return <div key={index}>{displayRegis(item, `s${index}`)}</div>;
             })
-          ) : listTime !== '' ? (
+          ) : listTimeMorning === '' ? (
             [1, 2, 3, 4, 5].map((item, index) => {
               return (
                 <div key={item}>
@@ -113,19 +136,19 @@ export default function WorkingTimeList(props) {
               );
             })
           ) : (
-            <div className="p-2">Không có lịch khám</div>
+                <div className="p-2 col-span-6">
+                  <Empty style={{width:"40"}} description={"Không có lịch khám"}></Empty>
+                </div>
           )}
         </div>
 
-        <div className="border-b-1 m-2">Buổi chiều</div>
+        <div className={listTimeMorning.length > 0 ? "border-b-w1 text-lg font-medium m-2 mt-25" : "border-b-w1 text-lg font-medium m-2"}>Buổi chiều</div>
         <div className="grid grid-cols-6">
-          {listTime.length > 0 && listTime !== '' ? (
-            listTime.map((item, index) => {
-              if (item.startTime > '12:00') {
-                return <div key={index}>{displayRegis(item, index)}</div>;
-              }
+          {listTimeAfternoon.length > 0 && listTimeAfternoon !== '' ? (
+            listTimeAfternoon.map((item, index) => {
+              return <div key={index}>{displayRegis(item, `c${index}`)}</div>;
             })
-          ) : listTime !== '' ? (
+          ) : listTimeAfternoon === '' ? (
             [1, 2, 3, 4, 5].map((item, index) => {
               return (
                 <div key={item}>
@@ -134,9 +157,12 @@ export default function WorkingTimeList(props) {
               );
             })
           ) : (
-            <div className="p-2">Không có lịch khám</div>
+                <div className="p-2 col-span-6">
+                  <Empty style={{ width: "40" }} description={"Không có lịch khám"}></Empty>
+                </div>
           )}
         </div>
+        <div className={listTimeAfternoon.length > 0 ? "border-b-w1 text-lg font-medium m-2 mt-25" : "border-b-w1 text-lg font-medium m-2"}></div>
       </div>
     </div>
   );
