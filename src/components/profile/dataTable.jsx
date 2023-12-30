@@ -54,7 +54,7 @@ const DataTable = () => {
    const getListHistory = async (option, filter) => {
       try {
          const queryParams = queryString.stringify({ ...option, ...filter });
-         const result = await axios.get(`${USER_URL.HEALFORM}/?userId=${path.profileId}&populate=doctor,workingTime&${queryParams}`);
+         const result = await axios.get(`${USER_URL.HEALTH_FORM}/?userId=${path.profileId}&populate=doctor,workingTime&${queryParams}`);
          if (result?.data?.code === 200) {
             console.log('Request successful:', result.data);
             return result.data;

@@ -9,6 +9,6 @@ export const ADMIN_URL = {
   ROLE: 'roles',
   BOOKING: 'health-forms',
   USERS: 'users/profile',
-  HEALFORM: 'health-forms',
+  HEALTH_FORM: 'health-forms',
   UPDATEPROFILE: '/users/profile',
 };

@@ -10,7 +10,7 @@ function DeleteHistory(props) {
 
    const cancelBooking = async (id) => {
       try {
-         const cancel = await axios.put(`${USER_URL.HEALFORM}/${id}`, { status: 'rejected' });
+         const cancel = await axios.put(`${USER_URL.HEALTH_FORM}/${id}`, { status: 'rejected' });
          return cancel;
       } catch (error) {
          console.error('Error cancel booking:', error);

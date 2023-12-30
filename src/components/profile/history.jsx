@@ -13,13 +13,13 @@ export default function History() {
   const [history, setHistory] = useState('');
 
   const callHistoryByUserId = async () => {
-    const historyy = await axios.get(`${USER_URL.HEALFORM}/?userId=${path.profileId}&populate=doctor,workingTime`);
+    const historyy = await axios.get(`${USER_URL.HEALTH_FORM}/?userId=${path.profileId}&populate=doctor,workingTime`);
     setHistory(historyy.data.data.results);
     console.log(historyy.data.data.results);
   };
 
   const cancelBooking = async (id) => {
-    const cancel = await axios.put(`${USER_URL.HEALFORM}/${id}`, { status: 'rejected' });
+    const cancel = await axios.put(`${USER_URL.HEALTH_FORM}/${id}`, { status: 'rejected' });
     console.log(cancel);
     if (cancel?.data?.code === 200) {
       toast.success(cancel.data.message);
