@@ -25,15 +25,17 @@ export default function RootLayout({ children }) {
           <div className="flex flex-col bg-slate h-full">
             <div className={pathname.includes("manage") ? "hidden" :"fixed z-20 w-screen"}>
               <SideBar></SideBar>
+            
             </div>
             <div>
+                
               <div className={pathname.includes("manage") ? "" : "mt-[62px]"}>{children}</div>
             </div>
             <div className={pathname.includes("manage") ? "hidden" : ""}>
               <Footer></Footer>
             </div>
           </div>
-          <ToastContainer />
+          <ToastContainer className={"mt-20"} position="top-right" autoClose={3000} />
         </Providers>
       </body>
     </html>

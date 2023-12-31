@@ -1,4 +1,4 @@
-"use clients"
+"use client"
 
 
 import { useEffect } from 'react';
@@ -9,8 +9,9 @@ const useColorMode = () => {
 
   useEffect(() => {
     const className = 'dark';
-    if (typeof window !== undefined) {
-    var bodyClass = window.document.body.classList;
+    if (typeof document !== undefined) {
+    var bodyClass = document.body.classList;
+
     }
     colorMode === 'dark' ? bodyClass.add(className) : bodyClass.remove(className);
   }, [colorMode]);

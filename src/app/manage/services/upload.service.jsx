@@ -1,3 +1,5 @@
+"use client"
+
 import ImgCrop from 'antd-img-crop';
 import React, { useEffect, useState } from 'react';
 import { Upload } from 'antd';

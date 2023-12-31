@@ -1,4 +1,4 @@
-"use clients"
+"use client"
 
 
 import { useEffect, useRef, useState } from 'react';
@@ -20,7 +20,7 @@ const DropdownUser = (props) => {
       if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) return;
       setDropdownOpen(false);
     };
-    if (typeof window !== undefined) {
+    if (typeof document !== undefined) {
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
     }
@@ -32,7 +32,7 @@ const DropdownUser = (props) => {
       if (!dropdownOpen || keyCode !== 27) return;
       setDropdownOpen(false);
     };
-    if (typeof window !== undefined) {
+    if (typeof document !== undefined) {
     document.addEventListener('keydown', keyHandler);
     return () => document.removeEventListener('keydown', keyHandler);
     }
