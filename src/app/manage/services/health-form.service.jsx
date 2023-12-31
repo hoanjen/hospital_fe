@@ -41,3 +41,14 @@ export const rejectRecord = async (id, msg) => {
     throw error;
   }
 };
+
+export const cancelRecord = async (id, msg) => {
+  try {
+    const result = await axios.put(`${ADMIN_URL.HEALTH_FORM}/${id}`, { status: 'canceled', canceledReason: msg });
+    return result;
+  } catch (error) {
+    console.error('Error editing record:', error);
+    throw error;
+  }
+};
+
