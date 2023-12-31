@@ -8,14 +8,15 @@ import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { selectUserLogin, setAvatar, setName, setDsForm } from '@/app/redux/userLogin/userLoginSlice';
 import { useDispatch } from 'react-redux';
 import Logo from '@/image/shortCutLogo.jpg';
-
+import { useRef } from 'react';
 
 export default function Signin(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-
+  const inputRef = useRef(null);
+  const inputRefpass = useRef(null);
   const clear = () => {
     setEmail('');
     setPassword('');
@@ -24,17 +25,24 @@ export default function Signin(props) {
     setIsLoading(true);
     const tmp = await axios.post(`${USER_URL.LOGIN}`, { email, password });
     const user = tmp.data?.data;
-
     if (tmp?.data?.code === 200) {
       toast.success('Đăng nhập thành công');
       console.log(user);
       setCookie('access_token', user.tokens.access.token);
+      setCookie('refresh_token', user.tokens.access.token);
       setCookie('user_avatar', user.user.avatar);
       setCookie('user_name', user.user.fullName);
       setCookie('user_id', user.user.id);
       clear();
-      
+      inputRef.current.value = '';
+      inputRefpass.current.value = '';
       dispatch(setDsForm(false));
+      let roles = "";
+      const data = await axios.post('https://medical-booking-server.onrender.com/api/v1/auth/token', { token: user.tokens.access.token  });
+      data.data.user.roles.map((item) => {
+        roles += item.roleIndex;
+      })
+      setCookie('roles',roles);
     } else {
       toast.error(tmp?.response?.data?.message);
     }
@@ -88,7 +96,7 @@ export default function Signin(props) {
                   <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Email
                   </label>
-                  <input
+                  <input ref={inputRef}
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
@@ -96,7 +104,7 @@ export default function Signin(props) {
                     name="email"
                     id="email"
                     className="bg-gray50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="name@company.com"
+                    placeholder="name@gmail.com"
                     required=""
                   />
                 </div>
@@ -104,7 +112,7 @@ export default function Signin(props) {
                   <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Mật khẩu
                   </label>
-                  <input
+                  <input ref={inputRefpass}
                     onChange={(e) => {
                       setPassword(e.target.value);
                     }}

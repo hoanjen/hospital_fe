@@ -28,7 +28,7 @@ export default function SideBar() {
   const [displayForgot, setDisplayForgot] = useState(false);
   const [toggle, setToggle] = useState(false);
   const dispatch = useDispatch();
-  const signout = () => {
+  const signout = async () => {
     deleteCookie('user_avatar');
     deleteCookie('user_name');
     deleteCookie('user_id');
@@ -37,6 +37,9 @@ export default function SideBar() {
     setUserFullName('NULL');
     deleteCookie('access_token');
     toast.success('Đăng xuất thành công');
+    const logout = await axios.post(`${USER_URL.LOGOUT}`, {refreshToken: getCookie('refresh_token')});
+    console.log(logout);
+    deleteCookie('refresh_token');
   };
 
   useEffect(() => {
@@ -130,9 +133,9 @@ export default function SideBar() {
           </div>
         </Link>
 
-        <div className="cursor-pointer p-4 text-lg mr-4">Tư vấn trực tuyến</div>
-        <div className="cursor-pointer p-4 text-lg mr-4">Store</div>
-        <div className="cursor-pointer p-4 text-lg mr-4">Tin Y tế</div>
+        <div onClick={() => {toast.info("Sắp ra mắt")}} className="cursor-pointer p-4 text-lg mr-4">Tư vấn trực tuyến</div>
+        <div onClick={() => { toast.info("Sắp ra mắt") }} className="cursor-pointer p-4 text-lg mr-4">Store</div>
+        <div onClick={() => { toast.info("Sắp ra mắt") }} className="cursor-pointer p-4 text-lg mr-4">Tin Y tế</div>
         <Link href={"/manage"}  >
           <div className="cursor-pointer p-4 text-lg mr-4">
             Dành cho nhân viên Y tế

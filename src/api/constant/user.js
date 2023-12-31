@@ -1,5 +1,6 @@
 export const USER_URL = {
   LOGIN: 'auth/login',
+  LOGOUT: 'auth/logout',
   REGISTER: 'auth/register',
   DEPARTMENTS: 'departments',
   DOCTOR: 'doctors',

@@ -29,8 +29,7 @@ export default function Profile() {
     } else if(active === 3) {
       return <HistoryOrder></HistoryOrder>;
     } else{
-      signout();
-      router.push('/');
+
     }
   };
 
@@ -83,18 +82,7 @@ export default function Profile() {
           >
             Lịch sử đặt khám
           </div>
-          <div
-            onClick={() => {
-              setActive(4);
-            }}
-            className={
-              active === 4
-                ? 'w-72 p-3 border-bluehome border-l-4 bg-sky-100'
-                : 'w-72 p-3 border-l-4 border-white hover:border-sky-100 hover:bg-sky-100'
-            }
-          >
-            Đăng xuất
-          </div>
+          
         </div>
         {pageProfile()}
         

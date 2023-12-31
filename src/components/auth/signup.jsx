@@ -8,7 +8,7 @@ import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { selectUserLogin, setAvatar, setDsForm, setName } from '@/app/redux/userLogin/userLoginSlice';
 import { useDispatch } from 'react-redux';
 import Logo from '@/image/shortCutLogo.jpg';
-
+import { useRef } from 'react';
 
 export default function Signup(props) {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +17,10 @@ export default function Signup(props) {
   const [fullName, setFullName] = useState('');
   const [passwordAgain, setPasswordAgain] = useState('');
   const dispatch = useDispatch();
+  const eRef = useRef(null);
+  const pRef = useRef(null);
+  const nRef = useRef(null);
+  const paRef = useRef(null);
 
   const signup = async () => {
     setIsLoading(true);
@@ -44,6 +48,11 @@ export default function Signup(props) {
     setFullName('');
     setPassword('');
     setPasswordAgain('');
+
+    nRef.current.value = '';
+    eRef.current.value = '';
+    pRef.current.value = '';
+    paRef.current.value = '';
   }
   return (
     <div className="">
@@ -98,7 +107,7 @@ export default function Signup(props) {
                   <label htmlFor="fullName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Tên của bạn
                   </label>
-                  <input
+                  <input ref={nRef}
                     onChange={(e) => {
                       setFullName(e.target.value);
                     }}
@@ -114,7 +123,7 @@ export default function Signup(props) {
                   <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Email
                   </label>
-                  <input
+                  <input ref={eRef}
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
@@ -130,7 +139,7 @@ export default function Signup(props) {
                   <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Mật khẩu
                   </label>
-                  <input
+                  <input ref={pRef}
                     onChange={(e) => {
                       setPassword(e.target.value);
                     }}
@@ -146,7 +155,7 @@ export default function Signup(props) {
                   <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Nhập lại mật khẩu
                   </label>
-                  <input
+                  <input ref={paRef}
                     onChange={(e) => {
                       setPasswordAgain(e.target.value);
                     }}
