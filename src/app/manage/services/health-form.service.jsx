@@ -8,7 +8,7 @@ export const getListHealthForm = async (option, filter) => {
   try {
     const queryParams = queryString.stringify({ ...option, ...filter });
     const result = await axios.get(
-      `${ADMIN_URL.HEALTH_FORM}?populate=doctor,workingTime.workingPlan,user&limit=1000&${queryParams}`,
+      `${ADMIN_URL.HEALTH_FORM}?populate=doctor,workingTime.workingPlan,user&${queryParams}`,
     );
     if (result?.data?.code === 200) {
       console.log('Request successful:', result.data);
@@ -26,7 +26,7 @@ export const getListMyHealthForm = async (option, filter) => {
   try {
     const queryParams = queryString.stringify({ ...option, ...filter });
     const result = await axios.get(
-      `${ADMIN_URL.HEALTH_FORM}/me?populate=doctor,workingTime.workingPlan,user&limit=100&${queryParams}`,
+      `${ADMIN_URL.HEALTH_FORM}/me?populate=doctor,workingTime.workingPlan,user&${queryParams}`,
     );
     if (result?.data?.code === 200) {
       console.log('Request successful:', result.data);

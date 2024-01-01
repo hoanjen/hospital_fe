@@ -151,6 +151,7 @@ function ChartByDepartment(props) {
         const department = departments?.find((department) => department.id === departmentId);
         filter['department'] = department.name;
       }
+      option['limit'] = 1000;
       const result = await getListHealthForm(option, filter);
       setHealthForms(result?.data?.results);
     } catch (error) {
