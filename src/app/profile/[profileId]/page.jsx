@@ -12,6 +12,7 @@ import HistoryOrder from '@/components/profile/historyOrder';
 
 export default function Profile() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const param = useParams('/profile');
   const handle = () => {
     console.log(param);
@@ -34,13 +35,6 @@ export default function Profile() {
   };
 
 
-  const signout = () => {
-    deleteCookie('user_avatar');
-    deleteCookie('user_name');
-    deleteCookie('user_id');
-    deleteCookie('access_token');
-    toast.success('Đăng xuất thành công');
-  };
 
   return (
     <div className=" flex justify-center mb-10 min-h-[1200px]">
@@ -49,6 +43,7 @@ export default function Profile() {
           <div
             onClick={() => {
               setActive(1);
+              dispatch(setActive(1));
             }}
             className={
               active === 1
@@ -61,6 +56,7 @@ export default function Profile() {
           <div
             onClick={() => {
               setActive(2);
+              dispatch(setActive(2));
             }}
             className={
               active === 2
@@ -73,6 +69,7 @@ export default function Profile() {
           <div
             onClick={() => {
               setActive(3);
+              dispatch(setActive(3));
             }}
             className={
               active === 3

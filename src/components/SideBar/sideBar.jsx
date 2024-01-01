@@ -37,7 +37,8 @@ export default function SideBar() {
     setUserFullName('NULL');
     deleteCookie('access_token');
     toast.success('Đăng xuất thành công');
-    const logout = await axios.post(`${USER_URL.LOGOUT}`, {refreshToken: getCookie('refresh_token')});
+    const refreshToken  = getCookie('refresh_token')
+    const logout = await axios.post(`${USER_URL.LOGOUT}`, { refreshToken });
     console.log(logout);
     deleteCookie('refresh_token');
   };

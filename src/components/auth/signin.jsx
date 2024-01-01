@@ -30,7 +30,7 @@ export default function Signin(props) {
       toast.success('Đăng nhập thành công');
       console.log(user);
       setCookie('access_token', user.tokens.access.token);
-      setCookie('refresh_token', user.tokens.access.token);
+      setCookie('refresh_token', user.tokens.refresh.token);
       setCookie('user_avatar', user.user.avatar);
       setCookie('user_name', user.user.fullName);
       setCookie('user_id', user.user.id);

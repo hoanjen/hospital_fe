@@ -2,8 +2,11 @@
 
 
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
+import { toast, ToastContainer } from 'react-toastify';
+import axios from '@/api/axios';
+import { USER_URL } from '@/api/constant/user';
 
 const DropdownUser = (props) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -37,10 +40,20 @@ const DropdownUser = (props) => {
     return () => document.removeEventListener('keydown', keyHandler);
     }
   });
-
+  const signout = async () => {
+    deleteCookie('user_avatar');
+    deleteCookie('user_name');
+    deleteCookie('user_id');
+    deleteCookie('access_token');
+    toast.success('Đăng xuất thành công');
+    const refreshToken = getCookie('refresh_token')
+    const logout = await axios.post(`${USER_URL.LOGOUT}`, { refreshToken });
+    window.location.href = '/';
+    deleteCookie('refresh_token');
+  };
   return (
     <div className="relative">
-      <Link ref={trigger} onClick={() => setDropdownOpen(!dropdownOpen)} className="flex items-center gap-4" to="#">
+      <button ref={trigger} onClick={() => setDropdownOpen(!dropdownOpen)} className="flex items-center gap-4" to="#">
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">{name}</span>
         </span>
@@ -64,7 +77,7 @@ const DropdownUser = (props) => {
             fill=""
           />
         </svg>
-      </Link>
+      </button>
 
       {/* <!-- Dropdown Start --> */}
       <div
@@ -78,7 +91,7 @@ const DropdownUser = (props) => {
         <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
           <li>
             <Link
-              to="/dashboard/profile"
+              href="/manage/profile"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg
@@ -98,12 +111,12 @@ const DropdownUser = (props) => {
                   fill=""
                 />
               </svg>
-              My Profile
+              Trang cá nhân
             </Link>
           </li>
           <li>
             <Link
-              to="/dashboard/settings"
+              href="/manage/settings"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg
@@ -123,11 +136,11 @@ const DropdownUser = (props) => {
                   fill=""
                 />
               </svg>
-              Account Settings
+              Cài đặt
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button onClick={() => { signout() }} className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
           <svg
             className="fill-current"
             width="22"
@@ -145,7 +158,7 @@ const DropdownUser = (props) => {
               fill=""
             />
           </svg>
-          Log Out
+          Đăng xuất
         </button>
       </div>
       {/* <!-- Dropdown End --> */}
