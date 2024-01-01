@@ -18,9 +18,9 @@ export default function Profile() {
     console.log(param);
   };
   const number =  useSelector(selectUserLogin);
-  const [active, setActive] = useState(number.active);
+  const [active, setActivePage] = useState(number.active);
   const backInfo = () => {
-    setActive(1);
+    setActivePage(1);
   };
   const pageProfile = () => {
     if (active === 1) {
@@ -42,7 +42,7 @@ export default function Profile() {
         <div className="bg-white h-64 mt-10 rounded-lg overflow-hidden cursor-pointer">
           <div
             onClick={() => {
-              setActive(1);
+              setActivePage(1);
               dispatch(setActive(1));
             }}
             className={
@@ -55,7 +55,7 @@ export default function Profile() {
           </div>
           <div
             onClick={() => {
-              setActive(2);
+              setActivePage(2);
               dispatch(setActive(2));
             }}
             className={
@@ -68,7 +68,7 @@ export default function Profile() {
           </div>
           <div
             onClick={() => {
-              setActive(3);
+              setActivePage(3);
               dispatch(setActive(3));
             }}
             className={
