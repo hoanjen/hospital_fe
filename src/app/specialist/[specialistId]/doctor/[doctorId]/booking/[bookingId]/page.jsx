@@ -24,22 +24,27 @@ export default function Booking() {
   const [form, setForm] = useState('');
   const [workingTime, setWorkingTime] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isBooking, setIsBooking] = useState(false);
   const [isLoadingPage, setIsLoadingPage] = useState(true);
   const booking = async (booking) => {
-    if (form === '') {
-      toast.error('Phải điền triệu chứng');
-      return;
+    if(isBooking === false){
+      setIsBooking(true);
+      if (form === '') {
+        toast.error('Phải điền triệu chứng');
+        return;
+      }
+      setIsLoading(true);
+      const mes = await axios.post(`${USER_URL.BOOKING}`, { workingTime: booking, note: form });
+      if (mes?.data?.code === 201) {
+        toast.success('Đặt lịch thành công');
+        setIsLoading(false);
+        dispatch(setActive(3));
+        router.push(`/profile/${getCookie('user_id')}`);
+        
+      }
+      toast.error(mes?.response?.data?.message);
+      setIsBooking(false);
     }
-    setIsLoading(true);
-    const mes = await axios.post(`${USER_URL.BOOKING}`, { workingTime: booking, note: form });
-    if (mes?.data?.code === 201) {
-      toast.success('Đặt lịch thành công');
-      setIsLoading(false);
-      dispatch(setActive(3));
-      router.push(`/profile/${getCookie('user_id')}`);
-      
-    }
-    toast.error(mes?.response?.data?.message);
   };
 
   const callWorkingTimeById = async () => {
@@ -112,7 +117,7 @@ export default function Booking() {
               <div className="m-5 p-2">
                 <Skeleton className="" width={51} height={24}></Skeleton>
                 <div className="w-[400px] h-28">
-                  <Skeleton className="" width={500} height={112}></Skeleton>
+                  <Skeleton className="" width={540} height={112}></Skeleton>
                 </div>
               </div>
             </div>
@@ -192,7 +197,7 @@ export default function Booking() {
               </div>
               <div className="m-5 p-2">
                 <div className="mb-2">Ghi chú</div>
-                <div className="w-[400px] h-28">
+                <div className="w-[540px] h-28">
                   <textarea
                     onChange={(e) => {
                       setForm(e.target.value);

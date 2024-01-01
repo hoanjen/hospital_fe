@@ -31,10 +31,10 @@ instance.interceptors.response.use(
       deleteCookie('user_avatar');
       deleteCookie('user_name');
       deleteCookie('user_id');
-      window.location.href = `${process.env.REACT_APP_BASE_HREF}/`;
+      window.location.href = `/`;
     }
     if (error.response?.data?.code === 403) {
-      window.location.href = `${process.env.REACT_APP_BASE_HREF}/error/403`;
+      window.location.href = `/error/403`;
     }
     return error;
   },
