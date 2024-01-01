@@ -33,6 +33,9 @@ instance.interceptors.response.use(
       deleteCookie('user_id');
       window.location.href = `${process.env.REACT_APP_BASE_HREF}/`;
     }
+    if (error.response?.data?.code === 403) {
+      window.location.href = `${process.env.REACT_APP_BASE_HREF}/error/403`;
+    }
     return error;
   },
 );
