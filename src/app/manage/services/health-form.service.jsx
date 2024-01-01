@@ -8,7 +8,25 @@ export const getListHealthForm = async (option, filter) => {
   try {
     const queryParams = queryString.stringify({ ...option, ...filter });
     const result = await axios.get(
-      `${ADMIN_URL.HEALTH_FORM}?populate=doctor,workingTime.workingPlan,user&limit=1000&${queryParams}`,
+      `${ADMIN_URL.HEALTH_FORM}?populate=doctor,workingTime.workingPlan,user&${queryParams}`,
+    );
+    if (result?.data?.code === 200) {
+      console.log('Request successful:', result.data);
+      return result.data;
+    } else {
+      console.error('Request failed with status:', result.data.code);
+      throw new Error('Failed to fetch data');
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+};
+
+export const getListMyHealthForm = async (option, filter) => {
+  try {
+    const queryParams = queryString.stringify({ ...option, ...filter });
+    const result = await axios.get(
+      `${ADMIN_URL.HEALTH_FORM}/me?populate=doctor,workingTime.workingPlan,user&${queryParams}`,
     );
     if (result?.data?.code === 200) {
       console.log('Request successful:', result.data);

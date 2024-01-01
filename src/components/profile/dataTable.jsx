@@ -4,11 +4,10 @@ import { useEffect, useState } from 'react';
 import React from 'react';
 import { Button, Table, Flex, Spin, Space, DatePicker, Select } from 'antd';
 const { RangePicker } = DatePicker;
-import { getListHealthForm } from '../../app/manage/services/health-form.service';
+import { getListMyHealthForm } from '../../app/manage/services/health-form.service';
 import CancelHistoryOrder from './cancelHistoryOrder';
 import DetailHistoryOrder from './detailHistoryOrder';
 import moment from 'moment';
-import { useParams } from 'next/navigation';
 
 function DataTable(props) {
   const { tab, departments } = props;
@@ -25,12 +24,10 @@ function DataTable(props) {
     current: 1,
     totalResult: 1,
   });
-  const path = useParams();
 
   const fetchApi = async (option, filter) => {
     try {
       setLoading(true);
-      filter['userId'] = path.profileId;
       switch (tab) {
         case '2':
           filter['status'] = 'pending';
@@ -58,7 +55,7 @@ function DataTable(props) {
         const department = departments?.find((department) => department.id === departmentId);
         filter['department'] = department.name;
       }
-      const result = await getListHealthForm(option, filter);
+      const result = await getListMyHealthForm(option, filter);
       setHealthForms(result);
       setPagination({
         limitPage: result.data.limit,

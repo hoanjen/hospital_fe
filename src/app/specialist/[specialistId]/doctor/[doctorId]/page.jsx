@@ -25,7 +25,6 @@ export default function DoctorDetailPage() {
   const [isLoading, setIsLoading] = useState('false');
   const callDoctorDetailById = async () => {
     const list = await axios.get(`${USER_URL.DOCTOR}/${pathname.doctorId}`);
-    console.log(list.data.data, "11111111111111111111");
     setDoctor(list.data.data);
   };
 
@@ -49,9 +48,7 @@ export default function DoctorDetailPage() {
         <div
           onClick={() => {
             if (getCookie('user_name')) {
-              router.push(
-                `/specialist/${pathname.specialistId}/doctor/${pathname.doctorId}/booking/${workingTime}`,
-              );
+              router.push(`/specialist/${pathname.specialistId}/doctor/${pathname.doctorId}/booking/${workingTime}`);
             } else {
               dispatch(setDsForm(true));
             }
@@ -73,9 +70,7 @@ export default function DoctorDetailPage() {
         <div
           onClick={() => {
             if (getCookie('user_name')) {
-              router.push(
-                `/specialist/${pathname.specialistId}/doctor/${pathname.doctorId}/booking/${workingTime}`,
-              );
+              router.push(`/specialist/${pathname.specialistId}/doctor/${pathname.doctorId}/booking/${workingTime}`);
             } else {
               dispatch(setDsForm(true));
             }
@@ -95,7 +90,7 @@ export default function DoctorDetailPage() {
     }
   };
   return (
-    <div className="h-screen mt-30">
+    <div className=" mt-30">
       <div className="flex justify-center mt-10 ">
         <div className="bg-white rounded-2xl w-[900px] ">
           <div className=" m-5">
