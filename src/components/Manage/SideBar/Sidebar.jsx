@@ -9,8 +9,12 @@ import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { getCookie } from 'cookies-next';
+import { selectUserLogin, setRoles } from '@/app/redux/userLogin/userLoginSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 export default function Sidebar ({ sidebarOpen, setSidebarOpen }){
+  const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
   const [currentPath, setCurrentPath] = useState(pathname);
@@ -19,7 +23,8 @@ export default function Sidebar ({ sidebarOpen, setSidebarOpen }){
   const roles = getCookie('roles')
   const trigger = useRef(null);
   const sidebar = useRef(null);
-
+  dispatch(setRoles(getCookie('roles')));
+  const user = useSelector(selectUserLogin);
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
@@ -236,7 +241,7 @@ export default function Sidebar ({ sidebarOpen, setSidebarOpen }){
               {/* <!-- Menu Item History --> */}
             </ul>
           </div>
-          {roles.includes("nhan-vien-phe-duyet") ? <div>
+          {user.roles.includes("nhan-vien-phe-duyet") ? <div>
             <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">THÔNG TIN ĐƠN KHÁM BỆNH</h3>
 
             <ul className="mb-6 flex flex-col gap-1.5">
@@ -314,7 +319,7 @@ export default function Sidebar ({ sidebarOpen, setSidebarOpen }){
               {/* <!-- Menu Item Chart --> */}
             </ul>
           </div> : ""}
-          {roles.includes("admin") ?
+          {user.roles.includes("admin") ?
             <div>
               <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">QUẢN TRỊ HỆ THỐNG & CMS</h3>
 
