@@ -8,10 +8,10 @@ import SidebarLinkGroup from './SidebarLinkGroup';
 import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import { selectUserLogin, setRoles } from '@/app/redux/userLogin/userLoginSlice';
 import { useDispatch, useSelector } from 'react-redux';
-
+import axios from 'axios';
 
 export default function Sidebar ({ sidebarOpen, setSidebarOpen }){
   const dispatch = useDispatch();
@@ -66,7 +66,18 @@ export default function Sidebar ({ sidebarOpen, setSidebarOpen }){
    }
     
   }, [sidebarExpanded]);
-
+  const getRoles = async () => {
+    let roles = "";
+    const data = await axios.post('https://medical-booking-server.onrender.com/api/v1/auth/token', { token: getCookie('access_token') });
+    data.data.user.roles.map((item) => {
+      roles += item.roleIndex;
+    })
+    dispatch(setRoles(roles));
+    setCookie('roles', roles);
+  }
+  useEffect(() => {
+    getRoles();
+  }, [])
   return (
     <aside
       ref={sidebar}
