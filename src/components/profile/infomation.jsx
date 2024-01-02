@@ -102,6 +102,7 @@ export default function Information() {
     if (userDetail.address) {
       setAddress(userDetail.address);
     }
+    
     if (userDetail.cmndImg) {
       setImgCMND(userDetail.cmndImg);
     }
@@ -226,8 +227,13 @@ export default function Information() {
                 <div className=" font-medium text-gray700">Chứng minh nhân dân</div>
                 {!isChangeCMND ? (
                   <div className="flex flex-col items-center m-5">
-                    <div className="w-72 h-48">
-                      <img className="object-cover w-72 h-48 rounded-md" src={imgCMND} alt="" />
+                    <div className="w-72 h-48 flex justify-center items-center border border-gray200" >
+                      {
+                        imgCMND === '' ?
+                          <div>Chưa cập nhật</div>
+                          :
+                          <img className="object-cover w-72 h-48 rounded-md" src={imgCMND} alt="" />
+                      }
                     </div>
                     <div
                       onClick={() => {
@@ -274,8 +280,13 @@ export default function Information() {
                 <div className=" font-medium text-gray700">Thẻ bảo hiểm y tế</div>
                 {!isChangeBHYT ? (
                   <div className="flex flex-col items-center m-5">
-                    <div className="w-72 h-48">
-                      <img className="object-cover w-72 h-48 rounded-md" src={imgBHYT} alt="" />
+                    <div className="w-72 h-48 flex justify-center items-center border border-gray200" >
+                      {
+                        imgCMND === '' ?
+                          <div>Chưa cập nhật</div>
+                          :
+                          <img className="object-cover w-72 h-48 rounded-md" src={imgCMND} alt="" />
+                      }
                     </div>
                     <div
                       onClick={() => {
@@ -563,13 +574,23 @@ export default function Information() {
           </div>
           <div className="bg-white rounded-lg p-5 w-[550px] mt-[68px] ml-5">
               <div className="font-medium mt-10">Thẻ căn cước công dân</div>
-              <div className="w-72 h-48">
-                <img className="object-cover w-72 h-48 rounded-md m-5 cursor-not-allowed" src={imgCMND} alt="" />
+              <div className="w-72 h-48 flex justify-center items-center m-5 border border-gray200">
+                { 
+                  imgCMND === '' ? 
+                  <div>Chưa cập nhật</div>
+                  :
+                  <img className="object-cover w-72 h-48 rounded-md m-5 cursor-not-allowed" src={imgCMND} alt="" />
+                }
               </div>
 
               <div className="font-medium mt-10">Thẻ bảo hiểm y tế</div>
-              <div className="w-72 h-48">
-                <img className="object-cover w-72 h-48 rounded-md m-5 cursor-not-allowed" src={imgBHYT} alt="" />
+              <div className="w-72 h-48 flex justify-center items-center m-5 border border-gray200" >
+                {
+                  imgBHYT === '' ?
+                    <div>Chưa cập nhật</div>
+                    :
+                    <img className="object-cover w-72 h-48 rounded-md m-5 cursor-not-allowed" src={imgBHYT} alt="" />
+                }
               </div>
               
             </div>

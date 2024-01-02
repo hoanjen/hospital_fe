@@ -6,8 +6,13 @@ import Swal from 'sweetalert2';
 import moment from 'moment';
 import 'moment/locale/vi';
 import UploadImage from '../services/upload.service';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUserLogin, setRoles } from '@/app/redux/userLogin/userLoginSlice';
+import axios from '@/api/axios';
+import { getCookie, setCookie } from 'cookies-next';
 
 const EditRecord = React.memo((props) => {
+  const dispatch = useDispatch();
   const { record, onReload, roles } = props;
 
   const [showModal, setShowModal] = useState(false);
@@ -31,6 +36,7 @@ const EditRecord = React.memo((props) => {
 
   const handleSubmit = async (values) => {
     const formData = new FormData();
+    console.log(values);
     for (const key in values) {
       if (values.hasOwnProperty(key) && values[key]) {
         const value = values[key];
@@ -68,6 +74,14 @@ const EditRecord = React.memo((props) => {
         icon: 'error',
       });
     }
+    let roles = "";
+    const data = await axios.post('https://medical-booking-server.onrender.com/api/v1/auth/token', { token: getCookie('access_token') });
+    data.data.user.roles.map((item) => {
+      roles += item.roleIndex;
+    })
+    setCookie('roles', roles);
+    dispatch(setRoles(roles));
+    
   };
 
   return (
